@@ -1,0 +1,36 @@
+<% include _fe_header_ %>
+
+<div class="row">
+	
+	<!-- aritcle content -->
+	<div class="small-12 medium-12 large-12">
+
+		<div class="jscroll clearfix">
+		<% if(_.isArray(latest_articles) && latest_articles.length) { %>
+			<% for(var idx = 0 ; idx < latest_articles.length ; idx++ ) { %>
+				<div class="cate-card small-12 medium-4 float-left">
+					<div class="card">
+						<a href="/articles/read/<%= latest_articles[idx].id; %>.html">
+							<img class="thumbnail ratio-item-img" src="<%- latest_articles[idx].thumbnail %>" />
+							<div class="card-section">
+								<a class="side-bar-news-cate" href="/categories/index/<%= latest_articles[idx].Category.get('id') %>">
+									<%= latest_articles[idx].Category.get('title'); %>
+								</a>
+								<%- latest_articles[idx].title; %>
+							</div>
+						</a>
+					</div>
+				</div>
+			<% } %>
+		<% } %> 
+
+		<% if( max_page > page ) { %>
+			<a class="jscroll-next" href="/articles/index/<%= page %>"></a>
+		<% } %>
+		</div>
+		
+	</div>
+
+</div>
+
+<% include _fe_footer_ %>

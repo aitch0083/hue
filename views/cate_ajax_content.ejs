@@ -1,0 +1,18 @@
+<% if(_.isArray(cate_articles) && cate_articles.length) { %>
+	<% for(var idx = 0 ; idx < cate_articles.length ; idx++ ) { %>
+		<div class="cate-card small-12 medium-6 float-left">
+			<div class="card">
+				<a href="/articles/read/<%= cate_articles[idx].id; %>.html">
+					<img class="thumbnail ratio-item-img" src="<%- cate_articles[idx].thumbnail %>" />
+					<div class="card-section">
+						<%- cate_articles[idx].title; %>
+					</div>
+				</a>
+			</div>
+		</div>
+	<% } %>
+<% } %> 
+
+<% if( show_page_anchor ) { %>
+	<a class="jscroll-next" href="/categories/index/<%= category.get('ID') %>/<%= page %>"></a>
+<% } %>

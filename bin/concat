@@ -1,0 +1,31 @@
+var concat     = require('concat');
+var path       = require('path');
+var dirname    = __dirname;
+var parent_dir = path.dirname(dirname);
+
+var js_files   = [
+	parent_dir + '/libs/js/jquery.min.js',
+	parent_dir + '/libs/js/jsgrid.min.js',
+	parent_dir + '/libs/js/bootstrap.min.js',
+	parent_dir + '/libs/js/summernote.min.js',
+];
+
+var js_output = parent_dir + '/public/javascripts/libs.min.js';
+
+console.info('JS...');
+concat(js_files, js_output);
+console.info('JS DONE: ', js_output);
+
+var css_files = [
+	parent_dir + '/libs/css/jsgrid.min.css',
+	parent_dir + '/libs/css/jsgrid-theme.min.css',
+	parent_dir + '/libs/css/bootstrap.min.css',
+	parent_dir + '/libs/css/summernote.min.css',
+	parent_dir + '/libs/css/elementui.min.css',
+];
+
+var css_output = parent_dir + '/public/stylesheets/libs.min.css';
+
+console.info('CSS...');
+concat(css_files, css_output);
+console.info('CSS DONE: ', css_output);

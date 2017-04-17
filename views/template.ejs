@@ -1,0 +1,28 @@
+<el-row v-bind:gutter="5" class="app-container">
+	<% include _side_menu_ %>
+	
+	<div class="app-canvas">
+		<el-menu mode="horizontal">
+			<h2> <%= function_name %></h2>
+		</el-menu>
+
+		<% if( container_type === 'grid' ) { %>
+			<div id="jsGrid"></div>
+		<% } else if(container_type === 'tree') { %>
+			<el-tree
+			  ref="tree-container"
+			  lazy
+			  node-key="id"
+			  default-expand-all
+			  v-bind:data="tree_data"
+			  v-bind:props="tree_props"
+			  v-bind:load="renderTreeNode"
+			  v-bind:expand-on-click-node="false"
+			  v-bind:render-content="renderTreeContent">
+			</el-tree>
+		<% } else if(container_type === 'editor') { %>
+			<% include _article_editor_ %>
+		<% }%>
+
+	</div>
+</el-row>

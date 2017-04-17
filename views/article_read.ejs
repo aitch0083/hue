@@ -1,0 +1,72 @@
+<% include _fe_header_ %>
+
+<div class="row">
+	
+	<!-- aritcle content -->
+	<div class="small-12 medium-8 float-left">
+		<article id="ArticleContentContainer">
+			<header>
+				<p class="category-title">
+					<a href="/categories/index/<%= article.Category.get('id') %>" style="">
+						<%= article.Category.get('title') %>
+					</a>
+				</p>
+				<hr/>
+				<h2 class="page-title">
+					<%= article.get('title') %>
+					<a id="ArticleTitleAnchor">&nbsp;</a>
+				</h2>
+				<meta name="description" content="<%= article.get('abstraction'); %>">
+				<div class="entry-meta">
+					<span class="author">
+						BY <%= article.User.get('name'); %>  
+						@ <time datetime="<%= article.get('created'); %>">
+							<%- display_time(article.get('created')); %>					
+						  </time>				
+					</span>
+				</div>
+			</header>
+			<div class="entry-content indented">
+				<%- article.get('content'); %>
+			</div>
+		</article>
+
+		<footer class="row article-footer">
+			<% if(_.isArray(same_cate_artciles) && same_cate_artciles.length) { %>
+				<% for(var idx = 0 ; idx < same_cate_artciles.length ; idx++ ) { %>
+					<div class="small-12 medium-4 float-left cate-card">
+						<div class="card">
+							<a href="/articles/read/<%= same_cate_artciles[idx].id; %>.html">
+								<img class="thumbnail ratio-item-img" src="<%- same_cate_artciles[idx].thumbnail %>" />
+								<div class="card-section">
+									<%- same_cate_artciles[idx].title; %>
+								</div>
+							</a>
+						</div>
+					</div>
+				<% } %>
+			<% } %> 
+		</footer>
+	</div>
+
+	<!-- side bar content -->
+	<div class="small-12 medium-4 float-left side-bar">
+		<% if(_.isArray(latest_articles) && latest_articles.length) { %>
+			<% for(var idx = 0 ; idx < latest_articles.length ; idx++ ) { %>
+				<div class="cate-card">
+					<div class="card">
+						<a href="/articles/read/<%= latest_articles[idx].id; %>.html">
+							<img class="thumbnail ratio-item-img" src="<%- latest_articles[idx].thumbnail %>" />
+							<div class="card-section">
+								<%- latest_articles[idx].title; %>
+							</div>
+						</a>
+					</div>
+				</div>
+			<% } %>
+		<% } %> 
+	</div>
+
+</div>
+
+<% include _fe_footer_ %>

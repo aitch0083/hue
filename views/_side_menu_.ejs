@@ -1,0 +1,25 @@
+<el-menu default-active="<%= '/app/' + function_name %>" class="sidebar-menu" v-on:select="onMenuClick">
+  <el-menu-item index="/app/articles" class="side-menu-item">
+  	<i class="material-icons" title="Article list">whatshot</i>
+  </el-menu-item>
+
+  <el-menu-item index="/app/addnew" class="side-menu-item">
+  	<i class="material-icons" title="Add new article">add</i>
+  </el-menu-item>
+
+  <el-menu-item index="/app/banners" class="side-menu-item">
+  	<i class="material-icons" title="Banners">video_library</i>
+  </el-menu-item>
+
+  <el-menu-item index="/app/categories" class="side-menu-item">
+  	<i class="material-icons" title="Categories">explore</i>
+  </el-menu-item>
+
+  <el-menu-item index="/app/cleancaches" class="side-menu-item">
+  	<i class="material-icons" title="Article reviews">description</i>
+  </el-menu-item>
+
+  <el-menu-item index="/app/logout" class="side-menu-item">
+  	<i class="material-icons" title="Logout">exit_to_app</i>
+  </el-menu-item>
+</el-menu>

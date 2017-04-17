@@ -1,0 +1,74 @@
+html, body{
+	background-color: #CECECE;
+}
+
+article {
+	background-color: white;
+	padding: 0.25rem;	
+}
+
+.article-footer {
+	margin-top: 0.5rem;
+	padding: 0rem 1rem;
+}
+
+.category-title a {
+	color:red; 
+	font-weight:bold;
+}
+
+.page-title {
+	margin-top:3px; 
+	margin-bottom:2px; 
+	padding-bottom: 0px;
+}
+
+.entry-meta {
+	font-size: 0.85rem;
+	margin-bottom: 0.85rem;
+	color: #606060;
+}
+
+.cate-card .card{
+	padding: 0.125rem;
+}
+
+.cate-card img{
+	min-width: 100%;
+	margin-bottom: 0.15rem;
+}
+
+.cate-card .card, .cate-card img {
+	border: 0px;
+}
+
+.card-section {
+    padding: 0.25rem;
+    min-height: 73px;
+    max-height: 73px;
+    overflow-y: hidden;
+}
+
+.card-section .material-icons{
+	font-size: 0;
+}
+
+.card-section a {
+	color: #808080;
+	text-decoration: none;
+}
+
+.side-bar {
+	padding-left: 0.5rem;
+}
+
+.cate-container {
+	padding: 0 0.6rem;
+}
+
+a.side-bar-news-cate{
+	font-size: 0.85rem;
+	color: red;
+	display: block;
+	width: 100%;
+}

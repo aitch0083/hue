@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+	    <meta http-equiv="x-ua-compatible" content="ie=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	    <% if(meta !== undefined && configs !== undefined) { %>
+	    <meta property="og:type" 	    content="website" />
+	    <meta property="og:title" 	    content="<%= meta !== undefined ? meta.title : configs.site_title %>" />
+		<meta property="og:url" 	    content="<%= meta !== undefined ? meta.url : configs.site_url; %>" />
+		<meta property="og:image" 	    content="<%= meta !== undefined ? meta.image : configs.logo; %>" />
+		<meta property="og:site_name"   content="<%= meta !== undefined ? meta.site_name : configs.site_title %>" />
+		<meta property="og:description" content="<%= meta !== undefined ? meta.description : '' %>" />
+		<meta property="fb:app_id"      content="<%= meta !== undefined ? meta.fb_id : '' %>" />
+		<% } %>
+
+		<title><%= title %></title>
+
+		<link href="/favicon.ico" rel="shortcut icon"/>
+
+		<!-- Material Design -->
+		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+		<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+
+		<!-- Foundation CSS -->
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/css/foundation.min.css" integrity="sha256-itWEYdFWzZPBG78bJOOiQIn06QCgN/F0wMDcC4nOhxY=" crossorigin="anonymous" />
+
+		<!-- Style -->
+		<link rel="stylesheet" href="/stylesheets/front.styles.css"/>
+	</head>
+	<body>

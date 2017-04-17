@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+	    <meta http-equiv="x-ua-compatible" content="ie=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	    <title><%= title %></title>
+
+		<link href="/favicon.ico" rel="shortcut icon"/>
+
+		<!-- Material Design -->
+		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+		<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+
+		<!-- Foundation CSS -->
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/css/foundation.min.css" integrity="sha256-itWEYdFWzZPBG78bJOOiQIn06QCgN/F0wMDcC4nOhxY=" crossorigin="anonymous" />
+		
+	</head>
+	<body>
+
+	<div id="error" class="row">
+	  <div class="small-4 large-12 columns callout alert">
+		<h1><i class="material-icons">warning</i> Sorry</h1>
+		<h3>The required path: <%= required_path; %> does not exits.</h3>
+		<p class="lead">This incident is reported. Sorry for the inconvenience.</p>
+		<blockquote>
+			<h6>Details:</h6>
+			<p><%= message %></p>
+		</blockquote>
+	  </div>
+	</div>
+
+<% include _fe_footer_ %>

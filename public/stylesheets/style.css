@@ -1,0 +1,80 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+
+html, body {
+  font: 14px 'Noto Sans TC', 'Roboto', Helvetica, Arial, sans-serif;
+  margin: 0px;
+  padding: 0px;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.blue {
+	color: #20A0FF;
+}
+
+.green {
+	color: #13CE66;	
+}
+
+.red {
+	color: #FF4949;
+}
+
+.orange {
+	color: #F7BA2A;
+}
+
+.container{
+	width: 100%;
+	height: 100%;
+	padding: 0px;
+	margin: 0px;
+}
+
+.sidebar-menu{
+	width: 3.6%;
+	position: fixed;
+	height: 100vh;
+}
+
+.app-canvas{
+	min-height: 100vh;
+	height: 100vh;
+	left: 3.5%;
+	position: relative;
+	width: 96%;
+}
+
+.side-menu-item{
+	height: 40px;
+}
+
+.jsgrid-cell .material-icons {
+	font-size: 14px;
+}
+
+.i-need-left-space{
+	padding-left: 0.25rem;
+}
+
+.inline-input {
+	width: 70%;
+}
+
+.editor-containcer, 
+.editor-containcer #editor, 
+.editor-containcer .el-form, 
+.editor-containcer .el-card__body {
+	height: 100vh;
+}
+
+.loading-image {
+	display: inherit; 
+	margin: auto;
+}
+
+.el-form-item__label {
+    padding: 6px 5px;
+}
