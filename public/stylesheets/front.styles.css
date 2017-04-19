@@ -46,6 +46,14 @@ img.pano-photos {
 	background: white;
 }
 
+.footer-bar {
+    background-color: #606060;
+}
+
+.footer-bar a {
+	color: white;
+}
+
 .title-bar-menu-button {
 	background-color: #808080;
 }

@@ -8,6 +8,7 @@ var Article = sequelize.define('articles', {
     //For display: 
 	id:            { type: SZ.BIGINT(20).UNSIGNED,  allowNull: false, autoIncrement: true, primaryKey: true, field: 'id'},
 	title:         { type: SZ.STRING(35),           allowNull: false, field: 'title'},
+    plain_title:   { type: SZ.VIRTUAL },
 	abstract:      { type: SZ.STRING(40),           allowNull: true,  field: 'abstract'},
 	thumbnail:     { type: SZ.TEXT('tiny'),         allowNull: true,  field: 'thumbnail'},
     created:       { type: SZ.DATE, 			    allowNull: false, field: 'created'},
@@ -67,6 +68,7 @@ var Article = sequelize.define('articles', {
                                         youtuber: video_url ? ' <i class="material-icons" title="it\'s a youtube article">video_library</i>' : ''
                                     });
 
+                    ele.setDataValue('plain_title', title);
                     ele.setDataValue('title', link);
 
                     if(category){

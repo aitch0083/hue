@@ -1,4 +1,6 @@
 .DS_Store
+global.configs.js
+page_footer.ejs
 node_modules/*
 public/images/uploaded/*
 public/articles/read/*

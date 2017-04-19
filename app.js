@@ -13,6 +13,8 @@ var quickthumb   = require('quickthumb');
 
 var app = express();
 
+app.locals.configs = configs;
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

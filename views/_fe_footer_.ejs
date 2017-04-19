@@ -1,4 +1,9 @@
-	
+		
+		<% if(configs.extra_footer) { %>
+			<% var extra_path = configs.extra_footer; %>
+			<%- include(extra_path) %>
+		<% } %>
+
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" ></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/js/foundation.min.js" integrity="sha256-Nd2xznOkrE9HkrAMi4xWy/hXkQraXioBg9iYsBrcFrs=" crossorigin="anonymous"></script>
 		<script src="/javascripts/front.libs.min.js" ></script>

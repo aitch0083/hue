@@ -1,11 +1,13 @@
 'use strict';
-var SZ      = require('sequelize');
-var express = require('express');
-var bcrypt  = require('bcrypt-nodejs');
-var _       = require('lodash');
-var fs      = require('fs');
-var path    = require('path');
-var moment  = require('moment');
+var SZ        = require('sequelize');
+var express   = require('express');
+var bcrypt    = require('bcrypt-nodejs');
+var _         = require('lodash');
+var fs        = require('fs');
+var path      = require('path');
+var moment    = require('moment');
+var RSSFeed   = require('feed');
+var striptags = require('striptags');
 
 //Configurations
 var configs  = require('../configs/global.configs');
@@ -42,6 +44,8 @@ var banner_conditions = {
 	}
 };
 var category_conditions = { valid: 1, level: 1, for_admin: 0 };
+var article_conditions  = { valid: 1, approved: 1};
+var user_conditions     = { valid: 1 };
 
 var display_time = function(time){
 	return moment(time).format('DD MMMM YYYY');
@@ -328,6 +332,74 @@ router.get('/articles/index/:page', function(req, res, next){
 
 	});
 
+});
+
+router.get('/articles/rssFeed/:cate_id/:page_size', function(req, res, next){
+	var cate_id   = parseInt(req.params.cate_id);
+	var page_size = parseInt(req.params.page_size);
+
+	if(isNaN(cate_id) || isNaN(page_size)){
+		var error = new Error('Invalid RSS invocation');
+		error.status = 404;
+
+		next(error);
+	}
+
+	if(cate_id > 0){
+		article_conditions['category_id'] = cate_id;
+	} 
+
+	var cache_file_name = path.join(__dirname, '../public/articles', 'rss_feed_'+cate_id+'s'+page_size+'.xml');
+
+	//find the html cache file, if there is none, then create one
+	if(fs.existsSync(cache_file_name)){
+		res.sendFile(cache_file_name);
+	} else {
+
+		Article.findAll({
+			where: article_conditions,
+			limit: page_size,
+			order: 'id desc',
+			include: [
+				{ model:Category, as:'Category', required: true, where: { valid: 1 }, attributes:['title', 'id'] },
+				{ model:User, as:'User', required: true, where: user_conditions, attributes:['username', 'id', 'name'] }
+			]
+		}).then(function(articles){
+			var feed = new RSSFeed({
+			  title:       configs.site_title + ' RSS Feed',
+			  description: configs.site_description,
+			  id:          configs.site_public_url,
+			  link:        configs.site_public_url,
+			  image:       configs.site_public_url + '/logo.png',
+			  copyright:   'All rights reserved ' + moment().format('YYYY'),
+			  updated:     new Date(),
+			  author:      configs.site_author
+			});
+
+			_.each(articles, function(article){
+
+				var URI        = configs.site_public_url + '/articles/read/' + article.id + '.html';
+				var abstract   = striptags(article.abstract);
+				var clean_desc = abstract.length < 100 ? striptags(article.content).replace(/\r?\n|\r|\&nbsp;/g, "").substring(0, 150) : abstract;
+
+				feed.addItem({
+					title:       article.plain_title,
+					id:          URI,
+					link:        URI,
+					description: clean_desc,
+					date:        article.created,
+					image:       configs.site_public_url + '/' + article.thumbnail
+				});
+
+			});
+
+			var rss = feed.rss2();
+
+			fs.writeFile(cache_file_name, rss);
+			res.send(rss);
+		});
+
+	}
 });
 
 router.get('/articles', function(req, res, next) {
