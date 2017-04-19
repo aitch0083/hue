@@ -96,8 +96,13 @@ let component = {
 		// $shared.updated.apply(this);
 	},
 
-	methods: _.extend($shared.methods, {
+	methods: {
+		onMenuClick(menu_path) {
+			$shared.methods.onMenuClick.apply(this, [menu_path]);
+		},
 		submit () {
+
+			console.info('from banner');
 			
 			if(!this.form.description) {
 				this.$message({type: 'error', message:'Please fill in description'});
@@ -155,7 +160,7 @@ let component = {
 		handlePictureUploadError() {
 			this.$message({type:'error', 'message':'Unable to upload the image for this banner'});
 		}
-	}),
+	},
 
 	init_dyn_component () {
 

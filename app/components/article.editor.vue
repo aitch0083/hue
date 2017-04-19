@@ -22,6 +22,8 @@ import axios   from 'axios';
 import _       from 'lodash';
 import $shared from './utils/shared';
 
+let $root = null;
+
 let clean_form = {
 	id:          null,
 	description: '',
@@ -70,7 +72,10 @@ let component = {
 		// $shared.updated.apply(this);
 	},
 
-	methods: _.extend($shared.methods, {
+	methods: {
+		onMenuClick(menu_path) {
+			$shared.methods.onMenuClick.apply(this, [menu_path]);
+		},
 		handlePanoUploadSuccess(response){
 			let image_src = response.urls.shift();
 
@@ -131,8 +136,9 @@ let component = {
 			}).catch(() => {
 				this.$message({message:'Ok'});
 			});
-		}
-	}),
+		},
+
+	},
 
 	init_dyn_component () {
 
