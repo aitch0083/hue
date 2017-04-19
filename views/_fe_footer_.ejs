@@ -26,6 +26,22 @@
 					$('#top-menu-placeholder').html(result);
 				});
 
+				var $pano_photos = $('img.pano-photos');
+
+				if($pano_photos.length){
+
+					$pano_photos.wrap('<div class="pano-container"></div>').removeClass('hide-pano-photo');
+
+					$('.pano-container').panorama_viewer({
+					    repeat: true,              
+					    direction: "horizontal",  
+					    animationTime: 700,       
+					    easing: "ease-out",       
+					    overlay: true
+					});
+
+				}
+
       		});
 
       		$(window).resize(function(){

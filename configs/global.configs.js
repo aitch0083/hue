@@ -4,7 +4,7 @@ module.exports = {
 	site_url:   '/',
 	fb_id:      '',
 
-	home_latest_artcile_no: 30,
+	home_latest_artcile_no: 15,
 	latest_artcile_no: 10,
 	same_cate_article_no: 12,
 	category_artcile_no: 20,

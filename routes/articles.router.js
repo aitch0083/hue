@@ -182,17 +182,13 @@ module.exports = function(validator){
 			Article.find({where:{id:id}})
 			.then(function(article){
 
-				if(!article.thumbnail){
-					//find the first image in the content
-					var $document = cheerio.load(article.content);
-					var first_img = $document('img').first();
+				//find the first image in the content
+				var $document = cheerio.load(record.content);
+				var first_img = $document('img').first();
 
-					if(first_img){
-						record.thumbnail = first_img.attr('src');
-					}
+				if(first_img){
+					record.thumbnail = first_img.attr('src');
 				}
-
-				//console.info('record.thumbnail:',record.thumbnail);
 
 				article.updateAttributes(record).then(function(article){
 

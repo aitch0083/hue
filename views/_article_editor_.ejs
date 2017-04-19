@@ -69,3 +69,21 @@
   	<img class="loading-image" src="/images/loading.gif" width="152" height="152"/>
   </el-row>
 </el-dialog>
+
+<el-dialog ref="upload-pano-dialog" title="Upload Pano" v-model="uploadPanoVisiable" size="tiny">
+  <span><i class="material-icons">panorama</i></span>
+
+  <el-upload action="/api/images"
+	               ref="image_upload"
+	               v-bind:on-success="handlePanoUploadSuccess"
+	               v-bind:on-error="handlePanoUploadError"
+	               v-bind:data="upload_pano_params"
+			   v-bind:auto-upload="true">
+		<el-button slot="trigger" size="small" type="primary">select...</el-button>
+		<div slot="tip" class="el-upload__tip">jpg/png files with a size less than 5MB.</div>
+  </el-upload>
+
+  <span slot="footer" class="dialog-footer">
+    <el-button v-on:click="uploadPanoVisiable = false">Close</el-button>
+  </span>
+</el-dialog>

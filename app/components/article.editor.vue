@@ -29,7 +29,7 @@ let clean_form = {
 	start_time:  '',
 	end_time:    '',
 	img1:        '',
-	url:         '',
+	url:         ''
 }
 
 let component = {
@@ -45,7 +45,9 @@ let component = {
 			bus: new Vue(),
 			category_selection_component: null,
 			user_selection_component: null,
-			uploadingDialog: false
+			uploadingDialog: false,
+			uploadPanoVisiable: false,
+			upload_pano_params: {}
 		});
 	},
 
@@ -69,6 +71,16 @@ let component = {
 	},
 
 	methods: _.extend($shared.methods, {
+		handlePanoUploadSuccess(response){
+			let image_src = response.urls.shift();
+
+			$('#editor').summernote('insertImage', image_src, function($image){
+				$image.addClass('pano-photos hide-pano-photo');
+			});
+		},
+		handlePanoUploadError(){
+			this.$message({type:'error', message:'Unable to upload the Panoramic photo'});
+		},
 		submit () {
 			this.form.abstract = _.trim($('#editor').summernote('code').replace(/<\/?[^>]+(>|$)|\&nbsp;|\r?\n/g, ""));
 
@@ -136,9 +148,40 @@ let component = {
 			app.uploadingDialog = toggle;
 		});
 
+		let PanoButton = (context) => {
+		  var ui = $.summernote.ui;
+		  
+		  // create button
+		  var button = ui.button({
+		    contents: '<i style="font-size: 12px;line-height: 1.5;" class="material-icons">panorama</i>',
+		    tooltip: 'Upload Panorama',
+		    click: function () {
+		    	app.uploadPanoVisiable               = true;
+		    	app.upload_pano_params['record_id']  = app.form.id;
+		    	app.upload_pano_params['model_name'] = 'Article';
+		    	app.upload_pano_params['type']       = 'panorama';
+		    }
+		  });
+
+		  return button.render();   // return button as jquery object 
+		}
+
 		let $editor = $('#editor').summernote({
 			height:    500,
 			maxHeight: 500,
+			toolbar: [
+				['style',    ['style']],
+		        ['font',     ['bold', 'underline', 'clear']],
+		        ['fontname', ['fontname']],
+		        ['color',    ['color']],
+		        ['para',     ['ul', 'ol', 'paragraph']],
+		        ['table',    ['table']],
+		        ['insert',   ['link', 'picture', 'video', 'pano']],
+		        ['view',     ['fullscreen', 'codeview', 'help']]
+			],
+			buttons: {
+			    pano: PanoButton
+			},
 			callbacks: {
 				onImageUpload (files) {
 					app.bus.$emit('open-loading-dialog', true);

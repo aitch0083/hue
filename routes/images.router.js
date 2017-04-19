@@ -32,6 +32,7 @@ module.exports = function(validator){
 			var preset_filenames = [];
 			var model_name = '';
 			var record_id  = '';
+			var type       = '';
 			var user_id    = result.user_id;
 			var ip = req.headers['x-forwarded-for'] || 
 				     req.connection.remoteAddress || 
@@ -41,6 +42,7 @@ module.exports = function(validator){
 			form.parse(req, function(err, fields, files){
 				model_name = fields.model_name;
 				record_id  = fields.record_id;
+				type       = fields.type || 'usual';
 			});
 
 			form.on('end', function(fields, files) {
