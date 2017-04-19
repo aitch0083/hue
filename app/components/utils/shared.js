@@ -4,6 +4,33 @@ import _     from 'lodash';
 
 let _bus = new Vue();
 
+let _common_logout = function() {
+
+	let token = this.$getState().$get('token');
+	let app   = this;
+
+	axios.get('/api/logout', {
+		params: {
+			token
+		},
+		withCredentials: true
+	})
+	.then((result) => {
+		if(result.status === 200 && result.data.success){
+			app.$router.replace('/');
+			app.$message({message:'logout', type:'success'});
+		} else {
+			app.$alert(result.data.message, 'Error');	
+		}
+	})
+	.catch((error) => {
+		_.delay(() => {
+			app.$alert('System is unable to logout', 'Error');
+			app.$router.replace('/');
+		}, 1000);
+	});
+};
+
 let $shared = {
 
 	index(obj,is, value) { //access the object via dot notation, like obj["a.b.c"] = "hi", like: obj["a"]["b"]["c"] = "hi"
@@ -82,40 +109,21 @@ let $shared = {
 		onMenuClick(menu_path) {
 
 			let function_name = menu_path;
-			let method_name   = 'on' + _.capitalize(menu_path) + 'Click';
+			let method_name   = 'on' + _.capitalize(menu_path.substring(5)) + 'Click';
 
-			if(_.isFunction(this[method_name])){
+			// console.info('method_name:', method_name, ', okay? ', _.isFunction(component[method_name]));
+
+			if(method_name === 'onLogoutClick'){
+				_common_logout.apply(this);
+			} else if(_.isFunction(this[method_name])){
 				this[method_name].apply();
 			} else {
 				this.$router.push(menu_path);
 			}
 		},//eo onMenuClick
 
-		onLogoutClick($event) {
-
-			let token = this.$getState().$get('token');
-			let app   = this;
-
-			axios.get('/api/logout', {
-				params: {
-					token
-				},
-				withCredentials: true
-			})
-			.then((result) => {
-				if(result.status === 200 && result.data.success){
-					app.$router.replace('/');
-					app.$message({message:'logout', type:'success'});
-				} else {
-					app.$alert(result.data.message, 'Error');	
-				}
-			})
-			.catch((error) => {
-				_.delay(() => {
-					app.$alert('System is unable to logout', 'Error');
-					app.$router.replace('/');
-				}, 1000);
-			});
+		onLogoutClick() {
+			_common_logout.apply(this);
 		}//eo onLogoutClick
 
 	},//eo methods
@@ -160,23 +168,29 @@ let $shared = {
 					});
 				}
 
-				grid_params.fields = fields;
+				if(grid_params) {
 
-				$('#jsGrid').jsGrid(grid_params);
+					grid_params.fields = fields;
+
+					$('#jsGrid').jsGrid(grid_params);
+				}
 
 			} else {
 				app.$alert(result.data.message, 'Error');	
 			}
+
+			$('[data-toggle="tooltip"]').tooltip();
 		})
 		.catch((error) => {
 			console.error('Something wrong:', error);
 		});
 	},//eo init_dyn_component
 
-	get_selections(model, mount_component, model_name, component_ref, original_store, cb) {
+	get_selections(model, mount_component, model_name, component_ref, original_store, cb, multiple) {
 		
 		let token = this.$getState().$get('token');
 		let app   = this;
+		multiple  = multiple || false;
 		
 		// bus = bus || _bus;
 
@@ -192,7 +206,8 @@ let $shared = {
 		return axios.get('/api/selections/' + model, {
 			params: {
 				token,
-				model_name
+				model_name,
+				multiple
 			},
 			withCredentials: true
 		}).then((result) => {

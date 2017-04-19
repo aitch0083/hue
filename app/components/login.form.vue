@@ -1,6 +1,6 @@
 <template>
 
-	<el-card class="box-card">
+	<el-card class="box-card login-form-card">
 		<el-form v-bind:model="form" v-bind:rules="rules" ref="login-form" label-width="100px">
 
 			<el-form-item label="Username" prop="username">
@@ -8,7 +8,7 @@
 		  	</el-form-item>
 
 		  	<el-form-item label="Password" prop="password">
-			    <el-input v-model="form.password"></el-input>
+			    <el-input type="password" v-model="form.password"></el-input>
 		  	</el-form-item>
 
 			<el-form-item>
@@ -39,7 +39,7 @@ export default {
 			rules: {
 	          username: [
 	            { required: true, message: 'Please input username', trigger: 'blur' },
-	            { min: 3, max: 15, message: 'Length should be 3 to 15', trigger: 'blur' }
+	            { min: 3, max: 55, message: 'Length should be 3 to 55', trigger: 'blur' }
 	          ],
 	          password: [
 	            { required: true, message: 'Please input password', trigger: 'blur' },
@@ -95,9 +95,9 @@ export default {
 
 						if(result.data.success && result.status === 200){
 
-							app.$message({message:'Redirecting, please wait...', type:'success'});
+							app.$message({message:'Stand by...', type:'success'});
 
-							this.$router.push('/app/dashboard');
+							this.$router.push('/app/articles');
 
 							app.$getState().$set('token', result.data.token);
 						} else {
@@ -127,7 +127,12 @@ export default {
 
 <style>
 .login-form{
-	margin-top: 1rem;
 	width: 23rem;
+}
+.login-form-card{
+	margin-top: 5rem;
+}
+.el-form-item {
+    margin-bottom: 22px;
 }
 </style>

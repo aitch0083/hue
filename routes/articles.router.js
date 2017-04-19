@@ -9,6 +9,7 @@ var _        = require('lodash');
 var moment   = require('moment');
 var path     = require('path');
 var fs       = require('fs');
+var cheerio  = require('cheerio');
 
 var router = express.Router();
 
@@ -25,12 +26,11 @@ module.exports = function(validator){
 			let now = moment();
 
 			Article.create({
-				title: '',
-				valid: 0,
+				title: 'new article',
+				valid: 1,
 				start_time: now.format('YYYY-MM-DD HH:mm:ss'),
-				approved: 1,
-				user_id: result.user_id,
-				approved: 0
+				approved: 0,
+				user_id: result.user_id
 			})
 			.then(function(article){
 				article.category_id = null;
@@ -182,6 +182,18 @@ module.exports = function(validator){
 			Article.find({where:{id:id}})
 			.then(function(article){
 
+				if(!article.thumbnail){
+					//find the first image in the content
+					var $document = cheerio.load(article.content);
+					var first_img = $document('img').first();
+
+					if(first_img){
+						record.thumbnail = first_img.attr('src');
+					}
+				}
+
+				//console.info('record.thumbnail:',record.thumbnail);
+
 				article.updateAttributes(record).then(function(article){
 
 					//clear the cache if any
@@ -211,6 +223,42 @@ module.exports = function(validator){
 
 				console.info('error @ /articles PUT:', error);
 
+				res.json({
+					success: false,
+					error: error 
+				});
+			});
+
+		}else {
+			res.json(result);
+		}
+	});
+
+	router.delete('/articles', function(req, res, next) {
+		var result = validator(req, res);
+
+		if(result.success){
+
+			var record = req.body;
+			var id     = record.id;
+
+			Article.find({where:{id:id}})
+			.then(function(article){
+
+				article.updateAttributes({valid:0})
+				.then(function(article){
+					res.json(article);
+				})
+				.catch(function(error){
+					console.info('Error @article delete:', error);
+					res.json({
+						success: false,
+						error: error 
+					});
+				});
+			})
+			.catch(function(error){
+				console.info('Error @article delete:', error);
 				res.json({
 					success: false,
 					error: error 

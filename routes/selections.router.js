@@ -47,7 +47,7 @@ var process_tree = function(rows){
 
 module.exports = function(validator){
 
-	var _template = _.template('<el-select v-model="<%=model_name%>" placeholder="Select <%=model_label%>..."><el-option v-for="item in remote_options" :key="item.value" :label="item.label" :value="item.value"></el-option></el-select>');
+	var _template = _.template('<el-select v-model="<%=model_name%>" <%=multiple%> placeholder="Select <%=model_label%>..."><el-option v-for="item in remote_options" :key="item.value" :label="item.label" :value="item.value"></el-option></el-select>');
 
 	//generate category combo selections
 	router.get('/selections/category', function(req, res, next) {
@@ -58,6 +58,9 @@ module.exports = function(validator){
 
 			var level      = req.query.level || 1;
 			var model_name = req.query.model_name || 'category_id';
+			var multiple   = req.query.multiple || false;
+
+			multiple = multiple === 'false' ? false : multiple;
 
 			//fetch filters from query if any
 			var conditions = { valid: 1, level: level };
@@ -73,7 +76,8 @@ module.exports = function(validator){
 					success:  true,
 					template: _template({
 						model_label: 'category',
-						model_name: model_name
+						model_name:  model_name,
+						multiple:    multiple ? 'multiple' : ''
 					}),
 					remote_options: process_tree(result.rows),
 					// preset_value: 393, for debug
@@ -102,6 +106,7 @@ module.exports = function(validator){
 		if(result.success){
 
 			var model_name = req.query.model_name || 'user_id';
+			var multiple   = req.query.multiple || false;
 
 			//fetch filters from query if any
 			var conditions = { valid: 1 };
@@ -116,7 +121,8 @@ module.exports = function(validator){
 					success:  true,
 					template: _template({
 						model_label: 'user',
-						model_name: model_name
+						model_name: model_name,
+						multiple: multiple
 					}),
 					remote_options: _.map(result.rows, function(user){
 						return {

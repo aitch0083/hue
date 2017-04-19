@@ -7,9 +7,54 @@ article {
 	padding: 0.25rem;	
 }
 
+#ArticleContentContainer img {
+	height: auto !important;
+}
+
+#main-menu {
+	max-width: 1200px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: white;
+}
+
+#main-menu .menu-text {
+	padding: 0;
+}
+
+.row {
+	background: white;
+}
+
+.title-bar-menu-button {
+	background-color: #808080;
+}
+
+.title-bar{
+	background: white;
+}
+
+.top-bar-left, .top-bar-right {
+	width: 50% !important;
+}
+
+.top-bar, .top-bar ul{
+	background: white;
+	padding: 0;
+}
+
+.top-bar .search-bar-menu {
+	margin-top: 0.6rem;
+}
+
+.container {
+	background-color: white;
+}
+
 .article-footer {
 	margin-top: 0.5rem;
 	padding: 0rem 1rem;
+	background: none;
 }
 
 .category-title a {
@@ -27,6 +72,10 @@ article {
 	font-size: 0.85rem;
 	margin-bottom: 0.85rem;
 	color: #606060;
+}
+
+.entry-content {
+	padding: 0 0.5rem;
 }
 
 .cate-card .card{
@@ -51,6 +100,7 @@ article {
 
 .card-section .material-icons{
 	font-size: 0;
+	display: none;
 }
 
 .card-section a {
@@ -64,6 +114,10 @@ article {
 
 .cate-container {
 	padding: 0 0.6rem;
+}
+
+.video-card-section {
+	margin-top: -0.25rem;
 }
 
 a.side-bar-news-cate{

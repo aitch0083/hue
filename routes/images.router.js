@@ -82,7 +82,7 @@ module.exports = function(validator){
 							}
 						});
 
-						returned_files.push(public_path + '?dim=800x450');
+						returned_files.push(public_path);
 						
 					});
 

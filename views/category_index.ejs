@@ -5,7 +5,7 @@
 	<!-- aritcle content -->
 	<div class="small-12 medium-8 float-left cate-container">
 
-		<article class="row">
+		<article>
 
 			<header>
 				<p class="category-title">
@@ -57,6 +57,18 @@
 						</a>
 					</div>
 				</div>
+
+				<% if(_.isArray(banners) && banners.length) {  %>
+					<% var banner = banners.pop(); %>
+					<div class="cate-card">
+						<div class="card">
+							<a href="<%=banner.url%>" target="<%=banner.target%>">
+								<img class="thumbnail" src="<%- banner.img1 %>" />
+							</a>
+						</div>
+					</div>
+				<% } %>
+
 			<% } %>
 		<% } %> 
 	</div>

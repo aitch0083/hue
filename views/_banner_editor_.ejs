@@ -1,0 +1,92 @@
+<el-card class="box-card editor-containcer" v-bind:span="24">
+	<!-- //form element -->
+
+	<el-form v-bind:model="form" v-bind:rules="rules" ref="article-editor-form" label-width="180px">
+
+		<el-form-item>
+		    <el-button type="primary" v-on:click="submit" size="mini">
+	    		<i class="material-icons" data-toggle="tooltip" data-placement="bottom" title="Save this form">save</i> 
+	    	</el-button>
+
+	    	<el-button type="danger" v-on:click="resetForm" size="mini">
+	    		<i class="material-icons" data-toggle="tooltip" data-placement="bottom" title="Reset this form">clear</i> 
+	    	</el-button>
+
+	    	<el-button size="mini">
+	    		<i class="material-icons blue" data-toggle="tooltip" data-placement="bottom" title="You need to upload at least one image.">info</i> 
+	    	</el-button>
+		</el-form-item>
+
+		<el-form-item label="Description" prop="description">
+			<el-col v-bind:span="12">
+		    	<el-input placeholder="" v-model="form.description"></el-input>
+		    </el-col>
+		</el-form-item>
+
+		<el-form-item label="URL" prop="url">
+			<el-col v-bind:span="12">
+		    	<el-input placeholder="starts with https://" v-model="form.url"></el-input>
+		    </el-col>
+	  	</el-form-item>
+
+	  	<el-form-item label="Start Time">
+	  		<el-col v-bind:span="4">
+		    	<el-date-picker v-model="form.start_time" type="datetime" placeholder=""></el-date-picker>
+		    </el-col>
+	  	</el-form-item>
+
+	  	<el-form-item label="End Time">
+	  		<el-col v-bind:span="4">
+		    	<el-date-picker v-model="form.end_time" type="datetime" placeholder=""></el-date-picker>
+		    </el-col>
+	  	</el-form-item>
+
+		<el-form-item label="Online?">
+	  		<el-col v-bind:span="3">
+		    	<el-checkbox label="" v-model="form.online"></el-checkbox>
+		    </el-col>
+	  	</el-form-item>
+
+	  	<el-form-item label="Type">
+	  		<el-col v-bind:span="3">
+		    	<el-select v-model="form.type" placeholder="">
+				    <el-option v-for="item in types"
+						       v-bind:label="item.label"
+						       v-bind:value="item.value">
+				    </el-option>
+				</el-select>
+		    </el-col>
+	  	</el-form-item>	  	
+
+	  	<el-form-item label="Others">
+
+	  		<el-col v-bind:span="12">
+		    	<component v-bind:bus="bus" v-bind:is="category_selection_component"></component>
+		    	<span>Leave empty for whole site</span>
+		    </el-col>
+
+	  	</el-form-item>
+
+	  	<el-form-item label="Images">
+	  	    <el-upload action="/api/images"
+	  	               ref="image_upload"
+	  	               v-bind:on-success="handlePictureUploadSuccess"
+	  	               v-bind:on-error="handlePictureUploadError"
+	  	               v-bind:data="upload_params"
+					   v-bind:auto-upload="true"
+				       v-bind:on-preview="handlePictureCardPreview"
+				       v-bind:on-remove="handleRemove">
+				<el-button slot="trigger" size="small" type="primary">select...</el-button>
+				<div slot="tip" class="el-upload__tip">jpg/png/gif files with a size less than 5MB.</div>
+			</el-upload>
+	  	</el-form-item>
+	  	
+	</el-form>
+	
+</el-card>
+
+<el-dialog ref="loading-dialog" title="Uploading..." v-model="uploadingDialog" size="tiny">
+  <el-row v-bind:gutter="5" justify="center">
+  	<img class="loading-image" src="/images/loading.gif" width="152" height="152"/>
+  </el-row>
+</el-dialog>

@@ -1,20 +1,44 @@
-<% if(_.isArray(latest_articles) && latest_articles.length) { %>
-	<% for(var idx = 0 ; idx < latest_articles.length ; idx++ ) { %>
-		<div class="cate-card small-12 medium-4 float-left">
-			<div class="card">
-				<a href="/articles/read/<%= latest_articles[idx].id; %>.html">
+<% for(var idx = 0 ; idx < latest_articles.length ; idx++ ) { %>
+	<div class="cate-card small-12 medium-6 large-4 float-left">
+		<div class="card">
+			<a href="/articles/read/<%= latest_articles[idx].id; %>.html">
+				
+				<% if(!latest_articles[idx].video_url) { %>
 					<img class="thumbnail ratio-item-img" src="<%- latest_articles[idx].thumbnail %>" />
-					<div class="card-section">
-						<a class="side-bar-news-cate" href="/categories/index/<%= latest_articles[idx].Category.get('id') %>">
-							<%= latest_articles[idx].Category.get('title'); %>
-						</a>
-						<%- latest_articles[idx].title; %>
-					</div>
+				<% } else { %>
+					<iframe id="player" type="text/html" style="width: 100%;" class="ratio-item-img"
+                			src="<%=latest_articles[idx].video_url;%>?enablejsapi=1&autoplay=0"
+                			frameborder="0"></iframe>
+                <% } %>
+
+				<div class="card-section <%= latest_articles[idx].video_url ? 'video-card-section' : ''; %>">
+					<a class="side-bar-news-cate" href="/categories/index/<%= latest_articles[idx].Category.get('id') %>">
+						<%= latest_articles[idx].Category.get('title'); %>
+					</a>
+					<%- latest_articles[idx].title; %>
+				</div>
+			</a>
+		</div>
+	</div>
+
+	<% if(_.isArray(banners) && banners.length) {  %>
+		<% var banner = banners.pop(); %>
+		<div class="cate-card small-12 medium-6 large-4 float-left">
+			<div class="card float-left" style="min-width: 100%;">
+				<% if(banner.is_youtube) { %>
+					<iframe id="player" type="text/html" style="width: 100%;" class="ratio-item-img"
+                			src="<%=banner.plain_url%>?enablejsapi=1&autoplay=0"
+                			frameborder="0"></iframe>
+				<% } else { %>
+					<a class="float-left" href="<%=banner.url%>" target="<%=banner.target%>" style="min-width: 100%;">
+						<img src="<%- banner.img1 %>"/>
 				</a>
+				<% } %>
 			</div>
 		</div>
 	<% } %>
-<% } %> 
+
+<% } %>
 
 <% if( max_page > page ) { %>
 	<a class="jscroll-next" href="/articles/index/<%= page %>"></a>

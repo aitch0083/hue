@@ -1,0 +1,11 @@
+<% if(_.isArray(categories) && categories.length) { %>
+
+	<% for( var i = 0 ; i < categories.length ; i++ ) { %>
+
+		<% var category = categories[i] %>
+
+		<li><a href="/categories/index/<%=category.id%>"><%=category.Title%></a></li>
+
+	<% } %>
+
+<% } %>

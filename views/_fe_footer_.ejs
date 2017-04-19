@@ -8,16 +8,30 @@
       			$('.ratio-item-img').keepRatio({ ratio: 16/9, calculate: 'height' });
 
       			$('.jscroll').jscroll({
-				    loadingHtml: '<p>loading...</p>',
+				    loadingHtml: '<img src="/images/page_loader.gif" width="100" height="100" />',
 				    nextSelector: 'a.jscroll-next:last',
 				    padding: 0,
-				    debug: true,
+				    // debug: true,
+				    // autoTriggerUntil: 10,
+				    refresh: true,
 				    callback: function(){
 				    	$('.ratio-item-img').keepRatio({ ratio: 16/9, calculate: 'height' });
+				    	$('.cate-card').equalHeights();
 				    }
 				});
 
+				$('#ArticleContentContainer').find('img').responsImg();
+
+				$.get('/menu').then(function(result){
+					$('#top-menu-placeholder').html(result);
+				});
+
       		});
+
+      		$(window).resize(function(){
+			    $('#ArticleContentContainer').find('img').responsImg();
+			    $('.cate-card').equalHeights();
+			});
 
     	</script>
 	</body>

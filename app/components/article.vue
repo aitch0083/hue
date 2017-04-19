@@ -4,7 +4,7 @@
 		<template v-if="state === 1">
 			
 			<div id="loading_tmp">
-				<h1 class="md-title">{{title}}</h1>
+				<img src="/images/loading.gif" width="150" height="150"/>
 			</div>
 
 		</template>

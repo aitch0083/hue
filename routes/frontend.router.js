@@ -12,6 +12,7 @@ var configs  = require('../configs/global.configs');
 var Article  = require('../models/Article');
 var User     = require('../models/User');
 var Category = require('../models/Category');
+var Banner   = require('../models/Banner');
 
 Article.belongsTo(User, {foreignKey:'user_id', as:'User'});
 Article.belongsTo(Category, {foreignKey:'category_id', as:'Category'});
@@ -19,6 +20,28 @@ Article.belongsTo(Category, {foreignKey:'category_id', as:'Category'});
 //init router
 var router  = express.Router();
 var Promise = SZ.Promise;
+var now     = moment().format('YYYY-MM-DD HH:mm:ss');
+
+//GLOBAL conditions
+var banner_conditions = { 
+	valid: 1, 
+	online: 1, 
+
+	start_time: { 
+		$or: {
+			$eq: null,
+			$lte: now
+		}
+	},
+
+	end_time: {
+		$or: {
+			$eq: null,
+			$gte: now
+		}
+	}
+};
+var category_conditions = { valid: 1, level: 1, for_admin: 0 };
 
 var display_time = function(time){
 	return moment(time).format('DD MMMM YYYY');
@@ -55,9 +78,15 @@ var article_read_hanlder = function(req, res, next) {
 				where: {valid: 1, approved: 1, '$not': {id: id}},
 				limit: configs.latest_artcile_no,
 				order: 'id desc'
+			}),
+
+			Banner.findAll({
+				where: banner_conditions,
+				limit: configs.latest_article_no,
+				order: 'id desc'
 			})
 
-		).spread(function(article, latest_articles){
+		).spread(function(article, latest_articles, banners){
 
 			if(!article){
 				var error = new Error('Invalid article');
@@ -77,6 +106,7 @@ var article_read_hanlder = function(req, res, next) {
 				order: 'RAND()'
 			}).then(function(same_cate_artciles){
 
+				res.locals.banners            = banners;
 				res.locals.same_cate_artciles = same_cate_artciles;
 				res.locals.latest_articles    = latest_articles;
 				res.locals.article            = article;
@@ -148,12 +178,17 @@ var category_read_handler = function(req, res, next){
 				{ model:Category, as:'Category', required: true, where: { valid: 1 }, attributes:['title', 'id'] },
 				{ model:User, as:'User', required: true, where: user_conditions, attributes:['username', 'id', 'name'] }
 			]
+		}),
+
+		Banner.findAll({
+			where: banner_conditions,
+			limit: configs.latest_article_no,
+			order: 'id desc'
 		})
 
-	).spread(function(category, cate_articles, latest_articles){
+	).spread(function(category, cate_articles, latest_articles, banners){
 
-		// console.info('category:', category);
-		
+		res.locals.banners         = banners;
 		res.locals.category        = category;
 		res.locals.cate_articles   = cate_articles.rows;
 		res.locals.cate_article_no = cate_articles.count;
@@ -189,45 +224,51 @@ var category_read_handler = function(req, res, next){
  */
 router.get('/', function(req, res, next){
 
-	var article_conditions  = { valid: 1, approved: 1 };
-	var category_conditions = { valid: 1 };
-	var user_conditions     = { valid: 1 };
+	res.locals.title   = configs.site_title;
+	res.locals.configs = configs;
+	
+	res.locals.meta = {
+		title:       configs.site_title,
+		url:         configs.site_url,
+		site_name:   configs.site_title,
+		description: configs.site_description,
+		fb_id:       configs.fb_id
+	};
 
-	Promise.join(
+	res.locals._ = _;
 
-		Article.findAndCountAll({
-			where: {valid: 1, approved: 1},
-			limit: configs.home_latest_artcile_no,
-			offset: 0,
-			order: 'id desc',
-			include: [
-				{ model:Category, as:'Category', required: true, where: category_conditions, attributes:['title', 'id'] },
-				{ model:User, as:'User', required: true, where: user_conditions, attributes:['username', 'id', 'name'] }
-			]
-		})
+	res.render('home', {page: 0});
+});
 
-	).spread(function(latest_articles){
+router.get('/menu', function(req, res, next){
 
-		res.locals.title             = configs.site_title;
-		res.locals.configs           = configs;
-		res.locals.latest_articles   = latest_articles.rows;
-		res.locals.latest_article_no = latest_articles.count;
+	var cache_file_name = path.join(__dirname, '../public/categories', 'menuitems.html');
 
-		res.locals.meta = {
-			title:       configs.site_title,
-			url:         configs.site_url,
-			site_name:   configs.site_title,
-			description: configs.site_description,
-			fb_id:       configs.fb_id
-		};
+	//find the html cache file, if there is none, then create one
+	if(fs.existsSync(cache_file_name)){
+		res.sendFile(cache_file_name);
+	} else {
 
-		res.locals._ = _;
+		//read categories
+		Promise.join(
+			Category.findAll({where: category_conditions})
+		).spread(function(categories){
 
-		res.locals.max_page = Math.ceil(latest_articles.count / configs.home_latest_artcile_no);
-		
-		res.render('home', {page: 1});
+			res.locals.categories = categories;
+			res.locals._          = _;
 
-	});
+			res.render('topmenu_items', function(error, html){
+				if(error){	
+					next(error);
+				}
+
+				fs.writeFile(cache_file_name, html);
+				res.send(html);
+			});
+			
+		});
+
+	}
 });
 
 router.get('/articles/index/:page', function(req, res, next){
@@ -254,14 +295,22 @@ router.get('/articles/index/:page', function(req, res, next){
 				{ model:Category, as:'Category', required: true, where: category_conditions, attributes:['title', 'id'] },
 				{ model:User, as:'User', required: true, where: user_conditions, attributes:['username', 'id', 'name'] }
 			]
+		}),
+
+		Banner.findAll({
+			where:  banner_conditions,
+			limit:  configs.latest_article_no,
+			//offset: offset,
+			order:  'id desc'
 		})
 
-	).spread(function(latest_articles){
+	).spread(function(latest_articles, banners){
 
 		res.locals.title             = configs.site_title;
 		res.locals.configs           = configs;
 		res.locals.latest_articles   = latest_articles.rows;
 		res.locals.latest_article_no = latest_articles.count;
+		res.locals.banners           = banners;
 
 		res.locals.meta = {
 			title:       configs.site_title,

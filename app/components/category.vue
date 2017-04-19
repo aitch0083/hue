@@ -4,7 +4,7 @@
 		<template v-if="state === 1">
 			
 			<div id="loading_tmp">
-				<h1 class="md-title">{{title}}</h1>
+				<img src="/images/loading.gif" width="150" height="150"/>
 			</div>
 
 		</template>
@@ -52,7 +52,7 @@ let component = {
 	
 	data(){
 		return { 
-			title: 'loading...',
+			title: '',
 			alert: {
 				title: 'Error',
 				contentHtml: 'Something went wrong'
@@ -103,7 +103,6 @@ let component = {
 	methods: {
 
 		onMenuClick(menu_path) {
-			
 			$shared.methods.onMenuClick.apply(this, [menu_path]);
 		},
 

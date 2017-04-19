@@ -4,7 +4,7 @@
 		<template v-if="state === 1">
 			
 			<div id="loading_tmp">
-				<h1 class="md-title">{{title}}</h1>
+				<img src="/images/loading.gif" width="150" height="150"/>
 			</div>
 
 		</template>
@@ -24,13 +24,12 @@ import $shared from './utils/shared';
 
 let clean_form = {
 	id:          null,
-	title:       '',
-	approved:    false,
+	description: '',
+	online:      false,
 	start_time:  '',
-	keywords:    '',
-	content:     '',
-	thumbnail:   '',
-	video_url:   '',
+	end_time:    '',
+	img1:        '',
+	url:         '',
 }
 
 let component = {
@@ -39,7 +38,7 @@ let component = {
 		return _.extend($shared.data.apply(this), {
 			form: _.extend(clean_form, {
 				category_id: null,
-				user_id:     null
+				creator_id:  null
 			}),
 			rules: {
 			},
@@ -154,7 +153,7 @@ let component = {
 		$shared.get_selections.apply(this, ['user', 'user_selection_component', 'form.user_id', component, store, null]);
 
 		//get category component
-		$shared.get_selections.apply(this, ['category', 'category_selection_component', 'form.category_id', component, store, null]);
+		$shared.get_selections.apply(this, ['category', 'category_selection_component', 'form.category_id', component, store, null, false]);
 
 		//read article, if ID provided
 		if(id){
@@ -211,8 +210,6 @@ let component = {
 
 			});
 		}
-
-		$('[data-toggle="tooltip"]').tooltip();
 
 	}
 }

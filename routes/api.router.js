@@ -41,6 +41,13 @@ var configs = require('../configs/global.configs');
 //Models
 var User    = require('../models/User');
 var Article = require('../models/Article');
+var Banner  = require('../models/Banner');
+
+var models = {
+	User:    User,
+	Article: Article,
+	Banner:  Banner
+};
 
 //Controllers
 var UserCtrl      = require('./users.router')(_do_validate);
@@ -48,6 +55,7 @@ var CategoryCtrl  = require('./categories.router')(_do_validate);
 var ArticleCtrl   = require('./articles.router')(_do_validate);
 var SelectionCtrl = require('./selections.router')(_do_validate);
 var ImgCtrl       = require('./images.router')(_do_validate);
+var BannerCtrl    = require('./banners.router')(_do_validate);
 
 //init router
 var router = express.Router();
@@ -57,6 +65,7 @@ router.use(CategoryCtrl);
 router.use(ArticleCtrl);
 router.use(SelectionCtrl);
 router.use(ImgCtrl);
+router.use(BannerCtrl);
 
 /**
  * *********
@@ -88,7 +97,7 @@ router.post('/login', function(req, res, next) {
 				result.message       = (_.template('Username: <%= username %> is found.'))({username:username});
 				result.token         = token;
 
-				console.info('req.session.username:', req.session.username);
+				// console.info('req.session.username:', req.session.username);
 			}
 
 			res.json(result);
@@ -111,7 +120,7 @@ router.get('/component', function(req, res, next) {
 		var function_name  = req.query.function_name;
 		var container_type = req.query.container_type;
 
-		console.info('function_name:', function_name);
+		// console.info('function_name:', function_name);
 
 		res.render('template', {
 			app_name:       configs.site_title, 
@@ -151,17 +160,20 @@ router.get('/logout', function(req, res, next) {
 router.get('/get_grid_params', function(req, res, next) {
 	var result        = _do_validate(req, res);
 	var function_name = req.query.function_name;
+	var model_name    = _.capitalize(function_name.substr(0, function_name.length - 1));
 
 	if(_.isUndefined(function_name)){
 		result.success = false;
 		result.message = 'Function name required';
 	}
 
-	if(result.success){
+	// console.info('model_name:', model_name);
+
+	if(result.success && models[model_name]){
 		result.success     = true;
 		result.message     = 'Fields for ' + function_name;
-		result.fields      = Article.show_fields;
-		result.grid_params = Article.grid_params;
+		result.fields      = models[model_name].show_fields;
+		result.grid_params = models[model_name].grid_params;
 	}
 
 	res.json(result);
