@@ -10,6 +10,7 @@ var api          = require('./routes/api.router');
 var frontend     = require('./routes/frontend.router');
 var configs      = require('./configs/global.configs');
 var quickthumb   = require('quickthumb');
+var device       = require('express-device');
 
 var app = express();
 
@@ -18,6 +19,7 @@ app.locals.configs = configs;
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.set('view options', { layout: false });
 app.set('trust proxy', 1);
 
 // uncomment after placing your favicon in /public
@@ -37,6 +39,14 @@ app.use(function(req, res, next) {
 	res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
 	next();
 });
+
+app.use(function(req, res, next){
+    res.locals.active = req.path.split('/')[1] // [0] will be empty since routes start with '/'
+    next();
+});
+
+app.use(device.capture());
+device.enableDeviceHelpers(app);
 
 app.use('/entry', entry);
 app.use('/api', api);

@@ -8,6 +8,8 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/js/foundation.min.js" integrity="sha256-Nd2xznOkrE9HkrAMi4xWy/hXkQraXioBg9iYsBrcFrs=" crossorigin="anonymous"></script>
 		<script src="/javascripts/front.libs.min.js" ></script>
 
+		<%- include share_btns %>
+
 		<script>
       		$(document).foundation().ready(function(){
       			$('.ratio-item-img').keepRatio({ ratio: 16/9, calculate: 'height' });
@@ -55,5 +57,7 @@
 			});
 
     	</script>
+
+
 	</body>
 </html>

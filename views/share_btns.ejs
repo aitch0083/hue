@@ -1,0 +1,143 @@
+<%
+var share_title = configs.site_title;
+var share_url   = active === '' ? '' : active;
+share_url = configs.site_url + share_url;
+%>
+
+<style type="text/css">
+.lian-share-wrapper{position:fixed}.lian-share-wrapper-bottom{width:100%;bottom:0;z-index: 100;}.lian-share-wrapper-left{width:50px;left:0;top:30%}.lian-share-wrapper a{display:inline-block;position:relative;font-size:26px;color:#fff!important;padding:12px 0;line-height:1em;text-align:center}.lian-share-wrapper .text{position:absolute;display:block;width:100%;bottom:1px;font-size:10px;line-height:10px}.lian-share-wrapper-left .hide-desktop{display:none}
+</style>
+
+<div class="lian-share-wrapper lian-share-wrapper-left hidden-xs hidden-sm">
+    
+    <% if(share_url !== '/') { %>
+    <a href="https://line.me/R/msg/text/?<%=share_title+share_url %>" target="_blank" style="width: 100%; background: rgb(1, 195, 18);" class="comment hide-desktop">
+        <i class="fa fa-comment"></i>
+        <span class="text">LINE</span>
+    </a>
+    <% } else { %>
+    <a href="https://line.me/ti/p/%40zth3224h" target="_blank" style="width: 100%; background: rgb(1, 195, 18);" class="comment hide-desktop">
+        <i class="fa fa-comment"></i>
+        <span class="text">LINE</span>
+    </a>
+    <% } %>
+
+    <a href="http://www.facebook.com/sharer.php?u=<%=share_url; %>" target="_blank" style="width: 100%; background: rgb(59, 89, 152);" class="facebook">
+        <i class="fa fa-facebook"></i>
+        <span class="text"></span>
+    </a>
+    <a href="whatsapp://send?text=<%=share_title+share_url %>" target="_blank" style="width: 100%; background: rgb(29, 158, 17);" class="whatsapp hide-desktop">
+        <i class="fa fa-whatsapp"></i>
+        <span class="text"></span>
+    </a>
+    <a href="https://plus.google.com/share?url=<%=share_url %>" target="_blank" style="width: 100%; background: rgb(221, 75, 57);" class="google-plus">
+        <i class="fa fa-google-plus"></i>
+        <span class="text"></span>
+    </a>
+    <a href="/pages/generate_qrcode?app=wechat&amp;link=<%=share_url %>" target="_blank" style="width: 100%; background: rgb(29, 158, 17);" class="weixin">
+        <i class="fa fa-weixin"></i>
+        <span class="text"></span>
+    </a>
+    <a href="http://twitter.com/share?text=<%=share_title %>&amp;url=<%=share_url %>" target="_blank" style="width: 100%; background: rgb(0, 172, 237);" class="twitter">
+        <i class="fa fa-twitter"></i>
+        <span class="text"></span>
+    </a>
+    <a href="sms:?&amp;body=<%=share_title+share_url %>" target="_blank" style="width: 100%; background: rgb(0, 118, 255);" class="mobile hide-desktop">
+        <i class="fa fa-mobile"></i>
+        <span class="text">簡訊</span>
+    </a>
+</div>
+<script type="text/javascript">
+$(function() {
+    var buttons = [ {
+        icon : "comment",
+        color : "#01C312",
+        <% if(share_url !== '/'){ %>
+        url : "https://line.me/R/msg/text/?{title}{newline}{url}",
+        <% } else { %>
+        url : "https://line.me/ti/p/%40zth3224h",
+        <% } %>
+        mobile : true,
+        text : 'LINE'
+    }, {
+        icon : "facebook",
+        color : "#3B5998",
+        <% if(is_desktop && share_url === '/') { %>
+        url : "https://www.facebook.com/CARLINK-164873120536112/"
+        <% } else if(is_desktop && share_url !== '/') { %>
+        url : "https://www.facebook.com/sharer.php?u={url}"
+        <% } else if(is_mobile && share_url === '/') { %>
+        url : "fb://profile/164873120536112"
+        <% } else if(is_mobile && share_url !== '/') { %>
+        url : "https://www.facebook.com/sharer.php?u={url}"
+        <% } %>
+    }, {
+        icon : "whatsapp",
+        color : "#1D9E11",
+        url : "whatsapp://send?text={title}{newline}{url}",
+        mobile : true
+    }, {
+        icon : "google-plus",
+        color : "#DD4B39",
+        <% if(share_url !== '/') { %>
+        url : "https://plus.google.com/share?url={url}"
+        <% } else { %>
+        url : "https://plus.google.com/101471739183664981875/"
+        <% } %>
+    }, {
+        icon : "weixin",
+        color : "#1D9E11",
+        <% if(share_url !== '/') { %>
+        url : "/pages/generate_qrcode?app=wechat&link={url}"
+        <% } else if(is_desktop && share_url === '/') { %>
+        url : "https://mp.weixin.qq.com/s?__biz=MzI0MDE5MDI5NQ==&mid=402638745&idx=1&sn=15101d733ad48d667a8ccd8f2eb7945d&scene=0#wechat_redirect"
+        <% } else if(!is_desktop && share_url === '/') { %>
+        url : "/pages/generate_qrcode?app=weixin_direct&link={url}"
+        <% } %>
+    }, {
+        icon : "twitter",
+        color : "#00ACED",
+        url : "http://twitter.com/share?text={title}&url={url}"
+    }, {
+        icon : "mobile",
+        color : "#0076FF",
+        url : "sms:?&body={title}{newline}{url}",
+        mobile : true,
+        text:"信息"
+    } ]
+    var wrapper = $("<div class='lian-share-wrapper'></div>");
+
+    for (var i = 0; i < buttons.length; i++) {
+        var button = buttons[i];
+        var url = button.url.replace("{title}",
+                encodeURIComponent(document.title)).replace("{url}",
+                encodeURIComponent(window.location.href)).replace("{newline}",
+                escape("\n"));
+        var buttonTemp = "<a href='{url}' target='_blank' style='background:{color}' class='{icon}'><i class='fa fa-{icon}'></i><span class='text'>{text}</span></a>";
+        var buttonHtml = buttonTemp.replace("{url}", url).replace(/{icon}/g,
+                button.icon).replace("{color}", button.color).replace("{text}",
+                button.text || "");
+        var buttonLink = $(buttonHtml);
+        if (button.mobile == true) {
+            buttonLink.addClass('hide-desktop');
+        }
+
+        wrapper.append(buttonLink);
+    }
+    $('body').append(wrapper);
+    $(window).resize(
+            function() {
+                if ($(document).width() <= 1000) {
+                    var width = 100 / buttons.length;
+                    wrapper.addClass("lian-share-wrapper-bottom").removeClass(
+                            "lian-share-wrapper-left");
+                } else {
+                    var width = 100;
+                    wrapper.addClass("lian-share-wrapper-left").removeClass(
+                            "lian-share-wrapper-bottom");
+                }
+                $(".lian-share-wrapper a").css("width", width + "%");
+            });
+    $(window).resize();
+});
+</script>

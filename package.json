@@ -24,6 +24,7 @@
     "ejs": "~2.5.5",
     "element-ui": "^1.2.7",
     "express": "~4.14.1",
+    "express-device": "^0.4.2",
     "express-session": "^1.15.2",
     "feed": "^1.0.2",
     "formidable": "^1.1.1",
