@@ -8,7 +8,7 @@ share_url = configs.site_url + share_url;
 .lian-share-wrapper{position:fixed}.lian-share-wrapper-bottom{width:100%;bottom:0;z-index: 100;}.lian-share-wrapper-left{width:50px;left:0;top:30%}.lian-share-wrapper a{display:inline-block;position:relative;font-size:26px;color:#fff!important;padding:12px 0;line-height:1em;text-align:center}.lian-share-wrapper .text{position:absolute;display:block;width:100%;bottom:1px;font-size:10px;line-height:10px}.lian-share-wrapper-left .hide-desktop{display:none}
 </style>
 
-<div class="lian-share-wrapper lian-share-wrapper-left hidden-xs hidden-sm">
+<div class="lian-share-wrapper lian-share-wrapper-left show-for-medium">
     
     <% if(share_url !== '/') { %>
     <a href="https://line.me/R/msg/text/?<%=share_title+share_url %>" target="_blank" style="width: 100%; background: rgb(1, 195, 18);" class="comment hide-desktop">
