@@ -84,11 +84,15 @@
 					}//eo PSV telling
 				}
 
+				$('.cate-card').equalHeights();
+			    $('.footer-same-cate-articles-smaller').equalHeights();
+
       		}).foundation();
 
       		$(window).resize(function(){
 			    $('#ArticleContentContainer').find('img').responsImg();
 			    $('.cate-card').equalHeights();
+			    $('.footer-same-cate-articles-smaller').equalHeights();
 			});
 
     	</script>

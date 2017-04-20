@@ -34,7 +34,7 @@
 		<footer class="row article-footer">
 			<% if(_.isArray(same_cate_artciles) && same_cate_artciles.length) { %>
 				<% for(var idx = 0 ; idx < same_cate_artciles.length ; idx++ ) { %>
-					<div class="small-12 medium-4 float-left cate-card">
+					<div class="small-12 medium-4 float-left cate-card footer-same-cate-articles-smaller">
 						<div class="card">
 							<a href="/articles/read/<%= same_cate_artciles[idx].id; %>.html">
 								<img class="thumbnail ratio-item-img" src="<%- same_cate_artciles[idx].thumbnail %>" />
@@ -68,9 +68,15 @@
 					<% var banner = banners.pop(); %>
 					<div class="cate-card">
 						<div class="card">
-							<a href="<%=banner.url%>" target="<%=banner.target%>">
-								<img class="thumbnail" src="<%- banner.img1 %>" />
+							<% if(banner.is_youtube) { %>
+								<iframe id="player" type="text/html" style="width: 100%;" class="ratio-item-img"
+			                			src="<%=banner.plain_url%>?enablejsapi=1&autoplay=0"
+			                			frameborder="0"></iframe>
+							<% } else { %>
+								<a class="float-left" href="<%=banner.url%>" target="<%=banner.target%>" style="min-width: 100%;">
+									<img src="<%- banner.img1 %>"/>
 							</a>
+							<% } %>
 						</div>
 					</div>
 				<% } %>
