@@ -49,7 +49,9 @@ let component = {
 			user_selection_component: null,
 			uploadingDialog: false,
 			uploadPanoVisiable: false,
-			upload_pano_params: {}
+			uploadedPhotoVisible: false,
+			upload_pano_params: {},
+			uploadedPhotos: []
 		});
 	},
 
@@ -76,6 +78,7 @@ let component = {
 		onMenuClick(menu_path) {
 			$shared.methods.onMenuClick.apply(this, [menu_path]);
 		},
+
 		handlePanoUploadSuccess(response){
 			let image_src = response.urls.shift();
 
@@ -84,9 +87,43 @@ let component = {
 				$image.css('width', $image.width() / 3);
 			});
 		},
+
 		handlePanoUploadError(){
 			this.$message({type:'error', message:'Unable to upload the Panoramic photo'});
 		},
+
+		showPhotoDialog(){
+			this.uploadedPhotoVisible = true;
+		},
+
+		uploadedPhotoOpen(){
+			let token = this.$getState().$get('token');
+
+			axios.get('/api/images/getlist', {
+				params: {
+					token,
+					model_name: 'Article',
+					model_id: this.form.id
+				},
+				withCredentials: true
+			}).then( (result) => {
+
+				if(result.status === 200 && result.data.success){
+
+					this.$message({type: 'success', message: 'Enjoy...'});
+					this.uploadedPhotos = result.data.images;
+
+				} else {
+					this.$message({type: 'error', message: 'Unable to read the uploaded photos for this article'});
+				}
+
+			}).catch( (error) => {
+				console.info('Unable to get images for this article:', error);
+				this.uploadedPhotoVisible = false;
+				this.$message({type: 'error', message: 'Unable to read the uploaded photos for this article'});
+			} );
+		},
+
 		submit () {
 			this.form.abstract = _.trim($('#editor').summernote('code').replace(/<\/?[^>]+(>|$)|\&nbsp;|\r?\n/g, ""));
 
@@ -127,6 +164,7 @@ let component = {
 				});
 			}
 		},
+
 		resetForm() {
 
 			this.$confirm('Are you sure about reseting this form?', {
@@ -273,5 +311,8 @@ export default component;
 }
 .el-form-item{
 	margin-bottom: 0px;
+}
+.card-thubnail-image{
+	max-width: 100%;
 }
 </style>

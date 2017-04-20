@@ -114,5 +114,45 @@ module.exports = function(validator){
 		}
 	});
 
+	router.get('/images/getlist', function(req, res, next) {
+		var result = validator(req, res);
+
+		if(result.success){
+			var model_id   = req.query.model_id;
+			var model_name = req.query.model_name;
+
+			if(!model_id || !model_name){
+				throw new Error('Invalid target');
+			} 	
+
+			Image.findAll({ 
+				where: {
+					valid: 1,
+					model: model_name,
+					model_id: model_id
+				}, 
+				order:'id asc'
+			}).then(function(images){
+
+				res.json({
+					success: true,
+					message: 'Images found',
+					images: images
+				});
+
+			}).catch(function(error){
+				console.error('Something went wrong@images/getlist', error);
+				res.json({
+					success: false,
+					error: error,
+					message: 'Unable to get the images'
+				});
+			});
+
+		} else {
+			res.json(result);
+		}
+	});
+
 	return router;
 }

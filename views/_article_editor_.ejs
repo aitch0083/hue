@@ -53,6 +53,10 @@
 		    	<el-button size="mini">
 		    		<i class="material-icons blue" data-toggle="tooltip" data-placement="bottom" title="You can drag multiple photos from your folder to this editor to upload.">info</i> 
 		    	</el-button>
+
+		    	<el-button v-on:click="showPhotoDialog" size="mini">
+		    		<i class="material-icons green" data-toggle="tooltip" data-placement="bottom" title="All the uploaded photos">photo_library</i> 
+		    	</el-button>
 		    </el-col>
 
 	  	</el-form-item>
@@ -86,4 +90,20 @@
   <span slot="footer" class="dialog-footer">
     <el-button v-on:click="uploadPanoVisiable = false">Close</el-button>
   </span>
+</el-dialog>
+
+<el-dialog ref="uploaded-photo-dialog" title="Uploaded Photos" v-model="uploadedPhotoVisible" v-on:open="uploadedPhotoOpen" size="large">
+  	<h5><i class="material-icons">photo_library</i> All the uploaded photos for this article</h5>
+
+	<el-row>
+		<el-col v-bind:span="4" v-for="(photo, index) in uploadedPhotos">
+			<el-card v-bind:body-style="{ padding: '2px' }">
+			  <img v-bind:src="photo.path" class="card-thubnail-image">
+			</el-card>
+		</el-col>
+	</el-row>
+
+	<span slot="footer" class="dialog-footer">
+		<el-button v-on:click="uploadedPhotoVisible = false">Close</el-button>
+	</span>
 </el-dialog>
