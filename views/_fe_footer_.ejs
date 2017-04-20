@@ -30,7 +30,7 @@
 				$.get('/menu').then(function(result){
 					$('#top-menu-placeholder').html(result);
 				});
-
+				var md = new MobileDetect(window.navigator.userAgent);
 				var $pano_images = $('img.pano-photos');
 				if($pano_images.length){
 					$pano_images.each(function(idx, img){
@@ -48,6 +48,7 @@
 							div.style.height = '30px';
 
 							var image_src = $(div).data('img-src');
+							var height = md.phone() !== null ? '180px' : '450px';
 
 							if(!image_src){
 								return true;
@@ -69,7 +70,7 @@
 								// Resize the panorama
 								size: {
 									width: '100%',
-									height: '180px'
+									height: height
 								},
 
 								// HTML loader
@@ -80,6 +81,8 @@
 							});
 
 						});//eo each
+
+						$('.pano-container').keepRatio({ ratio: 16/9, calculate: 'height' });
 
 					}//eo PSV telling
 				}
