@@ -81,6 +81,7 @@ let component = {
 
 			$('#editor').summernote('insertImage', image_src, function($image){
 				$image.addClass('pano-photos hide-pano-photo');
+				$image.css('width', $image.width() / 3);
 			});
 		},
 		handlePanoUploadError(){

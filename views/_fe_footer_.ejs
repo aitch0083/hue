@@ -11,15 +11,13 @@
 		<%- include share_btns %>
 
 		<script>
-      		$(document).foundation().ready(function(){
+      		$(document).ready(function(){
       			$('.ratio-item-img').keepRatio({ ratio: 16/9, calculate: 'height' });
 
       			$('.jscroll').jscroll({
 				    loadingHtml: '<img src="/images/page_loader.gif" width="100" height="100" />',
 				    nextSelector: 'a.jscroll-next:last',
 				    padding: 0,
-				    // debug: true,
-				    // autoTriggerUntil: 10,
 				    refresh: true,
 				    callback: function(){
 				    	$('.ratio-item-img').keepRatio({ ratio: 16/9, calculate: 'height' });
@@ -33,23 +31,60 @@
 					$('#top-menu-placeholder').html(result);
 				});
 
-				var $pano_photos = $('img.pano-photos');
-
-				if($pano_photos.length){
-
-					$pano_photos.wrap('<div class="pano-container"></div>').removeClass('hide-pano-photo');
-
-					$('.pano-container').panorama_viewer({
-					    repeat: true,              
-					    direction: "horizontal",  
-					    animationTime: 700,       
-					    easing: "ease-out",       
-					    overlay: true
+				var $pano_images = $('img.pano-photos');
+				if($pano_images.length){
+					$pano_images.each(function(idx, img){
+						var $img = $(img);
+						$img.after('<div class="pano-container" data-img-src="'+$img.attr('src')+'" />');
 					});
 
+					var $pano_container = $('div.pano-container');
+
+					if($pano_container.length){ //has PSV feature
+						
+						$('.pano-container').each(function(jdx, div){
+
+							// Panorama display
+							div.style.height = '30px';
+
+							var image_src = $(div).data('img-src');
+
+							if(!image_src){
+								return true;
+							}
+
+							PSV = new PhotoSphereViewer({
+								// Path to the panorama
+								panorama: image_src,
+
+								// Container
+								container: div,
+
+								// Deactivate the animation
+								time_anim: false,
+
+								// Display the navigation bar
+								navbar: true,
+
+								// Resize the panorama
+								size: {
+									width: '100%',
+									height: '500px'
+								},
+
+								// HTML loader
+								loading_html: '↻ 讀取全景圖中...',
+
+								// Disable smooth moves to test faster
+								smooth_user_moves: false
+							});
+
+						});//eo each
+
+					}//eo PSV telling
 				}
 
-      		});
+      		}).foundation();
 
       		$(window).resize(function(){
 			    $('#ArticleContentContainer').find('img').responsImg();
