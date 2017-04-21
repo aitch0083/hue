@@ -63,7 +63,7 @@ var Article = sequelize.define('articles', {
                     var video_url = ele.getDataValue('video_url');
                     var link      = _.template('<%=badge%> <%=youtuber%> <a href="<%=href%>" target="_blank"><%=title%></a>')({
                                         title: title,
-                                        href: '/articles/' + id + '.html',
+                                        href: configs.site_public_url + '/articles/' + id + '.html',
                                         badge: thumbnail ? '<i class="material-icons green" title="with thumbnail">photo</i>' : '<i class="material-icons red" title="no thumbnail">error</i>',
                                         youtuber: video_url ? ' <i class="material-icons" title="it\'s a youtube article">video_library</i>' : ''
                                     });
