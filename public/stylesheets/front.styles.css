@@ -7,7 +7,7 @@
 /** EO ParanomaView Styles */
 
 html, body{
-	font-family: 'Noto Sans TC', 'Roboto', Helvetica, Arial, sans-serif;
+	font-family: 'Noto Sans TC', Helvetica Neue,Helvetica,Roboto,Arial,sans-serif !important;
 	background-color: #CECECE;
 }
 
