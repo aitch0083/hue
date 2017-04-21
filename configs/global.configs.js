@@ -10,6 +10,8 @@ module.exports = {
 	site_public_url: 'https://www.lian-car.com',
 	fb_id:      '',
 
+	image_prefix: '/',
+
 	extra_footer: 'page_footer',
 
 	home_latest_artcile_no: 15,

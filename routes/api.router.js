@@ -2,6 +2,9 @@
 var express = require('express');
 var bcrypt  = require('bcrypt-nodejs');
 var _       = require('lodash');
+var fs      = require('fs');
+var path    = require('path');
+var glob    = require('glob');
 	
 //shared auth fucntion
 var _do_validate = function(req, res){
@@ -174,6 +177,37 @@ router.get('/get_grid_params', function(req, res, next) {
 		result.message     = 'Fields for ' + function_name;
 		result.fields      = models[model_name].show_fields;
 		result.grid_params = models[model_name].grid_params;
+	}
+
+	res.json(result);
+});
+
+router.get('/cleancaches', function(req, res, next){
+	var result = _do_validate(req, res);
+	
+	if(result.success){
+		var caches = [
+			path.join(__dirname, '../public/articles/*.xml'),//RSS
+			path.join(__dirname, '../public/articles/read/*.html'),//articles
+			path.join(__dirname, '../public/categories/*.html'),//categories
+			path.join(__dirname, '../public/index.html'),//categories
+		];
+
+		var nonono = 0;
+
+		_.each(caches, function(cache, idx){
+			var files = glob.sync(cache);
+
+			if(files.length){
+				_.each(files, function(oh_no, jdx){
+					fs.unlinkSync(oh_no);
+					nonono++;
+				});
+			}
+		});
+
+		result.success = true;
+		result.message = 'All clear. Cache number: ' + nonono;
 	}
 
 	res.json(result);

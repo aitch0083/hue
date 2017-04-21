@@ -1,6 +1,7 @@
 'use strict';
 
 var express    = require('express');
+var configs    = require('../configs/global.configs');
 var Article    = require('../models/Article');
 var Image      = require('../models/Image');
 var _          = require('lodash');
@@ -33,6 +34,7 @@ module.exports = function(validator){
 			var model_name = '';
 			var record_id  = '';
 			var type       = '';
+			var watermark  = true;
 			var user_id    = result.user_id;
 			var ip = req.headers['x-forwarded-for'] || 
 				     req.connection.remoteAddress || 
@@ -43,6 +45,7 @@ module.exports = function(validator){
 				model_name = fields.model_name;
 				record_id  = fields.record_id;
 				type       = fields.type || 'usual';
+				watermark  = fields.watermark !== undefined && fields.watermark === 'no' ? false : true;
 			});
 
 			form.on('end', function(fields, files) {
@@ -55,13 +58,15 @@ module.exports = function(validator){
 
 				_.each(this.openedFiles, function(file, idx){
 
-			        var now      = moment();
+			        var now          = moment();
 					var ext          = path.extname(file.name);
 					var img_name     = 'IMG' + now.format('YYYYMMDDHHmmss') + 'I' + _.padStart(_.random(10000, 99999), 5, '0') + 'U' + result.user_id + ext;
-					var public_path  = '/images/uploaded/' + img_name;
+					var public_path  = configs.image_prefix + 'images/uploaded/' + img_name;
 					var af_real_path = form.uploadDir + "/" + img_name;
 					var size         = fss(fs.statSync(file.path).size);
 					var dim          = iss(file.path);
+
+					returned_files.push(public_path);
 
 					fs.rename(file.path, af_real_path, function(error){
 						
@@ -69,11 +74,22 @@ module.exports = function(validator){
 							console.info('Error happened while processing the uploaded image: ', file.path, ', Error:', error);
 						}
 
-						gm(af_real_path).draw(['gravity SouthEast image Over 0,0 87,41 "' + wm_path + '"']).write(af_real_path, function(e){
-							if(e){
-								console.error(af_real_path, ' cannot be merged with watermark:', e);
-							}
+						if(watermark){
+							gm(af_real_path).draw(['gravity SouthEast image Over 0,0 87,41 "' + wm_path + '"']).write(af_real_path, function(e){
+								if(e){
+									console.error(af_real_path, ' cannot be merged with watermark:', e);
+								}
 
+								file_num--;
+
+								if(file_num <= 0){
+									res.json({
+								    	success: true,
+								    	urls: returned_files
+								    });
+								}
+							});
+						} else {//skip watermark
 							file_num--;
 
 							if(file_num <= 0){
@@ -82,9 +98,7 @@ module.exports = function(validator){
 							    	urls: returned_files
 							    });
 							}
-						});
-
-						returned_files.push(public_path);
+						}
 						
 					});
 

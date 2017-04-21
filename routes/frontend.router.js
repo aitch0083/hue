@@ -413,6 +413,8 @@ router.get('/articles/rssFeed/:cate_id/:page_size', function(req, res, next){
 			var rss = feed.rss2();
 
 			fs.writeFile(cache_file_name, rss);
+
+			res.set('Content-Type', 'text/xml');
 			res.send(rss);
 		});
 

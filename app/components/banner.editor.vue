@@ -221,6 +221,7 @@ let component = {
 
 					this.upload_params['model_name'] = 'Banner';
 					this.upload_params['record_id']  = result.data.record.id;
+					this.upload_params['watermark']  = 'no';
 					
 					// app.bus.$emit('set.form.user_id', app.form.user_id);
 

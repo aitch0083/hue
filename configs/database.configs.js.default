@@ -1,0 +1,9 @@
+var DB = {
+	name: '',
+	host: '',
+	user: '',
+	pass: '',
+	port: 3306
+};
+
+module.exports = DB;

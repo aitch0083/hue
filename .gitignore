@@ -2,7 +2,10 @@
 global.configs.js
 page_footer.ejs
 node_modules/*
+public/index.html
 public/images/uploaded/*
 public/articles/read/*
 public/categories/*
 sftp-config.json
+*.xml
+.*

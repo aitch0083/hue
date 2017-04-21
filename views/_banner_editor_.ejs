@@ -80,6 +80,10 @@
 				<div slot="tip" class="el-upload__tip">jpg/png/gif files with a size less than 5MB.</div>
 			</el-upload>
 	  	</el-form-item>
+
+	  	<el-form-item label="Thumbnail" v-if="form.img1">
+			<img v-bind:src="form.img1" class="image" v-bind:style="{ maxWidth: '120px' }" >
+	  	</el-form-item>
 	  	
 	</el-form>
 	

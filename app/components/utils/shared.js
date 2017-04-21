@@ -31,6 +31,31 @@ let _common_logout = function() {
 	});
 };
 
+let _common_cleancache = function() {
+
+	let token = this.$getState().$get('token');
+	let app   = this;
+
+	axios.get('/api/cleancaches', {
+		params: {
+			token
+		},
+		withCredentials: true
+	})
+	.then((result) => {
+		if(result.status === 200 && result.data.success){
+			app.$alert(result.data.message, 'Success');	
+		} else {
+			app.$alert(result.data.message, 'Error');	
+		}
+	})
+	.catch((error) => {
+		_.delay(() => {
+			app.$alert('System is unable to clean the cache', 'Error');
+		}, 1000);
+	});
+};
+
 let $shared = {
 
 	index(obj,is, value) { //access the object via dot notation, like obj["a.b.c"] = "hi", like: obj["a"]["b"]["c"] = "hi"
@@ -115,6 +140,8 @@ let $shared = {
 
 			if(method_name === 'onLogoutClick'){
 				_common_logout.apply(this);
+			} else if(method_name === 'onCleancacheClick'){
+				_common_cleancache.apply(this);
 			} else if(_.isFunction(this[method_name])){
 				this[method_name].apply();
 			} else {
@@ -124,7 +151,11 @@ let $shared = {
 
 		onLogoutClick() {
 			_common_logout.apply(this);
-		}//eo onLogoutClick
+		},//eo onLogoutClick
+
+		onCleancacheClick(){
+			_common_cleancache.apply(this);
+		}
 
 	},//eo methods
 
