@@ -98,10 +98,21 @@
 
       		});
 
+			var resize_all = false;
       		$(window).resize(function(){
-      			$('#ArticleContentContainer').find('img').responsImg();
-			    $('.cate-card').equalHeights();
-			    $('.footer-same-cate-articles-smaller').equalHeights();
+      			if(!resize_all){
+      				resize_all = true;
+      				var t = setTimeout(function(){
+
+      					$('#ArticleContentContainer').find('img').responsImg();
+			    		$('.cate-card').equalHeights();
+			    		$('.footer-same-cate-articles-smaller').equalHeights();
+			    		clearTimeout(t);
+
+			    		resize_all = false;
+
+      				}, 1000);
+      			}
 			});
 
     	</script>
