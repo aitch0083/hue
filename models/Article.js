@@ -1,4 +1,5 @@
 var DBConfig  = require('../configs/database.configs');
+var configs   = require('../configs/global.configs');
 var SZ        = require('sequelize');
 var sequelize = new SZ(DBConfig.name, DBConfig.user, DBConfig.pass, DBConfig);
 var _         = require('lodash');
