@@ -228,20 +228,37 @@ var category_read_handler = function(req, res, next){
  */
 router.get('/', function(req, res, next){
 
-	res.locals.title   = configs.site_title;
-	res.locals.configs = configs;
-	
-	res.locals.meta = {
-		title:       configs.site_title,
-		url:         configs.site_url,
-		site_name:   configs.site_title,
-		description: configs.site_description,
-		fb_id:       configs.fb_id
-	};
+	var cache_file_name = path.join(__dirname, '../public', 'index.html');
 
-	res.locals._ = _;
+	if(fs.existsSync(cache_file_name)){
 
-	res.render('home', {page: 0});
+		res.sendFile(cache_file_name);
+
+	} else {
+
+		res.locals.title   = configs.site_title;
+		res.locals.configs = configs;
+		
+		res.locals.meta = {
+			title:       configs.site_title,
+			url:         configs.site_url,
+			site_name:   configs.site_title,
+			description: configs.site_description,
+			fb_id:       configs.fb_id
+		};
+
+		res.locals._ = _;
+		res.locals.page = 0;
+
+		res.render('home', function(error, html){
+			if(error){	
+				next(error);
+			}
+
+			fs.writeFile(cache_file_name, html);
+			res.send(html);
+		});
+	}
 });
 
 router.get('/menu', function(req, res, next){
