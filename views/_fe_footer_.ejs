@@ -14,6 +14,22 @@
 		<script>
 
 			var $doc = $(document);
+			var resize_all = false;
+			var resize_func = function(){
+				if(!resize_all){
+      				resize_all = true;
+      				var t = setTimeout(function(){
+
+      					$('#ArticleContentContainer').find('img').responsImg();
+			    		$('.cate-card').equalHeights();
+			    		$('.footer-same-cate-articles-smaller').equalHeights();
+			    		clearTimeout(t);
+
+			    		resize_all = false;
+
+      				}, 2000);
+      			}
+			};
 			
 			$doc.foundation();
 
@@ -26,8 +42,7 @@
 				    padding: 0,
 				    refresh: true,
 				    callback: function(){
-				    	$('.ratio-item-img').keepRatio({ ratio: 16/9, calculate: 'height' });
-				    	$('.cate-card').equalHeights();
+				    	resize_func();
 				    }
 				});
 
@@ -98,21 +113,8 @@
 
       		});
 
-			var resize_all = false;
       		$(window).resize(function(){
-      			if(!resize_all){
-      				resize_all = true;
-      				var t = setTimeout(function(){
-
-      					$('#ArticleContentContainer').find('img').responsImg();
-			    		$('.cate-card').equalHeights();
-			    		$('.footer-same-cate-articles-smaller').equalHeights();
-			    		clearTimeout(t);
-
-			    		resize_all = false;
-
-      				}, 1000);
-      			}
+      			resize_func();
 			});
 
     	</script>
