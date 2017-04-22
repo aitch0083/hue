@@ -9,6 +9,7 @@ module.exports = {
 	site_description: '戀上車，從CARLINK鏈車網開始',
 	site_public_url: 'https://www.lian-car.com',
 	fb_id:      '',
+	logo: '/images/watermark.png',
 
 	image_prefix: '/',
 

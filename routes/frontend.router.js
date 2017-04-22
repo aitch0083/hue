@@ -124,7 +124,7 @@ var article_read_hanlder = function(req, res, next) {
 				res.locals.title              = title || configs.site_title;
 				res.locals.configs            = configs;
 				res.locals.meta               = {
-					title:       article.title,
+					title:       article.title || configs.site_title,
 					url:         configs.site_url + '/articles/read' + article.id,
 					image:       article.thumbnail,
 					site_name:   configs.site_title,
@@ -251,7 +251,8 @@ router.get('/', function(req, res, next){
 			url:         configs.site_url,
 			site_name:   configs.site_title,
 			description: configs.site_description,
-			fb_id:       configs.fb_id
+			fb_id:       configs.fb_id,
+			image:       configs.logo
 		};
 
 		res.locals._      = _;
