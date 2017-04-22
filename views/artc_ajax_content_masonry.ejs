@@ -20,7 +20,9 @@
 					<a class="side-bar-news-cate" href="/categories/index/<%= hotlines.Category.get('id') %>">
 						<%= hotlines.Category.get('title'); %>
 					</a>
-					<%= hotlines.get('title'); %>
+					<a class="a-title" href="/articles/read/<%= hotlines.id; %>.html">
+						<%= hotlines.get('title'); %>
+					</a>
 				</div>
 			</a>
 		</div>
@@ -44,7 +46,9 @@
 						<a class="side-bar-news-cate" href="/categories/index/<%= side_kicks[idx].Category.get('id') %>">
 							<%= side_kicks[idx].Category.get('title'); %>
 						</a>
-						<%- side_kicks[idx].plain_title; %>
+						<a class="a-title" href="/articles/read/<%= side_kicks[idx].id; %>.html">
+							<%- side_kicks[idx].plain_title; %>
+						</a>
 					</div>
 				</a>
 			</div>
@@ -80,7 +84,9 @@
 					<a class="side-bar-news-cate" href="/categories/index/<%= latest_articles[idx].Category.get('id') %>">
 						<%= latest_articles[idx].Category.get('title'); %>
 					</a>
-					<%- latest_articles[idx].plain_title; %>
+					<a class="a-title" href="/articles/read/<%= latest_articles[idx].id; %>.html">
+						<%- latest_articles[idx].plain_title; %>
+					</a>
 				</div>
 			</a>
 		</div>
@@ -97,7 +103,7 @@
 				<% } else { %>
 					<a class="float-left" href="<%=banner.plain_url%>" target="<%=banner.target%>" style="min-width: 100%;">
 						<img class="thumbnail" src="<%- banner.img1 %>" style="min-width: 100%;"/>
-				</a>
+					</a>
 				<% } %>
 			</div>
 		<% } %>

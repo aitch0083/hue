@@ -1,4 +1,7 @@
 /**Home page styles**/
+a.a-title {
+	color: black !important;
+}
 @media print, screen and (min-width: 40em){
 	body{
 		line-height: 1.2 !important;
