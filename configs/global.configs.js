@@ -14,7 +14,7 @@ module.exports = {
 
 	extra_footer: 'page_footer',
 
-	home_latest_artcile_no: 15,
+	home_latest_artcile_no: 35,
 	latest_artcile_no: 10,
 	same_cate_article_no: 12,
 	category_artcile_no: 20,

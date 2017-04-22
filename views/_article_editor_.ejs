@@ -40,6 +40,10 @@
 		    	<el-checkbox label="approved" v-model="form.approved"></el-checkbox>
 		    </el-col>
 
+		    <el-col v-bind:span="2" align="right">
+		    	<el-checkbox label="at top" v-model="form.at_top"></el-checkbox>
+		    </el-col>
+
 		    <el-col v-bind:span="5" align="right">
 		    	
 		    	<el-button type="primary" v-on:click="submit" size="mini">

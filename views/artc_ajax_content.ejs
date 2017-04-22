@@ -6,9 +6,11 @@
 				<% if(!latest_articles[idx].video_url) { %>
 					<img class="thumbnail ratio-item-img" src="<%- latest_articles[idx].thumbnail %>" />
 				<% } else { %>
-					<iframe id="player" type="text/html" style="width: 100%;" class="ratio-item-img"
-                			src="<%=latest_articles[idx].video_url;%>?enablejsapi=1&autoplay=0"
-                			frameborder="0"></iframe>
+					<div class="responsive-embed widescreen">
+						<iframe id="player" type="text/html" width="560" height="315" class="ratio-item-img"
+	                			src="<%=latest_articles[idx].video_url;%>?enablejsapi=1&autoplay=0"
+	                			frameborder="0"></iframe>
+                	</div>
                 <% } %>
 
 				<div class="card-section <%= latest_articles[idx].video_url ? 'video-card-section' : ''; %>">
@@ -26,12 +28,14 @@
 		<div class="cate-card small-12 medium-6 large-4 float-left">
 			<div class="card float-left" style="min-width: 100%;">
 				<% if(banner.is_youtube) { %>
-					<iframe id="player" type="text/html" style="width: 100%;" class="ratio-item-img"
-                			src="<%=banner.plain_url%>?enablejsapi=1&autoplay=0"
-                			frameborder="0"></iframe>
+					<div class="responsive-embed widescreen">
+						<iframe id="player" type="text/html" width="560" height="315" class="ratio-item-img"
+	                			src="<%=banner.plain_url%>?enablejsapi=1&autoplay=0"
+	                			frameborder="0"></iframe>
+                	</div>
 				<% } else { %>
-					<a class="float-left" href="<%=banner.url%>" target="<%=banner.target%>" style="min-width: 100%;">
-						<img src="<%- banner.img1 %>"/>
+					<a class="float-left" href="<%=banner.plain_url%>" target="<%=banner.target%>" style="min-width: 100%;">
+						<img src="<%- banner.img1 %>" style="min-width: 100%;"/>
 				</a>
 				<% } %>
 			</div>

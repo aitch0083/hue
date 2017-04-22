@@ -81,7 +81,10 @@ var article_read_hanlder = function(req, res, next) {
 			Article.findAll({
 				where: {valid: 1, approved: 1, '$not': {id: id}},
 				limit: configs.latest_artcile_no,
-				order: 'id desc'
+				order: 'id desc',
+				include: [
+					{ model:Category, as:'Category', required: true, where: category_conditions, attributes:['title', 'id'] }
+				]
 			}),
 
 			Banner.findAll({
@@ -107,7 +110,10 @@ var article_read_hanlder = function(req, res, next) {
 					category_id: category_id
 				},
 				limit: configs.same_cate_article_no,
-				order: 'RAND()'
+				order: 'RAND()',
+				include: [
+					{ model:Category, as:'Category', required: true, where: category_conditions, attributes:['title', 'id'] }
+				]
 			}).then(function(same_cate_artciles){
 
 				res.locals.banners            = banners;
@@ -247,10 +253,11 @@ router.get('/', function(req, res, next){
 			fb_id:       configs.fb_id
 		};
 
-		res.locals._ = _;
-		res.locals.page = 0;
+		res.locals._      = _;
+		res.locals.page   = 0;
+		res.locals.layout = 'masonry';
 
-		res.render('home', function(error, html){
+		res.render('masonry', function(error, html){
 			if(error){	
 				next(error);
 			}
@@ -298,17 +305,20 @@ router.get('/articles/index/:page', function(req, res, next){
 	var category_conditions = { valid: 1 };
 	var user_conditions     = { valid: 1 };
 	var page                = parseInt(req.params.page);
+	var layout              = req.query.layout || '';
+
+	layout = layout === '' ? '' : '_' + layout;
 
 	if(isNaN(page) || page <= 0){
 		page = 0;
 	} 
 
-	var offset = page * configs.category_artcile_no;
+	var offset = page * configs.home_latest_artcile_no;
 
 	Promise.join(
 
 		Article.findAndCountAll({
-			where: {valid: 1, approved: 1},
+			where: {valid: 1, approved: 1, at_top: 0},
 			limit: configs.home_latest_artcile_no,
 			offset: offset,
 			order: 'id desc',
@@ -323,15 +333,27 @@ router.get('/articles/index/:page', function(req, res, next){
 			limit:  configs.latest_article_no,
 			//offset: offset,
 			order:  'id desc'
+		}),
+
+		Article.findOne({
+			where: {valid: 1, approved: 1, at_top: 1},
+			order: 'id desc',
+			include: [
+				{ model:Category, as:'Category', required: true, where: category_conditions, attributes:['title', 'id'] },
+				{ model:User, as:'User', required: true, where: user_conditions, attributes:['username', 'id', 'name'] }
+			]
 		})
 
-	).spread(function(latest_articles, banners){
+	).spread(function(latest_articles, banners, hotlines){
 
 		res.locals.title             = configs.site_title;
 		res.locals.configs           = configs;
 		res.locals.latest_articles   = latest_articles.rows;
 		res.locals.latest_article_no = latest_articles.count;
 		res.locals.banners           = banners;
+		res.locals.hotlines          = hotlines;
+
+		//console.info('hotlines:', hotlines.length);
 
 		res.locals.meta = {
 			title:       configs.site_title,
@@ -344,8 +366,8 @@ router.get('/articles/index/:page', function(req, res, next){
 		res.locals._ = _;
 
 		res.locals.max_page = Math.ceil(latest_articles.count / configs.home_latest_artcile_no);
-		
-		res.render('artc_ajax_content', {page: page + 1});
+
+		res.render('artc_ajax_content' + layout, {page: page + 1});
 
 	});
 
@@ -433,6 +455,35 @@ router.get('/categories', function(req, res, next) {
 	error.status = 404;
 
 	next(error);
+});
+
+router.get('/layout/:name', function(req, res, next){
+
+	var supported_layouts = ['masonry'];
+	var name              = req.params.name;
+
+	if(_.indexOf(supported_layouts, name) === -1){
+		var error = new Error('Invalid layout name: ' + name);
+		error.status = 404;
+		next(error);
+	}
+
+	res.locals.title   = configs.site_title;
+	res.locals.configs = configs;
+	
+	res.locals.meta = {
+		title:       configs.site_title,
+		url:         configs.site_url,
+		site_name:   configs.site_title,
+		description: configs.site_description,
+		fb_id:       configs.fb_id
+	};
+
+	res.locals._      = _;
+	res.locals.page   = 0;
+	res.locals.layout = name;
+
+	res.render(name);
 });
 
 router.get('/articles/:id', article_read_hanlder);

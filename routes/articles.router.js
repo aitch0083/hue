@@ -30,6 +30,7 @@ module.exports = function(validator){
 				valid: 1,
 				start_time: now.format('YYYY-MM-DD HH:mm:ss'),
 				approved: 0,
+				at_top: 0,
 				user_id: result.user_id
 			})
 			.then(function(article){
@@ -143,7 +144,7 @@ module.exports = function(validator){
 				order:   order,
 				offset:  pageIndex,
 				limit:   pageSize,
-				attributes:['title', 'id', 'abstract', 'created', 'modified', 'thumbnail', 'video_url'],
+				attributes:['title', 'id', 'abstract', 'created', 'modified', 'thumbnail', 'video_url', 'at_top'],
 				include: [
 					{ model:Category, as:'Category', required: true, where: category_conditions, attributes:['title', 'id'] },
 					{ model:User, as:'User', required: true, where: user_conditions, attributes:['username', 'id'] }

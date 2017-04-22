@@ -1,5 +1,5 @@
 		
-		<% if(configs.extra_footer) { %>
+		<% if(configs.extra_footer !== undefined) { %>
 			<% var extra_path = configs.extra_footer; %>
 			<%- include(extra_path) %>
 		<% } %>
@@ -13,8 +13,9 @@
 
 		<script>
 
-			var $doc = $(document);
-			var resize_all = false;
+			var $doc        = $(document);
+			var resize_all  = false;
+			var layout      = '<%= layout || '' ; %>';
 			var resize_func = function(){
 				if(!resize_all){
       				resize_all = true;
@@ -33,26 +34,45 @@
 			
 			$doc.foundation();
 
+			var $mgrid          = null;
+			var $page_indicator = null;
+
+			var loadnext = _.throttle(function(){
+				$page_indicator = $('.page-indicator:last');
+				
+				if($page_indicator.length){
+					var src = $page_indicator.data('src');
+
+					console.info($page_indicator);
+
+					if(src){
+						$.get(src, {layout:layout}, function(result){
+							var $result = $(result);
+							if(src.indexOf('/index/0') > 0){
+								$mgrid.append($result);
+							} else {
+								$('#playpoint').append($result);
+							}
+						});
+					}
+				}//eo $page_indicator if
+
+			}, 800);
+
       		$doc.ready(function(){
+
+      			var md = new MobileDetect(window.navigator.userAgent);
+
       			$('.ratio-item-img').keepRatio({ ratio: 16/9, calculate: 'height' });
+      			$('#ArticleContentContainer').find('img').responsImg();
 
-      			$('.jscroll').jscroll({
-				    loadingHtml: '<img src="/images/page_loader.gif" width="100" height="100" />',
-				    nextSelector: 'a.jscroll-next:last',
-				    padding: 0,
-				    // refresh: true,
-				    autoTriggerUntil: 1,
-				    callback: function(){
-				    	resize_func();
-				    }
-				});
-
-				$('#ArticleContentContainer').find('img').responsImg();
-
-				$.get('/menu').then(function(result){
+      			$.get('/menu').then(function(result){
 					$('#top-menu-placeholder').html(result);
 				});
-				var md = new MobileDetect(window.navigator.userAgent);
+
+                $mgrid = $('#masonry-grid');
+                loadnext();
+				
 				var $pano_images = $('img.pano-photos');
 				if($pano_images.length){
 					$pano_images.each(function(idx, img){
@@ -109,13 +129,18 @@
 					}//eo PSV telling
 				}
 
-				$('.cate-card').equalHeights();
+				// $('.cate-card').equalHeights();
 			    $('.footer-same-cate-articles-smaller').equalHeights();
 
       		});
 
+
       		$(window).resize(function(){
       			resize_func();
+			}).scroll(function() {
+			   if($(window).scrollTop() + $(window).height() > $(document).height() - 320) {
+			       loadnext();
+			   }
 			});
 
     	</script>

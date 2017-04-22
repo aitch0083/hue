@@ -62,11 +62,13 @@ var Article = sequelize.define('articles', {
                     var title     = ele.getDataValue('title');
                     var thumbnail = ele.getDataValue('thumbnail');
                     var video_url = ele.getDataValue('video_url');
-                    var link      = _.template('<%=badge%> <%=youtuber%> <a href="<%=href%>" target="_blank"><%=title%></a>')({
+                    var at_top    = ele.getDataValue('at_top');
+                    var link      = _.template('<%=badge%> <%=youtuber%> <%=at_top%> <a href="<%=href%>" target="_blank"><%=title%></a>')({
                                         title: title,
                                         href: configs.site_public_url + '/articles/' + id + '.html',
                                         badge: thumbnail ? '<i class="material-icons green" title="with thumbnail">photo</i>' : '<i class="material-icons red" title="no thumbnail">error</i>',
-                                        youtuber: video_url ? ' <i class="material-icons" title="it\'s a youtube article">video_library</i>' : ''
+                                        youtuber: video_url ? ' <i class="material-icons" title="it\'s a youtube article">video_library</i>' : '',
+                                        at_top: at_top ? '<i class="material-icons orange" title="it\'s the TOP article">grade</i>' : ''
                                     });
 
                     ele.setDataValue('plain_title', title);

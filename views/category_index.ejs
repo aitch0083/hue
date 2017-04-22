@@ -63,12 +63,14 @@
 					<div class="cate-card">
 						<div class="card">
 							<% if(banner.is_youtube) { %>
-								<iframe id="player" type="text/html" style="width: 100%;" class="ratio-item-img"
-			                			src="<%=banner.plain_url%>?enablejsapi=1&autoplay=0"
-			                			frameborder="0"></iframe>
+								<div class="responsive-embed widescreen">
+									<iframe id="player" type="text/html" width="560" height="315" class="ratio-item-img"
+				                			src="<%=banner.plain_url%>?enablejsapi=1&autoplay=0"
+				                			frameborder="0"></iframe>
+			                	</div>
 							<% } else { %>
-								<a class="float-left" href="<%=banner.url%>" target="<%=banner.target%>" style="min-width: 100%;">
-									<img src="<%- banner.img1 %>"/>
+								<a class="float-left" href="<%=banner.plain_url%>" target="<%=banner.target%>" style="min-width: 100%;">
+									<img src="<%- banner.img1 %>" style="min-width: 100%;"/>
 							</a>
 							<% } %>
 						</div>

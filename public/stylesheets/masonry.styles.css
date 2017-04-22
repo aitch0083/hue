@@ -1,0 +1,42 @@
+/**Home page styles**/
+@media print, screen and (min-width: 40em){
+	body{
+		line-height: 1.2 !important;
+		font-size: 85% !important;
+	}
+
+	.column-block {
+	    margin-bottom: 0.875rem !important;
+	}
+
+	.column, .columns {
+	    padding-right: 0.075rem !important;
+	    padding-left: 0.075rem !important;
+	}
+
+	.big-head {
+		width: 50% !important;
+	}
+
+	.big-head div {
+		font-size: 160%;
+	}
+
+	.big-head a {
+		font-size: 1.75rem;
+	}
+
+	.side-kicks {
+		width: 25% !important;
+	}
+
+	.thumbnail{
+		margin-bottom: 0 !important;
+	}
+}
+
+@media print, screen and (min-width: 64em){
+	.hide-for-large-only {
+		width: 0;height: 0;display: hidden;
+	}
+}

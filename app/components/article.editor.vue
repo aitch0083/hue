@@ -31,7 +31,8 @@ let clean_form = {
 	start_time:  '',
 	end_time:    '',
 	img1:        '',
-	url:         ''
+	url:         '',
+	at_top:      false
 }
 
 let component = {

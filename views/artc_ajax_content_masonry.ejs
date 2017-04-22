@@ -1,0 +1,109 @@
+<% var kicks = []; %>
+<% if(page - 1 <= 0 && hotlines !== null) { //first page, hotline %>
+
+	<% var side_kicks = _.slice(latest_articles, 0, 4); %>
+	<div class="small-up-1 medium-up-5 large-up-5">
+		<div class="column column-block big-head">
+			<a href="/articles/read/<%= hotlines.id; %>.html">
+				
+				<% if(!hotlines.video_url) { %>
+					<img class="thumbnail" src="<%- hotlines.thumbnail %>" />
+				<% } else { %>
+					<div class="responsive-embed widescreen">
+						<iframe id="player" type="text/html" width="560" height="315" class=""
+		            			src="<%=hotlines.video_url;%>?enablejsapi=1&autoplay=0"
+		            			frameborder="0"></iframe>
+	            	</div>
+	            <% } %>
+
+				<div class="<%=hotlines.video_url ? 'video-card-section' : ''; %>">
+					<a class="side-bar-news-cate" href="/categories/index/<%= hotlines.Category.get('id') %>">
+						<%= hotlines.Category.get('title'); %>
+					</a>
+					<%= hotlines.get('title'); %>
+				</div>
+			</a>
+		</div>
+
+		<% for(var idx = 0 ; idx < side_kicks.length ; idx++ ) { %>
+			<% kicks.push(side_kicks[idx].id) %>
+			<div class="column column-block side-kicks">
+				<a href="/articles/read/<%= side_kicks[idx].id; %>.html">
+					
+					<% if(!side_kicks[idx].video_url) { %>
+						<img class="thumbnail" src="<%- side_kicks[idx].thumbnail %>" />
+					<% } else { %>
+						<div class="responsive-embed widescreen">
+							<iframe id="player" type="text/html" width="560" height="315" class=""
+			            			src="<%=side_kicks[idx].video_url;%>?enablejsapi=1&autoplay=0"
+			            			frameborder="0"></iframe>
+		            	</div>
+		            <% } %>
+
+					<div class="<%= side_kicks[idx].video_url ? 'video-card-section' : ''; %>">
+						<a class="side-bar-news-cate" href="/categories/index/<%= side_kicks[idx].Category.get('id') %>">
+							<%= side_kicks[idx].Category.get('title'); %>
+						</a>
+						<%- side_kicks[idx].plain_title; %>
+					</div>
+				</a>
+			</div>
+		<% } //eo for %>		
+	<div>
+
+<% } //eo hotline %>
+
+<% if (page - 1 <= 0) { %>
+<div id="playpoint" class="small-up-1 medium-up-4 large-up-5">
+<% } %>
+
+	<% if( max_page > page ) { %>
+	<span class="page-indicator hidden" data-src="/articles/index/<%= page %>"></span>
+	<% } %>
+
+	<% for(var idx = 0 ; idx < latest_articles.length ; idx++ ) { %>
+		<% if(_.indexOf(kicks, latest_articles[idx].id) !== -1) continue; %>
+		<div class="column column-block">
+			<a href="/articles/read/<%= latest_articles[idx].id; %>.html">
+				
+				<% if(!latest_articles[idx].video_url) { %>
+					<img class="thumbnail" src="<%- latest_articles[idx].thumbnail %>" />
+				<% } else { %>
+					<div class="responsive-embed widescreen">
+						<iframe id="player" type="text/html" width="560" height="315" class=""
+		            			src="<%=latest_articles[idx].video_url;%>?enablejsapi=1&autoplay=0"
+		            			frameborder="0"></iframe>
+	            	</div>
+	            <% } %>
+
+				<div class="<%= latest_articles[idx].video_url ? 'video-card-section' : ''; %>">
+					<a class="side-bar-news-cate" href="/categories/index/<%= latest_articles[idx].Category.get('id') %>">
+						<%= latest_articles[idx].Category.get('title'); %>
+					</a>
+					<%- latest_articles[idx].plain_title; %>
+				</div>
+			</a>
+		</div>
+
+		<% if(_.isArray(banners) && banners.length) {  %>
+			<% var banner = banners.pop(); %>
+			<div class="column column-block">
+				<% if(banner.is_youtube) { %>
+					<div class="responsive-embed widescreen">
+						<iframe id="player" type="text/html" width="560" height="315" class=""
+		            			src="<%=banner.plain_url%>?enablejsapi=1&autoplay=0"
+		            			frameborder="0"></iframe>
+	            	</div>
+				<% } else { %>
+					<a class="float-left" href="<%=banner.plain_url%>" target="<%=banner.target%>" style="min-width: 100%;">
+						<img class="thumbnail" src="<%- banner.img1 %>" style="min-width: 100%;"/>
+				</a>
+				<% } %>
+			</div>
+		<% } %>
+
+	<% } %>
+
+<% if (page - 1 <= 0) { %>
+</div>
+<% } %>

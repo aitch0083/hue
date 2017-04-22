@@ -15,6 +15,7 @@ var device       = require('express-device');
 var app = express();
 
 app.locals.configs = configs;
+app.locals.layout  = '';
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
