@@ -19,6 +19,9 @@ module.exports = {
 	same_cate_article_no: 12,
 	category_artcile_no: 20,
 
+	old_server_ip: '139.162.21.105',
+	new_server_ip: '139.162.50.229',
+
 	session: {
 		secret: '$Hstsyw929B7347KKs002!',
 		name: 'hueSession2017',
