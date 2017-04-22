@@ -101,6 +101,7 @@ var article_read_hanlder = function(req, res, next) {
 			}
 
 			var category_id = article.Category.get('id');
+			var title = article.get('title');
 
 			//find the artciles under the same category
 			Article.findAll({ 
@@ -120,7 +121,7 @@ var article_read_hanlder = function(req, res, next) {
 				res.locals.same_cate_artciles = same_cate_artciles;
 				res.locals.latest_articles    = latest_articles;
 				res.locals.article            = article;
-				res.locals.title              = configs.site_title;
+				res.locals.title              = title || configs.site_title;
 				res.locals.configs            = configs;
 				res.locals.meta               = {
 					title:       article.title,
