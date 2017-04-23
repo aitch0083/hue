@@ -32,6 +32,8 @@ let clean_form = {
 	thumbnail:   '',
 	video_url:   '',
 	img1:        '',
+	url:         '',
+	is_youtube:  false
 }
 
 let component = {
@@ -108,7 +110,7 @@ let component = {
 				this.$message({type: 'error', message:'Please fill in description'});
 			} else if(!this.form.url) {
 				this.$message({type: 'error', message:'Please fill in URL'});
-			} else if(!this.form.img1) {
+			} else if(!this.form.img1 && !this.form.is_youtube) {
 				this.$message({type: 'error', message:'Please upload one image'});
 			}else {
 

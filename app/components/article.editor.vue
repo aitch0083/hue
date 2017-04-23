@@ -32,7 +32,8 @@ let clean_form = {
 	end_time:    '',
 	img1:        '',
 	url:         '',
-	at_top:      false
+	at_top:      false,
+	watermark:   true
 }
 
 let component = {
@@ -206,6 +207,7 @@ let component = {
 		    	app.upload_pano_params['record_id']  = app.form.id;
 		    	app.upload_pano_params['model_name'] = 'Article';
 		    	app.upload_pano_params['type']       = 'panorama';
+		    	app.upload_pano_params['watermark']  = app.form.watermark ? 'yes' : 'no';
 		    }
 		  });
 
@@ -231,7 +233,8 @@ let component = {
 			callbacks: {
 				onImageUpload (files) {
 					app.bus.$emit('open-loading-dialog', true);
-					$shared.uploadImage.apply(this, [files, $(this), app.form.id, model_name, ()=>{app.bus.$emit('open-loading-dialog', false);}]);
+
+					$shared.uploadImage.apply(this, [files, $(this), app.form.id, model_name, ()=>{app.bus.$emit('open-loading-dialog', false);}, app.form.watermark ]);
 				}//eo onImageUpload
 			}
 		});

@@ -33,8 +33,8 @@ module.exports = function(validator){
 				description: '',
 				valid:       1,
 				online:      0,
-				start_time:  now.format('YYYY-MM-DD HH:mm:ss'),
-				end_time:    now.format('YYYY-MM-DD HH:mm:ss'),
+				start_time:  '',
+				end_time:    '',
 				creator_id:  result.user_id,
 				img1:        '',
 				url:         ''
@@ -165,7 +165,7 @@ module.exports = function(validator){
 				order:   order,
 				offset:  (pageIndex * pageSize),
 				limit:   pageSize,
-				attributes:['id', 'description', 'img1', 'url', 'type', 'position', 'start_time', 'end_time', 'created','modified'],
+				attributes:['id', 'description', 'img1', 'url', 'type', 'position', 'start_time', 'end_time', 'created','modified', 'is_youtube'],
 				include: [
 					{ model:User, as:'User', required: true, where: user_conditions, attributes:['username', 'id'] }
 				]

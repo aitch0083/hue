@@ -288,7 +288,7 @@ let $shared = {
 		});
 	},//eo get_selections
 
-	uploadImage(files, $editor, record_id, model_name, cb) {
+	uploadImage(files, $editor, record_id, model_name, cb, with_watermark) {
 
 		let formData = new FormData();
 		
@@ -298,6 +298,9 @@ let $shared = {
 
 		formData.append('record_id', record_id);
 		formData.append('model_name', model_name);
+		formData.append('watermark', with_watermark ? 'yes' : 'no')
+
+		// console.info('with_watermark:',with_watermark);return;
 
 	    axios.post('/api/images', formData)
 	    .then((result) => {

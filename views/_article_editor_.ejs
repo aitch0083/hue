@@ -36,15 +36,19 @@
 		    	<el-input placeholder="Keywords, (seperated with comma: ',')" v-model="form.keywords"></el-input>
 			</el-col>					    
 
-			<el-col v-bind:span="2" align="right">
-		    	<el-checkbox label="approved" v-model="form.approved"></el-checkbox>
+			<el-col v-bind:span="1" align="right" v-bind:style="{width:'5.16667%'}">
+		    	<el-checkbox label="朕准" v-model="form.approved"></el-checkbox>
 		    </el-col>
 
-		    <el-col v-bind:span="2" align="right">
-		    	<el-checkbox label="at top" v-model="form.at_top"></el-checkbox>
+		    <el-col v-bind:span="1" align="right" v-bind:style="{width:'5.16667%'}">
+		    	<el-checkbox label="頂天" v-model="form.at_top"></el-checkbox>
 		    </el-col>
 
-		    <el-col v-bind:span="5" align="right">
+		    <el-col v-bind:span="1" align="right" v-bind:style="{width:'5.16667%'}">
+		    	<el-checkbox label="蓋印" v-model="form.watermark"></el-checkbox>
+		    </el-col>
+
+		    <el-col v-bind:span="4" align="right">
 		    	
 		    	<el-button type="primary" v-on:click="submit" size="mini">
 		    		<i class="material-icons" data-toggle="tooltip" data-placement="bottom" title="Save this form">save</i> 

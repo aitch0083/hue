@@ -47,6 +47,12 @@
 		    </el-col>
 	  	</el-form-item>
 
+	  	<el-form-item label="Youtube?">
+	  		<el-col v-bind:span="3">
+		    	<el-checkbox label="" v-model="form.is_youtube"></el-checkbox>
+		    </el-col>
+	  	</el-form-item>
+
 	  	<el-form-item label="Type">
 	  		<el-col v-bind:span="3">
 		    	<el-select v-model="form.type" placeholder="">

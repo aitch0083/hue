@@ -20,6 +20,10 @@ article {
 	height: auto !important;
 }
 
+#ArticleContentContainer div.entry-content iframe {
+	max-width: 100% !important;
+}
+
 #main-menu {
 	max-width: 1200px;
 	margin-left: auto;
