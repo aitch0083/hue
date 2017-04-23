@@ -1,11 +1,16 @@
 <% if(_.isArray(cate_articles) && cate_articles.length) { %>
 	<% for(var idx = 0 ; idx < cate_articles.length ; idx++ ) { %>
-		<div class="cate-card small-12 medium-6 float-left">
+		<div class="column column-block">
 			<div class="card">
 				<a href="/articles/read/<%= cate_articles[idx].id; %>.html">
-					<img class="thumbnail ratio-item-img" src="<%- cate_articles[idx].thumbnail %>" />
+					<img class="thumbnail" src="<%- cate_articles[idx].thumbnail %>" />
 					<div class="card-section">
-						<%- cate_articles[idx].title; %>
+						<a class="side-bar-news-cate" href="/categories/index/<%= cate_articles[idx].Category.get('id') %>">
+							<%= cate_articles[idx].Category.get('title'); %>
+						</a>
+						<a href="/articles/read/<%= cate_articles[idx].id; %>.html">
+							<%- cate_articles[idx].plain_title; %>
+						</a>
 					</div>
 				</a>
 			</div>

@@ -42,7 +42,9 @@
 									<a class="side-bar-news-cate" href="/categories/index/<%= same_cate_artciles[idx].Category.get('id') %>">
 										<%= same_cate_artciles[idx].Category.get('title'); %>
 									</a>
-									<%- same_cate_artciles[idx].title; %>
+									<a href="/articles/read/<%= same_cate_artciles[idx].id; %>.html">
+										<%- same_cate_artciles[idx].plain_title; %>
+									</a>
 								</div>
 							</a>
 						</div>
@@ -64,7 +66,9 @@
 								<a class="side-bar-news-cate" href="/categories/index/<%= latest_articles[idx].Category.get('id') %>">
 									<%= latest_articles[idx].Category.get('title'); %>
 								</a>
-								<%- latest_articles[idx].title; %>
+								<a href="/articles/read/<%= latest_articles[idx].id; %>.html">
+									<%- latest_articles[idx].plain_title; %>
+								</a>
 							</div>
 						</a>
 					</div>

@@ -1,9 +1,11 @@
 <% include _fe_header_ %>
 
+<link rel="stylesheet" href="/stylesheets/masonry.styles.css"/>
+
 <div class="row">
 	
 	<!-- aritcle content -->
-	<div class="small-12 medium-8 float-left cate-container">
+	<div id="cate-container" class="small-12 medium-8 float-left cate-container">
 
 		<article>
 
@@ -19,15 +21,20 @@
 				<span class="page-indicator hidden" data-src="/categories/index/<%= category.get('ID') %>/<%= page %>"></span>
 			<% } %>
 
-			<div id="playpoint" class="jscroll clearfix">
+			<div id="playpoint" class="small-up-1 medium-up-3 large-up-4">
 			<% if(_.isArray(cate_articles) && cate_articles.length) { %>
 				<% for(var idx = 0 ; idx < cate_articles.length ; idx++ ) { %>
-					<div class="cate-card small-12 medium-6 float-left">
+					<div class="column column-block">
 						<div class="card">
 							<a href="/articles/read/<%= cate_articles[idx].id; %>.html">
-								<img class="thumbnail ratio-item-img" src="<%- cate_articles[idx].thumbnail %>" />
+								<img class="thumbnail" src="<%- cate_articles[idx].thumbnail %>" />
 								<div class="card-section">
-									<%- cate_articles[idx].title; %>
+									<a class="side-bar-news-cate" href="/categories/index/<%= cate_articles[idx].Category.get('id') %>">
+										<%= cate_articles[idx].Category.get('title'); %>
+									</a>
+									<a href="/articles/read/<%= cate_articles[idx].id; %>.html">
+										<%- cate_articles[idx].plain_title; %>
+									</a>
 								</div>
 							</a>
 						</div>
@@ -53,7 +60,9 @@
 								<a class="side-bar-news-cate" href="/categories/index/<%= latest_articles[idx].Category.get('id') %>">
 									<%= latest_articles[idx].Category.get('title'); %>
 								</a>
-								<%- latest_articles[idx].title; %>
+								<a href="/articles/read/<%= latest_articles[idx].id; %>.html">
+									<%- latest_articles[idx].plain_title; %>
+								</a>
 							</div>
 						</a>
 					</div>
