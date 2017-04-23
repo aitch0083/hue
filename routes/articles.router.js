@@ -142,7 +142,7 @@ module.exports = function(validator){
 			Article.findAndCountAll({
 				where:   conditions,
 				order:   order,
-				offset:  pageIndex,
+				offset:  (pageIndex * pageSize),
 				limit:   pageSize,
 				attributes:['title', 'id', 'abstract', 'created', 'modified', 'thumbnail', 'video_url', 'at_top'],
 				include: [

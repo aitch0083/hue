@@ -43,7 +43,7 @@ module.exports = function(validator){
 
 			User.findAndCountAll({
 				where:  conditions,
-				offset: pageIndex,
+				offset: pageIndex * pageSize,
 				limit:  pageSize,
 				order:  order
 			}).then(function(result){

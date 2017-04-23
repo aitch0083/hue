@@ -163,7 +163,7 @@ module.exports = function(validator){
 			Banner.findAndCountAll({
 				where:   conditions,
 				order:   order,
-				offset:  pageIndex,
+				offset:  (pageIndex * pageSize),
 				limit:   pageSize,
 				attributes:['id', 'description', 'img1', 'url', 'type', 'position', 'start_time', 'end_time', 'created','modified'],
 				include: [
