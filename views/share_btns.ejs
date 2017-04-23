@@ -70,6 +70,8 @@ $(function() {
         url : "fb://profile/164873120536112"
         <% } else if(is_mobile && share_url !== '/') { %>
         url : "https://www.facebook.com/sharer.php?u={url}"
+        <% } else { %>
+        url : "https://www.facebook.com/CARLINK-164873120536112/"
         <% } %>
     }, {
         icon : "whatsapp",
