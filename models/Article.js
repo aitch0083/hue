@@ -96,7 +96,7 @@ Article.show_fields = [//follow jsGrid's definition
     { name: 'title',          title: 'Title', type: 'text', width: 250 },
     { name: 'category_name',  title: 'Category', type: 'text', width: 50 },
     { name: 'author',         title: 'Author', type: 'text', width: 50},
-    { name: 'at_top',         title: 'Top?', type: 'text', width: 50, type: 'number'},
+    { name: 'at_top',         title: 'Top?', type: 'text', width: 30, type: 'number'},
     { name: 'created',        title: 'Created', itemTemplate: (function(v) { return v ? v.substring(0, 10) : ''; }).toString(), width: 50, align:'center' },
     { name: 'modified',       title: 'Modified', itemTemplate: (function(v) { return v ? v.substring(0, 10) : ''; }).toString(), width: 50, align:'center' },
     { type: 'control',        modeSwitchButton: false, clearFilterButton: false, width: 50, editing: true }
