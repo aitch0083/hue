@@ -4,27 +4,24 @@
 	<% var side_kicks = _.slice(latest_articles, 0, 4); %>
 	<div class="small-up-1 medium-up-5 large-up-5">
 		<div class="column column-block big-head">
-			<a href="/articles/read/<%= hotlines.id; %>.html">
-				
-				<% if(!hotlines.video_url) { %>
-					<img class="thumbnail" src="<%- hotlines.thumbnail %>" />
-				<% } else { %>
-					<div class="responsive-embed widescreen">
-						<iframe id="player" type="text/html" width="560" height="315" class="thumbnail"
-		            			src="<%=hotlines.video_url;%>?enablejsapi=1&autoplay=0"
-		            			frameborder="0"></iframe>
-	            	</div>
-	            <% } %>
+			<% if(!hotlines.video_url) { %>
+				<img class="thumbnail" src="<%- hotlines.thumbnail %>" />
+			<% } else { %>
+				<div class="responsive-embed widescreen">
+					<iframe id="player" type="text/html" width="560" height="315" class="thumbnail"
+	            			src="<%=hotlines.video_url;%>?enablejsapi=1&autoplay=0"
+	            			frameborder="0"></iframe>
+            	</div>
+            <% } %>
 
-				<div class="<%=hotlines.video_url ? 'video-card-section' : ''; %>">
-					<a class="side-bar-news-cate" href="/categories/index/<%= hotlines.Category.get('id') %>">
-						<%= hotlines.Category.get('title'); %>
-					</a>
-					<a class="a-title" href="/articles/read/<%= hotlines.id; %>.html">
-						<%= hotlines.get('title'); %>
-					</a>
-				</div>
-			</a>
+			<div class="<%=hotlines.video_url ? 'video-card-section' : ''; %>">
+				<a class="side-bar-news-cate" href="/categories/index/<%= hotlines.Category.get('id') %>">
+					<%= hotlines.Category.get('title'); %>
+				</a>
+				<a class="a-title" href="/articles/read/<%= hotlines.id; %>.html">
+					<%= hotlines.get('title'); %>
+				</a>
+			</div>
 		</div>
 
 		<% for(var idx = 0 ; idx < side_kicks.length ; idx++ ) { %>
