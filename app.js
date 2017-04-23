@@ -14,6 +14,8 @@ var device       = require('express-device');
 
 var app = express();
 
+app.disable('x-powered-by');
+
 app.locals.configs = configs;
 app.locals.layout  = '';
 
