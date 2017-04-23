@@ -4,7 +4,7 @@ var configs = require('../configs/global.configs');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: configs.site_title });
+  res.render('index', { title: (configs.backend_site_title || configs.site_title) });
 });
 
 module.exports = router;
