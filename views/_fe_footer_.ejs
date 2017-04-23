@@ -43,8 +43,6 @@
 				if($page_indicator.length){
 					var src = $page_indicator.data('src');
 
-					console.info($page_indicator);
-
 					if(src){
 						$.get(src, {layout:layout}, function(result){
 							var $result = $(result);

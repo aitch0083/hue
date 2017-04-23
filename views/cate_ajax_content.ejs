@@ -14,5 +14,5 @@
 <% } %> 
 
 <% if( show_page_anchor ) { %>
-	<a class="jscroll-next" href="/categories/index/<%= category.get('ID') %>/<%= page %>"></a>
+	<span class="page-indicator hidden" data-src="/categories/index/<%= category.get('ID') %>/<%= page %>"></span>
 <% } %>
