@@ -30,27 +30,24 @@
 		<% for(var idx = 0 ; idx < side_kicks.length ; idx++ ) { %>
 			<% kicks.push(side_kicks[idx].id) %>
 			<div class="column column-block side-kicks">
-				<a href="/articles/read/<%= side_kicks[idx].id; %>.html">
-					
-					<% if(!side_kicks[idx].video_url) { %>
-						<img class="thumbnail" src="<%- side_kicks[idx].thumbnail %>" />
-					<% } else { %>
-						<div class="responsive-embed widescreen">
-							<iframe id="player" type="text/html" width="560" height="315" class="thumbnail"
-			            			src="<%=side_kicks[idx].video_url;%>?enablejsapi=1&autoplay=0"
-			            			frameborder="0"></iframe>
-		            	</div>
-		            <% } %>
+				<% if(!side_kicks[idx].video_url) { %>
+					<img class="thumbnail" src="<%- side_kicks[idx].thumbnail %>" />
+				<% } else { %>
+					<div class="responsive-embed widescreen">
+						<iframe id="player" type="text/html" width="560" height="315" class="thumbnail"
+		            			src="<%=side_kicks[idx].video_url;%>?enablejsapi=1&autoplay=0"
+		            			frameborder="0"></iframe>
+	            	</div>
+	            <% } %>
 
-					<div class="<%= side_kicks[idx].video_url ? 'video-card-section' : ''; %>">
-						<a class="side-bar-news-cate" href="/categories/index/<%= side_kicks[idx].Category.get('id') %>">
-							<%= side_kicks[idx].Category.get('title'); %>
-						</a>
-						<a class="a-title" href="/articles/read/<%= side_kicks[idx].id; %>.html">
-							<%- side_kicks[idx].plain_title; %>
-						</a>
-					</div>
-				</a>
+				<div class="<%= side_kicks[idx].video_url ? 'video-card-section' : ''; %>">
+					<a class="side-bar-news-cate" href="/categories/index/<%= side_kicks[idx].Category.get('id') %>">
+						<%= side_kicks[idx].Category.get('title'); %>
+					</a>
+					<a class="a-title" href="/articles/read/<%= side_kicks[idx].id; %>.html">
+						<%- side_kicks[idx].plain_title; %>
+					</a>
+				</div>
 			</div>
 		<% } //eo for %>		
 	<div>
