@@ -393,7 +393,8 @@ router.get('/articles/rssFeed/:cate_id/:page_size', function(req, res, next){
 	var cache_file_name = path.join(__dirname, '../public/articles', 'rss_feed_'+cate_id+'s'+page_size+'.xml');
 
 	//find the html cache file, if there is none, then create one
-	if(fs.existsSync(cache_file_name)){
+	// if(fs.existsSync(cache_file_name)){
+	if(false){
 		res.sendFile(cache_file_name);
 	} else {
 
@@ -421,7 +422,7 @@ router.get('/articles/rssFeed/:cate_id/:page_size', function(req, res, next){
 
 				var URI        = configs.site_public_url + '/articles/read/' + article.id + '.html';
 				var abstract   = striptags(article.abstract);
-				var clean_desc = abstract.length < 100 ? striptags(article.content).replace(/\r?\n|\r|\&nbsp;/g, "").substring(0, 150) : abstract;
+				var clean_desc = article.content;
 
 				feed.addItem({
 					title:       article.plain_title,
@@ -436,7 +437,7 @@ router.get('/articles/rssFeed/:cate_id/:page_size', function(req, res, next){
 
 			var rss = feed.rss2();
 
-			fs.writeFile(cache_file_name, rss);
+			// fs.writeFile(cache_file_name, rss);
 
 			res.set('Content-Type', 'text/xml');
 			res.send(rss);
