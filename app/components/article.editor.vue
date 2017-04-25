@@ -242,12 +242,6 @@ let component = {
 
 		let store = app.$data;
 		
-		//get user component
-		$shared.get_selections.apply(this, ['user', 'user_selection_component', 'form.user_id', component, store, null]);
-
-		//get category component
-		$shared.get_selections.apply(this, ['category', 'category_selection_component', 'form.category_id', component, store, null, false]);
-
 		//read article, if ID provided
 		if(id){
 			//get article content
@@ -259,6 +253,12 @@ let component = {
 			}).then((result) => {
 
 				if(result.status === 200 && result.data.success){
+
+					//get user component
+					$shared.get_selections.apply(this, ['user', 'user_selection_component', 'form.user_id', component, store, ()=>{
+						//get category component
+						$shared.get_selections.apply(this, ['category', 'category_selection_component', 'form.category_id', component, store, null, false]);	
+					} ]);
 					
 					this.form = Object.assign({}, app.form, result.data.record);
 					
@@ -286,6 +286,12 @@ let component = {
 			}).then((result) => {
 
 				if(result.status === 200 && result.data.success){
+
+					//get user component
+					$shared.get_selections.apply(this, ['user', 'user_selection_component', 'form.user_id', component, store, ()=>{
+						//get category component
+						$shared.get_selections.apply(this, ['category', 'category_selection_component', 'form.category_id', component, store, null, false]);	
+					} ]);
 
 					this.form = Object.assign({}, app.form, result.data.record);
 					
