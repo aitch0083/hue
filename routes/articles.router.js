@@ -210,22 +210,7 @@ module.exports = function(validator){
 					// URL schemes we permit 
 					allowedSchemes: [ 'http', 'https', 'mailto' ],
 					allowProtocolRelative: true
-				}).replace(/mso-fareast-font-family:標楷體/g, '')
-				  .replace(/mso-fareast-font-family: 新細明體;/g, '')
-				  .replace(/font-family: 標楷體;/g, '')
-				  .replace(/mso-fareast-theme-font:minor-fareast;/g, '')
-				  .replace(/mso-bidi-font-family:Arial;/g, '')
-				  .replace(/mso-fareast-language:ZH-TW/g, '')
-				  .replace(/font-family: CorpoS;/g, '')
-				  .replace(/font-family: 新細明體/g, '')
-				  .replace(/undefined, serif;/g, '')
-				  .replace(/font-family: 新細明體, serif;/g, '')
-				  .replace(/ , serif;/g, '')
-				  .replace(/font-family:&quot;新細明體&quot;,serif;/g, '')
-				  .replace(/mso-ascii-theme-font:minor-fareast;mso-fareast-theme-font:/g, '')
-				  .replace(/minor-fareast;mso-hansi-theme-font:minor-fareast;/g, '')
-				  .replace(/mso-fareast-theme-font:minor-fareast;/g, '')
-				  .replace(/新細明體;/g, 'Helvetica Neue');
+				});
 
 				article.updateAttributes(record).then(function(article){
 
