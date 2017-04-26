@@ -411,7 +411,7 @@ router.get('/articles/rssFeed/:cate_id/:page_size', function(req, res, next){
 			  description: configs.site_description,
 			  id:          configs.site_public_url,
 			  link:        configs.site_public_url,
-			  image:       configs.site_public_url + '/logo.png',
+			  image:       configs.site_public_url + '/images/biglogo.png',
 			  copyright:   'All rights reserved ' + moment().format('YYYY'),
 			  updated:     new Date(),
 			  author:      configs.site_author
