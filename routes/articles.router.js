@@ -196,18 +196,21 @@ module.exports = function(validator){
 					allowedTags: [ 
 					  'h1','h2','h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
 					  'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'hr', 'br', 'div', 'img',
-					  'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'iframe'
+					  'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'iframe',
+					  'font', 'span'
 					],
 					allowedAttributes: {
-					  a: [ 'href', 'name', 'target', 'title'],
-					  img: [ 'src' ]
+					  a:    [ 'href', 'name', 'target', 'title'],
+					  img:  [ 'src' ],
+					  font: [ 'face', 'style'],
+					  span: [ 'style']
 					},
 					// Lots of these won't come up by default because we don't allow them 
 					selfClosing: [ 'img', 'br', 'hr', 'area', 'base', 'basefont', 'input', 'link', 'meta' ],
 					// URL schemes we permit 
 					allowedSchemes: [ 'http', 'https', 'mailto' ],
 					allowProtocolRelative: true
-				});
+				}).replace(/\sfont-family: 標楷體;/g, '');
 
 				article.updateAttributes(record).then(function(article){
 
