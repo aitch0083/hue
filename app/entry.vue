@@ -1,9 +1,7 @@
 <template>
 	<div class="container">
 		<el-row type="flex" justify="center">
-	  		<el-col :span="6">
-	  			<login-form></login-form>
-	  		</el-col>
+	  		<login-form></login-form>
 		</el-row>
 	</div>
 </template>

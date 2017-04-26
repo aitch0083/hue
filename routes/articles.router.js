@@ -1,15 +1,16 @@
 'use strict';
 
-var express  = require('express');
-var configs  = require('../configs/global.configs');
-var Article  = require('../models/Article');
-var User     = require('../models/User');
-var Category = require('../models/Category');
-var _        = require('lodash');
-var moment   = require('moment');
-var path     = require('path');
-var fs       = require('fs');
-var cheerio  = require('cheerio');
+var express      = require('express');
+var configs      = require('../configs/global.configs');
+var Article      = require('../models/Article');
+var User         = require('../models/User');
+var Category     = require('../models/Category');
+var _            = require('lodash');
+var moment       = require('moment');
+var path         = require('path');
+var fs           = require('fs');
+var cheerio      = require('cheerio');
+var sanitizeHtml = require('sanitize-html');
 
 var router = express.Router();
 
@@ -190,6 +191,23 @@ module.exports = function(validator){
 				if(first_img){
 					record.thumbnail = first_img.attr('src');
 				}
+
+				record.content = sanitizeHtml(record.content, {
+					allowedTags: [ 
+					  'h1','h2','h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
+					  'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'hr', 'br', 'div', 'img',
+					  'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre' 
+					],
+					allowedAttributes: {
+					  a: [ 'href', 'name', 'target', 'title'],
+					  img: [ 'src' ]
+					},
+					// Lots of these won't come up by default because we don't allow them 
+					selfClosing: [ 'img', 'br', 'hr', 'area', 'base', 'basefont', 'input', 'link', 'meta' ],
+					// URL schemes we permit 
+					allowedSchemes: [ 'http', 'https', 'mailto' ],
+					allowProtocolRelative: true
+				});
 
 				article.updateAttributes(record).then(function(article){
 

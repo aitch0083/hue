@@ -1,7 +1,7 @@
 <template>
 
 	<el-card class="box-card login-form-card">
-		<el-form v-bind:model="form" v-bind:rules="rules" ref="login-form" label-width="100px">
+		<el-form v-bind:model="form" v-bind:rules="rules" ref="login-form" label-width="5rem;">
 
 			<el-form-item label="Username" prop="username">
 			    <el-input v-model="form.username"></el-input>
@@ -127,10 +127,18 @@ export default {
 
 <style>
 .login-form{
-	width: 23rem;
+	width: 13rem;
 }
 .login-form-card{
 	margin-top: 5rem;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 33rem;
+	min-width: 318px;
+	background-image: url(/images/login-bg.png);
+	background-repeat:no-repeat;
+	background-size:contain;
+	background-position:center;
 }
 .el-form-item {
     margin-bottom: 22px;
