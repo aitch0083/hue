@@ -210,7 +210,7 @@ module.exports = function(validator){
 					// URL schemes we permit 
 					allowedSchemes: [ 'http', 'https', 'mailto' ],
 					allowProtocolRelative: true
-				}).replace(/\sfont-family: 標楷體;/g, '');
+				}).replace(/\sfont-family: 標楷體;/g, '').replace(/\sfont-family:CorpoS;mso-fareast-font-family: 新細明體;mso-fareast-theme-font:minor-fareast;mso-bidi-font-family:Arial; mso-fareast-language:ZH-TW"/g, '');
 
 				article.updateAttributes(record).then(function(article){
 
