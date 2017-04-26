@@ -393,8 +393,7 @@ router.get('/articles/rssFeed/:cate_id/:page_size', function(req, res, next){
 	var cache_file_name = path.join(__dirname, '../public/articles', 'rss_feed_'+cate_id+'s'+page_size+'.xml');
 
 	//find the html cache file, if there is none, then create one
-	// if(fs.existsSync(cache_file_name)){
-	if(false){
+	if(fs.existsSync(cache_file_name)){
 		res.sendFile(cache_file_name);
 	} else {
 
@@ -437,7 +436,7 @@ router.get('/articles/rssFeed/:cate_id/:page_size', function(req, res, next){
 
 			var rss = feed.rss2();
 
-			// fs.writeFile(cache_file_name, rss);
+			fs.writeFile(cache_file_name, rss);
 
 			res.set('Content-Type', 'text/xml');
 			res.send(rss);
