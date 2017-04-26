@@ -210,7 +210,17 @@ module.exports = function(validator){
 					// URL schemes we permit 
 					allowedSchemes: [ 'http', 'https', 'mailto' ],
 					allowProtocolRelative: true
-				}).replace(/\sfont-family: 標楷體;/g, '').replace(/\sfont-family:CorpoS;mso-fareast-font-family: 新細明體;mso-fareast-theme-font:minor-fareast;mso-bidi-font-family:Arial; mso-fareast-language:ZH-TW"/g, '');
+				}).replace(/mso-fareast-font-family:標楷體/g, '')
+				  .replace(/mso-fareast-font-family: 新細明體;/g, '')
+				  .replace(/font-family: 標楷體;/g, '')
+				  .replace(/mso-fareast-theme-font:minor-fareast;/g, '')
+				  .replace(/mso-bidi-font-family:Arial;/g, '')
+				  .replace(/mso-fareast-language:ZH-TW/g, '')
+				  .replace(/font-family: CorpoS;/g, '')
+				  .replace(/font-family: 新細明體/g, '')
+				  .replace(/undefined, serif;/g, '')
+				  .replace(/font-family: 新細明體, serif;/g, '')
+				  .replace(/ , serif;/g, '');
 
 				article.updateAttributes(record).then(function(article){
 
