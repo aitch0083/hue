@@ -224,7 +224,8 @@ module.exports = function(validator){
 				  .replace(/font-family:&quot;新細明體&quot;,serif;/g, '')
 				  .replace(/mso-ascii-theme-font:minor-fareast;mso-fareast-theme-font:/g, '')
 				  .replace(/minor-fareast;mso-hansi-theme-font:minor-fareast;/g, '')
-				  .replace(/mso-fareast-theme-font:minor-fareast;/g, '');;
+				  .replace(/mso-fareast-theme-font:minor-fareast;/g, '')
+				  .replace(/新細明體;/g, 'Helvetica Neue');
 
 				article.updateAttributes(record).then(function(article){
 
