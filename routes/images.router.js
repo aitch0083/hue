@@ -50,8 +50,8 @@ module.exports = function(validator){
 
 			form.on('end', function(fields, files) {
 
-				var returned_files = [];
 				var images         = [];
+				var returned_files = [];
 				var file_num       = this.openedFiles.length;
 
 				//console.info('file_num:', file_num);
@@ -67,6 +67,9 @@ module.exports = function(validator){
 					var dim          = iss(file.path);
 
 					returned_files.push(public_path);
+
+					console.info('public_path:', public_path);
+					console.info('returned_files:', returned_files);
 
 					fs.rename(file.path, af_real_path, function(error){
 						

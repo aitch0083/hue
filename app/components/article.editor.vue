@@ -51,9 +51,12 @@ let component = {
 			user_selection_component: null,
 			uploadingDialog: false,
 			uploadPanoVisiable: false,
+			upload2020Visiable: false,
 			uploadedPhotoVisible: false,
 			upload_pano_params: {},
-			uploadedPhotos: []
+			upload_2020_params: {},
+			uploadedPhotos: [],
+			image_list_2020: []
 		});
 	},
 
@@ -86,12 +89,40 @@ let component = {
 
 			$('#editor').summernote('insertImage', image_src, function($image){
 				$image.addClass('pano-photos hide-pano-photo');
-				$image.css('width', $image.width() / 3);
+				$image.css('width', $image.width() / 8);
 			});
 		},
 
 		handlePanoUploadError(){
 			this.$message({type:'error', message:'Unable to upload the Panoramic photo'});
+		},
+
+		handle2020UploadSuccess(response){
+			let image_srcs = response.urls.shift();
+
+			if(this.image_list_2020.length < 2){
+				this.image_list_2020.push(image_srcs);
+			}
+
+			if(this.image_list_2020.length >= 2){
+				this.image_list_2020 = _.slice(this.image_list_2020, 0, 2);
+
+				var marco_html = '<div class="marco-container">';
+
+				_.each(this.image_list_2020, (image_src) => {
+					marco_html += '<img src="'+image_src+'" class="marco-photos half-marco-photo" />';
+				});
+
+				marco_html += '</div>';
+
+				$('#editor').summernote('insertNode', $(marco_html).get(0));
+
+				this.image_list_2020 = [];
+			}
+		},
+
+		handle2020UploadError(){
+			this.$message({type:'error', message:'Unable to upload the MarcoMarco photo'});
 		},
 
 		showPhotoDialog(){
@@ -196,23 +227,42 @@ let component = {
 		});
 
 		let PanoButton = (context) => {
-		  var ui = $.summernote.ui;
-		  
-		  // create button
-		  var button = ui.button({
-		    contents: '<i style="font-size: 12px;line-height: 1.5;" class="material-icons">panorama</i>',
-		    tooltip: 'Upload Panorama',
-		    click: function () {
-		    	app.uploadPanoVisiable               = true;
-		    	app.upload_pano_params['record_id']  = app.form.id;
-		    	app.upload_pano_params['model_name'] = 'Article';
-		    	app.upload_pano_params['type']       = 'panorama';
-		    	app.upload_pano_params['watermark']  = app.form.watermark ? 'yes' : 'no';
-		    }
-		  });
+			var ui = $.summernote.ui;
 
-		  return button.render();   // return button as jquery object 
+			// create button
+			var button = ui.button({
+				contents: '<i style="font-size: 12px;line-height: 1.5;" class="material-icons">panorama</i>',
+				tooltip: 'Upload Panorama',
+				click: function () {
+					app.uploadPanoVisiable               = true;
+					app.upload_pano_params['record_id']  = app.form.id;
+					app.upload_pano_params['model_name'] = 'Article';
+					app.upload_pano_params['type']       = 'panorama';
+					app.upload_pano_params['watermark']  = app.form.watermark ? 'yes' : 'no';
+				}
+			});
+
+			return button.render();   // return button as jquery object 
 		}
+
+		let TwentyTwentyButton = (context) => {
+	  		var ui = $.summernote.ui;
+	  		
+	  		var button = ui.button({
+			    contents: '<i style="font-size: 12px;line-height: 1.5;" class="material-icons">chrome_reader_mode</i>',
+			    tooltip: 'Marco Marco',
+			    click: function () {
+			    	app.upload2020Visiable               = true;
+			    	app.upload_2020_params['record_id']  = app.form.id;
+			    	app.upload_2020_params['model_name'] = 'Article';
+			    	app.upload_2020_params['type']       = '2020';
+			    	app.upload_2020_params['watermark']  = app.form.watermark ? 'yes' : 'no';
+			    }
+		  	});
+
+		  	return button.render();   // return button as jquery object 	
+	  	};
+
 
 		let $editor = $('#editor').summernote({
 			height:    500,
@@ -225,11 +275,12 @@ let component = {
 		        ['color',    ['color']],
 		        ['para',     ['ul', 'ol', 'paragraph']],
 		        ['table',    ['table']],
-		        ['insert',   ['link', 'picture', 'video', 'pano']],
+		        ['insert',   ['link', 'picture', 'video', 'pano', 'twenty']],
 		        ['view',     ['fullscreen', 'codeview', 'help']]
 			],
 			buttons: {
-			    pano: PanoButton
+			    pano: PanoButton,
+			    twenty: TwentyTwentyButton
 			},
 			callbacks: {
 				onImageUpload (files) {

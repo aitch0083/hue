@@ -201,9 +201,10 @@ module.exports = function(validator){
 					],
 					allowedAttributes: {
 					  a:    [ 'href', 'name', 'target', 'title'],
-					  img:  [ 'src' ],
+					  img:  [ 'src', 'style', 'class' ],
 					  font: [ 'face', 'style'],
-					  span: [ 'style']
+					  span: [ 'style'],
+					  div:  [ 'style', 'class' ]
 					},
 					// Lots of these won't come up by default because we don't allow them 
 					selfClosing: [ 'img', 'br', 'hr', 'area', 'base', 'basefont', 'input', 'link', 'meta' ],

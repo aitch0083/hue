@@ -100,11 +100,30 @@
   </span>
 </el-dialog>
 
+<el-dialog ref="upload-2020-dialog" title="Marco Marco" v-model="upload2020Visiable" size="tiny">
+  <span><i class="material-icons">chrome_reader_mode</i></span>
+  <span class="red">Select 2 images and 2 images max!</span>
+  <el-upload action="/api/images"
+	               ref="image_2020_upload"
+	               v-bind:on-success="handle2020UploadSuccess"
+	               v-bind:on-error="handle2020UploadError"
+	               v-bind:data="upload_2020_params"
+	               v-bind:multiple="true"
+			   v-bind:auto-upload="true">
+		<el-button slot="trigger" size="small" type="primary">select...</el-button>
+		<div slot="tip" class="el-upload__tip">jpg/png files with a size less than 5MB.</div>
+  </el-upload>
+
+  <span slot="footer" class="dialog-footer">
+    <el-button v-on:click="upload2020Visiable = false">Close</el-button>
+  </span>
+</el-dialog>
+
 <el-dialog ref="uploaded-photo-dialog" title="Uploaded Photos" v-model="uploadedPhotoVisible" v-on:open="uploadedPhotoOpen" size="large">
   	<h5><i class="material-icons">photo_library</i> All the uploaded photos for this article</h5>
 
 	<el-row>
-		<el-col v-bind:span="4" v-for="(photo, index) in uploadedPhotos">
+		<el-col v-bind:key="photo.path" v-bind:span="4" v-for="(photo, index) in uploadedPhotos">
 			<el-card v-bind:body-style="{ padding: '2px' }">
 			  <img v-bind:src="photo.path" class="card-thubnail-image">
 			</el-card>

@@ -78,6 +78,11 @@
 
                 $mgrid = $('#masonry-grid');
                 loadnext();
+
+                var $marcomarco = $('.marco-photos');
+                if($marcomarco.length){
+               		$(".marco-container").twentytwenty();
+                }
 				
 				var $pano_images = $('img.pano-photos');
 				if($pano_images.length){
@@ -105,25 +110,19 @@
 							PSV = new PhotoSphereViewer({
 								// Path to the panorama
 								panorama: image_src,
-
 								// Container
 								container: div,
-
 								// Deactivate the animation
 								time_anim: false,
-
 								// Display the navigation bar
 								navbar: true,
-
 								// Resize the panorama
 								size: {
 									width: '100%',
 									height: height
 								},
-
 								// HTML loader
 								loading_html: '↻ 讀取全景圖中...',
-
 								// Disable smooth moves to test faster
 								smooth_user_moves: false
 							});

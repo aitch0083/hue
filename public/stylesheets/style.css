@@ -63,6 +63,10 @@ a {
 	width: 70%;
 }
 
+.half-marco-photo {
+	width: 48%;
+}
+
 .editor-containcer, 
 .editor-containcer #editor, 
 .editor-containcer .el-form, 
