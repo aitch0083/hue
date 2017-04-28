@@ -36,6 +36,28 @@ let clean_form = {
 	watermark:   true
 }
 
+let _newp = (str) => {
+    let _t = str
+        .replace(/\r\n?/g,'\n')
+        .replace(/(^((?!\n)\s)+|((?!\n)\s)+$)/gm,'')
+        .replace(/(?!\n)\s+/g,' ')
+        .replace(/^\n+|\n+$/g,'')
+        .replace(/[<>&"']/g,function(a) {
+            switch (a) {
+                case '<'    : return '&lt;';
+                case '>'    : return '&gt;';
+                case '&'    : return '&amp;';
+                case '"'    : return '&quot;';
+                case '\''   : return '&apos;';
+            }
+        })
+        .replace(/\n{2,}/g,'</p><p>')
+        .replace(/\n/g,'<br />')
+        .replace(/^(.+?)$/,'<p>$1</p>');
+
+    return sanitizeHtml(_t);
+};
+
 let component = {
 
 	data() {
@@ -287,7 +309,17 @@ let component = {
 					app.bus.$emit('open-loading-dialog', true);
 
 					$shared.uploadImage.apply(this, [files, $(this), app.form.id, model_name, ()=>{app.bus.$emit('open-loading-dialog', false);}, app.form.watermark ]);
-				}//eo onImageUpload
+				},//eo onImageUpload
+
+				onPaste (e){
+					var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+
+					$editor.summernote('code', _newp(bufferText));
+
+					e.preventDefault();
+
+					return false;
+				}				
 			}
 		});
 

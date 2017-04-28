@@ -8,6 +8,7 @@ var js_files   = [
 	parent_dir + '/libs/js/jsgrid.min.js',
 	parent_dir + '/libs/js/bootstrap.min.js',
 	parent_dir + '/libs/js/summernote.min.js',
+	parent_dir + '/libs/js/sanitize-html.min.js'
 ];
 
 var js_output = parent_dir + '/public/javascripts/libs.min.js';
