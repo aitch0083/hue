@@ -37,7 +37,7 @@ let clean_form = {
 }
 
 let _newp = (str) => {
-    let _t = str
+    return sanitizeHtml(str)
         .replace(/\r\n?/g,'\n')
         .replace(/(^((?!\n)\s)+|((?!\n)\s)+$)/gm,'')
         .replace(/(?!\n)\s+/g,' ')
@@ -54,8 +54,6 @@ let _newp = (str) => {
         .replace(/\n{2,}/g,'</p><p>')
         .replace(/\n/g,'<br />')
         .replace(/^(.+?)$/,'<p>$1</p>');
-
-    return sanitizeHtml(_t);
 };
 
 let component = {
