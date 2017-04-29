@@ -67,13 +67,6 @@ a {
 	width: 48%;
 }
 
-.editor-containcer, 
-.editor-containcer #editor, 
-.editor-containcer .el-form, 
-.editor-containcer .el-card__body {
-	height: 100vh;
-}
-
 .loading-image {
 	display: inherit; 
 	margin: auto;
