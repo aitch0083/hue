@@ -205,7 +205,7 @@ module.exports = function(validator){
 					  font: [ 'face', 'style'],
 					  span: [ 'style'],
 					  div:  [ 'style', 'class' ],
-					  iframe: ['style', 'src', 'width', 'height', 'frameborder', 'allowfullscreen']
+					  iframe: ['style', 'src', 'width', 'height', 'frameborder', 'allowfullscreen', 'class']
 					},
 					// Lots of these won't come up by default because we don't allow them 
 					selfClosing: [ 'img', 'br', 'hr', 'area', 'base', 'basefont', 'input', 'link', 'meta' ],
