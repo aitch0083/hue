@@ -37,7 +37,7 @@ let clean_form = {
 }
 
 let _newp = (str) => {
-    return sanitizeHtml(str, {allowedTags:[], allowedAttributes:[]});
+    return sanitizeHtml(str, {allowedTags:['p', 'br'], allowedAttributes:[]});
 };
 
 let component = {
