@@ -191,7 +191,7 @@ module.exports = function(validator){
 				if(first_img){
 					record.thumbnail = first_img.attr('src');
 				}
-
+				
 				record.content = sanitizeHtml(record.content, {
 					allowedTags: [ 
 					  'h1','h2','h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
@@ -204,7 +204,8 @@ module.exports = function(validator){
 					  img:  [ 'src', 'style', 'class' ],
 					  font: [ 'face', 'style'],
 					  span: [ 'style'],
-					  div:  [ 'style', 'class' ]
+					  div:  [ 'style', 'class' ],
+					  iframe: ['style', 'src', 'width', 'height', 'frameborder', 'allowfullscreen']
 					},
 					// Lots of these won't come up by default because we don't allow them 
 					selfClosing: [ 'img', 'br', 'hr', 'area', 'base', 'basefont', 'input', 'link', 'meta' ],
