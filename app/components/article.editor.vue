@@ -37,23 +37,7 @@ let clean_form = {
 }
 
 let _newp = (str) => {
-    return sanitizeHtml(str)
-        .replace(/\r\n?/g,'\n')
-        .replace(/(^((?!\n)\s)+|((?!\n)\s)+$)/gm,'')
-        .replace(/(?!\n)\s+/g,' ')
-        .replace(/^\n+|\n+$/g,'')
-        .replace(/[<>&"']/g,function(a) {
-            switch (a) {
-                case '<'    : return '&lt;';
-                case '>'    : return '&gt;';
-                case '&'    : return '&amp;';
-                case '"'    : return '&quot;';
-                case '\''   : return '&apos;';
-            }
-        })
-        .replace(/\n{2,}/g,'</p><p>')
-        .replace(/\n/g,'<br />')
-        .replace(/^(.+?)$/,'<p>$1</p>');
+    return sanitizeHtml(str, {allowedTags:[], allowedAttributes:[]});
 };
 
 let component = {
@@ -312,7 +296,7 @@ let component = {
 				onPaste (e){
 					var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
 
-					$editor.summernote('code', _newp(bufferText));
+					$editor.summernote('insertText', _newp(bufferText));
 
 					e.preventDefault();
 
