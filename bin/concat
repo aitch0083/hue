@@ -1,3 +1,7 @@
+/**
+ * Concat script for front backend side
+ */
+
 var concat     = require('concat');
 var path       = require('path');
 var dirname    = __dirname;

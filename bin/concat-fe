@@ -1,0 +1,26 @@
+/**
+ * Concat script for front end side
+ */
+
+var concat     = require('concat');
+var path       = require('path');
+var compressor = require('node-minify');
+var uglifyjs   = require('uglifyjs');
+var dirname    = __dirname;
+var parent_dir = path.dirname(dirname);
+
+var p = compressor.minify({
+  compressor: 'uglifyjs',
+  input: parent_dir + '/libs/js/fe_footer_script.js',
+  output: parent_dir + '/public/javascripts/front.actions.min.js'
+});
+
+p.then(function(min){
+	console.info('JS...');
+	console.info('FRONTEND JS DONE...');
+});
+
+p.catch(function(){
+	console.info('Catch:', arguments);
+});
+

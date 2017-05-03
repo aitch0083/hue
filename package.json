@@ -5,8 +5,9 @@
   "scripts": {
     "start": "node ./bin/www",
     "concat": "node ./bin/concat",
+    "concat-fe": "node ./bin/concat-fe",
     "dev": "watchify -vd -p browserify-hmr -e app/main.js -o public/javascripts/bundle.js",
-    "build": "cross-env NODE_ENV=production browserify -g envify app/main.js | uglifyjs -c warnings=false -m > public/javascripts/bundle.js"
+    "build": "cross-env NODE_ENV=production browserify -g envify app/main.js | uglifyjs -c warnings=false -m > public/javascripts/bundle.js | node ./bin/concat-fe"
   },
   "dependencies": {
     "async": "^2.3.0",
@@ -37,6 +38,7 @@
     "moment": "^2.18.1",
     "morgan": "~1.7.0",
     "mysql": "^2.13.0",
+    "node-minify": "^2.0.4",
     "numeral": "^2.0.4",
     "pm2": "^2.4.2",
     "quickthumb": "0.0.12",
@@ -44,6 +46,8 @@
     "sequelize": "^3.30.2",
     "serve-favicon": "~2.3.2",
     "striptags": "^3.0.1",
+    "uglify-js": "^2.8.22",
+    "uglifyjs": "^2.4.10",
     "validator-js": "^0.2.1",
     "vue": "^2.2.6",
     "vue-material": "^0.7.1",
