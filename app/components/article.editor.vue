@@ -37,7 +37,9 @@ let clean_form = {
 }
 
 let _newp = (str) => {
-	return sanitizeHtml(str.replace(/(?:\r\n|\r|\n)/g, '<br/>'), {allowedTags:['p', 'br'], allowedAttributes:[]});
+	let result = sanitizeHtml(str.replace(/(?:\r\n|\r|\n)/g, '<br/>'), {allowedTags:['p', 'br'], allowedAttributes:[]});
+	console.info('result:', result);
+	return result;
 };
 
 let component = {
@@ -295,7 +297,7 @@ let component = {
 
 				onPaste (e){
 					var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
-					var $node = $(_newp(bufferText));
+					var $node = $('<div>' + _newp(bufferText) + '</div>');
 
 					$editor.summernote('insertNode', $node.get(0));
 
