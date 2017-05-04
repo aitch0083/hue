@@ -17,18 +17,17 @@ var _do_validate = function(req, res){
 		user_id: null
 	};
 
-	return {
-		success: true,
-		message: 'testing...',
-		user_id: 9
-	}
+	// return {
+	// 	success: true,
+	// 	message: 'testing...',
+	// 	user_id: 9
+	// }
+	
+	console.info('username:', req.session);
 
 	if(!username){
 		result.success = false;
 		result.message = 'Please login first';
-	} else if(username !== token){
-		result.success = false;
-		result.message = 'Invalid token';
 	} else {
 		result.success = true;
 		result.message = 'This due is cool';

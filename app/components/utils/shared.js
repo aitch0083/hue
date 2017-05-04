@@ -116,6 +116,7 @@ let $shared = {
 
 				} else {
 					app.$alert(result.data.message, 'Error');
+					app.$router.replace('/');
 				}
 			})
 			.catch((error) => {
