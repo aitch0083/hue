@@ -201,6 +201,13 @@ var category_read_handler = function(req, res, next){
 
 	).spread(function(category, cate_articles, latest_articles, banners){
 
+		if(!category || category === null){
+			var error = new Error('Invalid Category');
+			console.error('Invalid category caught:', id);
+			next(error);
+			return;
+		}
+
 		res.locals.banners         = banners;
 		res.locals.category        = category;
 		res.locals.cate_articles   = cate_articles.rows;
