@@ -95,9 +95,10 @@ var article_read_hanlder = function(req, res, next) {
 
 		).spread(function(article, latest_articles, banners){
 
-			if(!article){
+			if(!article || article === null){
 				var error = new Error('Invalid article');
 				next(error);
+				return;
 			}
 
 			var category_id = article.Category.get('id');
