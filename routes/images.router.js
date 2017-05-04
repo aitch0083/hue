@@ -59,7 +59,7 @@ module.exports = function(validator){
 				_.each(this.openedFiles, function(file, idx){
 
 			        var now          = moment();
-					var ext          = path.extname(file.name);
+					var ext          = path.extname(file.name).toLowerCase();
 					var img_name     = 'IMG' + now.format('YYYYMMDDHHmmss') + 'I' + _.padStart(_.random(10000, 99999), 5, '0') + 'U' + result.user_id + ext;
 					var public_path  = configs.image_prefix + 'images/uploaded/' + img_name;
 					var af_real_path = form.uploadDir + "/" + img_name;
@@ -68,8 +68,8 @@ module.exports = function(validator){
 
 					returned_files.push(public_path);
 
-					console.info('public_path:', public_path);
-					console.info('returned_files:', returned_files);
+					// console.info('public_path:', public_path);
+					// console.info('returned_files:', returned_files);
 
 					fs.rename(file.path, af_real_path, function(error){
 						
