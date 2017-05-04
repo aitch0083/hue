@@ -97,6 +97,7 @@ var article_read_hanlder = function(req, res, next) {
 
 			if(!article || article === null){
 				var error = new Error('Invalid article');
+				console.error('Invalid article caught:', id);
 				next(error);
 				return;
 			}
