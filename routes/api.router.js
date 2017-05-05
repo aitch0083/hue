@@ -23,7 +23,8 @@ var _do_validate = function(req, res){
 	// 	user_id: 9
 	// }
 	
-	console.info('username:', req.session);
+	// console.info('username:', req.session.username);
+	// console.info('req:', req.session.user_id);
 
 	if(!username){
 		result.success = false;
@@ -93,7 +94,7 @@ router.post('/login', function(req, res, next) {
 
 				var token = bcrypt.hashSync(username);
 
-				req.session.user_id  = user.id;
+				req.session.user_id  = user.ID;
 				req.session.username = token;
 				result.success       = true;
 				result.message       = (_.template('Username: <%= username %> is found.'))({username:username});

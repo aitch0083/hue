@@ -24,6 +24,8 @@ module.exports = function(validator){
 
 		var result = validator(req, res);
 
+		// console.info('result:', result);
+
 		if(result.success){
 
 			var form            = new formidable.IncomingForm();
