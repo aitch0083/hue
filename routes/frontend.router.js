@@ -499,7 +499,6 @@ router.get('/layout/:name', function(req, res, next){
 
 router.get('/articles/:id', article_read_hanlder);
 router.get('/articles/read/:id', article_read_hanlder);
-router.get('/articles/index/:id', article_read_hanlder);
 router.get('/categories/:id', category_read_handler);
 router.get('/categories/index/:id', category_read_handler);
 router.get('/categories/main/:id', category_read_handler);
