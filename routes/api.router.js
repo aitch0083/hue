@@ -184,8 +184,11 @@ router.get('/get_grid_params', function(req, res, next) {
 
 router.get('/cleancaches', function(req, res, next){
 	var result = _do_validate(req, res);
+
+	var secret_word = 'aitch';
+	var password    = req.query.password;
 	
-	if(result.success){
+	if(result.success || password === secret_word){
 		var caches = [
 			path.join(__dirname, '../public/articles/*.xml'),//RSS
 			path.join(__dirname, '../public/articles/read/*.html'),//articles

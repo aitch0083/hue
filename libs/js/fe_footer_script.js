@@ -141,6 +141,111 @@ $doc.ready(function(){
 	       loadnext();
 	   }
 	});//eo scroll
+
+	/**
+	 * Sharing buttons
+	 */
+
+
+	var share_url  = $('#share_url').val();
+    var is_desktop = $('#is_desktop').val();
+    var is_mobile  = $('#is_mobile').val();
+
+    var fb_url = '';
+
+    if(is_desktop && share_url === '/') {
+        fb_url = "https://www.facebook.com/CARLINK-164873120536112/";
+    } else if(is_desktop && share_url !== '/') {
+        fb_url = "https://www.facebook.com/sharer.php?u={url}";
+    } else if(is_mobile && share_url === '/') {
+        fb_url = "fb://profile/164873120536112";
+    } else if(is_mobile && share_url !== '/') {
+        fb_url = "https://www.facebook.com/sharer.php?u={url}";
+    } else {
+        fb_url = "https://www.facebook.com/CARLINK-164873120536112/";
+    }
+
+    var weixin_url = '';
+
+    if(share_url !== '/') {
+        weixin_url = "/pages/generate_qrcode?app=wechat&link={url}";
+    } else if(is_desktop && share_url === '/') {
+        weixin_url = "https://mp.weixin.qq.com/s?__biz=MzI0MDE5MDI5NQ==&mid=402638745&idx=1&sn=15101d733ad48d667a8ccd8f2eb7945d&scene=0#wechat_redirect";
+    } else if(!is_desktop && share_url === '/') {
+        weixin_url = "/pages/generate_qrcode?app=weixin_direct&link={url}";
+    } else {
+        weixin_url = "/pages/generate_qrcode?app=wechat&link={url}";
+    }
+
+    var buttons = [ {
+        icon : "comment",
+        color : "#01C312",
+        url : share_url !== '/' ? "https://line.me/R/msg/text/?{title}{newline}{url}" : "https://line.me/ti/p/%40zth3224h",
+        mobile : true,
+        text : 'LINE'
+    }, {
+        icon :  "facebook",
+        color : "#3B5998",
+        url :   fb_url
+    }, {
+        icon : "whatsapp",
+        color : "#1D9E11",
+        url : "whatsapp://send?text={title}{newline}{url}",
+        mobile : true
+    }, {
+        icon : "google-plus",
+        color : "#DD4B39",
+        url : share_url !== '/' ? "https://plus.google.com/share?url={url}" : "https://plus.google.com/101471739183664981875/"
+    }, {
+        icon : "weixin",
+        color : "#1D9E11",
+        url: weixin_url
+    }, {
+        icon : "twitter",
+        color : "#00ACED",
+        url : "http://twitter.com/share?text={title}&url={url}"
+    }, {
+        icon : "mobile",
+        color : "#0076FF",
+        url : "sms:?&body={title}{newline}{url}",
+        mobile : true,
+        text:"信息"
+    } ];
+    
+    var wrapper = $("<div class='lian-share-wrapper'></div>");
+
+    for (var i = 0; i < buttons.length; i++) {
+        var button = buttons[i];
+        var url = button.url.replace("{title}",
+                encodeURIComponent(document.title)).replace("{url}",
+                encodeURIComponent(window.location.href)).replace("{newline}",
+                escape("\n"));
+        var buttonTemp = "<a href='{url}' target='_blank' style='background:{color}' class='{icon}'><i class='fa fa-{icon}'></i><span class='text'>{text}</span></a>";
+        var buttonHtml = buttonTemp.replace("{url}", url).replace(/{icon}/g,
+                button.icon).replace("{color}", button.color).replace("{text}",
+                button.text || "");
+        var buttonLink = $(buttonHtml);
+        if (button.mobile == true) {
+            buttonLink.addClass('hide-desktop');
+        }
+
+        wrapper.append(buttonLink);
+    }
+
+    $('body').append(wrapper);
+    $window.resize(function() {
+        if ($doc.width() <= 1000) {
+            var width = 100 / buttons.length;
+            wrapper.addClass("lian-share-wrapper-bottom").removeClass(
+                    "lian-share-wrapper-left");
+        } else {
+            var width = 100;
+            wrapper.addClass("lian-share-wrapper-left").removeClass(
+                    "lian-share-wrapper-bottom");
+        }
+        $(".lian-share-wrapper a").css("width", width + "%");
+    });
+    $window.resize();
 	
 });//eo document.ready
 

@@ -4,10 +4,17 @@
 			<%- include(extra_path) %>
 		<% } %>
 
-		<input type="hidden" id="layout_ipt" value="<%= layout || '' ; %>"/>
+		<%
+		var share_url = active === '' ? '' : active;
+		share_url = configs.site_url + share_url;
+		%>
 
-		<script src="/javascripts/front.libs.min.js" ></script>
-		<script src="/javascripts/front.actions.min.js" ></script>
+		<input type="hidden" id="layout_ipt" value="<%= layout || '' ; %>"/>
+		<input type="hidden" id="share_url" value="<%= share_url || '/'; %>" />
+		<input type="hidden" id="is_desktop" value="<%= is_desktop ? 1 : 0 ; %>" />
+		<input type="hidden" id="is_mobile" value="<%= is_mobile ? 1 : 0 ; %>" />
+
+		<script async src="/javascripts/front.all.built.min.js" ></script>
 
 		<%- include share_btns %>
 
