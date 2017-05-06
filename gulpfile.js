@@ -84,7 +84,7 @@ gulp.task('force-image-opt-old', function(cb){
 			gm_file.format(function(err, format){
 
 				if(err){
-					console.error('Error happended when compressing the image:', error);
+					console.error('Error happended when compressing the image:', err);
 					done(null, gm_file);
 				}
 	    		
