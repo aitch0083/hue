@@ -67,4 +67,27 @@ gulp.task('force-image-opt', function(cb){
 	    .pipe(gulp.dest(target_dir));
 });
 
+//old files:
+gulp.task('force-image-opt-old', function(cb){
+	gulp.src('/var/www/html/car/app/webroot/files/lian-car/**/*.*') //all old images
+		.pipe(gm(function(gm_file, done){
+
+			console.info('source:', gm_file.source);
+
+			gm_file.format(function(err, format){
+	    		
+	    		if(format === 'JPEG'){
+	    			done(null, gm_file.strip().quality(85).interlace('Line').samplingFactor(2, 1).noProfile());
+	    		} else if(format === 'PNG'){
+	    			done(null, gm_file.type('PaletteMatte').strip().noProfile());
+	    		} else {
+	    			done(null, gm_file.strip());
+	    		}
+	    	});
+	    }, {imageMagick: true}))
+	    .pipe(gulp.dest(function(file){
+	    	return file.base;
+	    }));
+});
+
 gulp.task('default', ['image-opt']);
