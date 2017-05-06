@@ -69,7 +69,14 @@ gulp.task('force-image-opt', function(cb){
 
 //old files:
 gulp.task('force-image-opt-old', function(cb){
-	gulp.src('/var/www/html/car/app/webroot/files/lian-car/**/*.*') //all old images
+	gulp.src([
+		'/var/www/html/car/app/webroot/files/lian-car/**/*.jpg',
+		'/var/www/html/car/app/webroot/files/lian-car/**/*.jpeg',
+		'/var/www/html/car/app/webroot/files/lian-car/**/*.png',
+		'/var/www/html/car/app/webroot/files/lian-car/**/*.JPG',
+		'/var/www/html/car/app/webroot/files/lian-car/**/*.JPEG',
+		'/var/www/html/car/app/webroot/files/lian-car/**/*.PNG'
+		]) //all old images
 		.pipe(gm(function(gm_file, done){
 
 			console.info('source:', gm_file.source);
