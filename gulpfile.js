@@ -98,9 +98,7 @@ gulp.task('force-image-opt-old', function(cb){
 	    			done(null, gm_file.strip());
 	    		}
 	    	});
-
-			global.gc();
-
+			
 	    }, {imageMagick: true}))
 	    .pipe(gulp.dest(function(file){
 	    	return file.base;
