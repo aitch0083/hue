@@ -9,6 +9,7 @@ var formidable = require('formidable');
 var moment     = require('moment');
 var util       = require('util');
 var fs         = require('fs-extra');
+var fsz        = require('fs');
 var fss        = require('filesize');
 var iss        = require('image-size');
 var path       = require('path');
@@ -86,6 +87,9 @@ module.exports = function(validator){
 								}
 
 								file_num--;
+
+								// fs.chmodSync(af_real_path, 755);
+								fsz.chmod(af_real_path, 511);
 
 								if(file_num <= 0){
 									res.json({
