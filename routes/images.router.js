@@ -86,17 +86,23 @@ module.exports = function(validator){
 									console.error(af_real_path, ' cannot be merged with watermark:', e);
 								}
 
-								file_num--;
-
 								// fs.chmodSync(af_real_path, 755);
-								fsz.chmod(af_real_path, 511);
+								fs.chmod(af_real_path, 511, function(error){
 
-								if(file_num <= 0){
-									res.json({
-								    	success: true,
-								    	urls: returned_files
-								    });
-								}
+									if(error){
+										console.error(af_real_path, '\'s permission cannot be changed:', e);
+									}
+
+									file_num--;
+
+									if(file_num <= 0){
+										res.json({
+									    	success: true,
+									    	urls: returned_files
+									    });
+									}
+
+								});
 							});
 						} else {//skip watermark
 							file_num--;
