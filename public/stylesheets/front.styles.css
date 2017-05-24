@@ -15,6 +15,7 @@
 html, body{
 	font-family: 'Noto Sans TC', Helvetica Neue,Helvetica,Roboto,Arial,sans-serif !important;
 	background-color: #CECECE;
+	overflow-x: hidden;
 }
 
 article {
@@ -66,6 +67,7 @@ img.pano-photos {
 
 .footer-bar {
     background-color: #606060;
+    margin-bottom: 3.2rem;
 }
 
 .footer-bar a {
