@@ -99,7 +99,7 @@ $doc.ready(function(){
 					return true;
 				}
 
-				PSV = new PhotoSphereViewer({
+				var PSV = new PhotoSphereViewer({
 					// Path to the panorama
 					panorama: image_src,
 					// Container
