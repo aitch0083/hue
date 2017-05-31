@@ -29,7 +29,8 @@ module.exports = function(validator){
 			Article.create({
 				title: 'new article',
 				valid: 1,
-				start_time: now.format('YYYY-MM-DD HH:mm:ss'),
+				//start_time: now.format('YYYY-MM-DD HH:mm:ss'),
+				start_time: null,
 				approved: 0,
 				at_top: 0,
 				user_id: result.user_id

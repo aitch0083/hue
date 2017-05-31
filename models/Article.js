@@ -41,7 +41,7 @@ var Article = sequelize.define('articles', {
     position_weight: { type: SZ.INTEGER(5).UNSIGNED, allowNull: true, defaultValue: 0},
     promoter_id:     { type: SZ.BIGINT(20).UNSIGNED, allowNull: true, defaultValue: 0},
     approved_time:   { type: SZ.DATE, allowNull: true },
-    start_time:      { type: SZ.DATE, allowNull: true }
+    start_time:      { type: SZ.DATE, allowNull: true, defaultValue: null }
 }, {
 	timestamp: true, 
 	createdAt:'created', 

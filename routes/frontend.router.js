@@ -54,7 +54,7 @@ var display_time = function(time){
 var article_read_hanlder = function(req, res, next) {
 
 	var id                  = parseInt(req.params.id);
-	var article_conditions  = { id: id, valid: 1, approved: 1 };
+	var article_conditions  = { id: id, valid: 1, approved: req.query.approved || 1 };
 	var category_conditions = { valid: 1 };
 	var user_conditions     = { valid: 1 };
 	var cache_file_name     = path.join(__dirname, '../public/articles/read', id + '.html');
