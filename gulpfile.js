@@ -34,7 +34,7 @@ gulp.task('image-opt', function(cb) {
 			    		// console.info('go go go:', format);
 
 			    		if(format === 'JPEG'){
-			    			done(null, gm_file.strip().quality(90).interlace('Line').samplingFactor(2, 1).noProfile());
+			    			done(null, gm_file.strip().quality(85).interlace('Line').samplingFactor(2, 1).noProfile());
 			    		} else if(format === 'PNG'){
 			    			done(null, gm_file.type('PaletteMatte').strip().noProfile());
 			    		} else {
@@ -58,7 +58,7 @@ gulp.task('force-image-opt', function(cb){
 			gm_file.format(function(err, format){
 	    		
 	    		if(format === 'JPEG'){
-	    			done(null, gm_file.strip().quality(90).interlace('Line').samplingFactor(2, 1).noProfile());
+	    			done(null, gm_file.strip().quality(85).interlace('Line').samplingFactor(2, 1).noProfile());
 	    		} else if(format === 'PNG'){
 	    			done(null, gm_file.type('PaletteMatte').strip().noProfile());
 	    		} else {
