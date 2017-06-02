@@ -72,9 +72,9 @@ $doc.ready(function(){
 	loadnext();
 
 	var $marcomarco = $('.marco-photos');
-	if($marcomarco.length){
-			$(".marco-container").twentytwenty();
-	}
+	$marcomarco.find('img:last').once('load', function($event){
+		$(".marco-container").twentytwenty();
+	});
 
 	var $pano_images = $('img.pano-photos');
 	if($pano_images.length){
