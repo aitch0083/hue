@@ -72,7 +72,7 @@ $doc.ready(function(){
 	loadnext();
 
 	var $marcomarco = $('.marco-photos:last');
-	$marcomarco.once('load', function($event){
+	$marcomarco.on('load', function($event){
 		$(".marco-container").twentytwenty();
 	});
 

@@ -25,7 +25,7 @@ p.then(function(min){
 	console.info('JS...');
 	console.info('FRONTEND JS DONE...');
 
-	return true;
+	return min;
 });
 
 p.catch(function(){
