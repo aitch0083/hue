@@ -71,8 +71,8 @@ $doc.ready(function(){
 	$mgrid = $('#masonry-grid');
 	loadnext();
 
-	var $marcomarco = $('.marco-photos');
-	$marcomarco.last().once('load', function($event){
+	var $marcomarco = $('.marco-photos:last');
+	$marcomarco.once('load', function($event){
 		$(".marco-container").twentytwenty();
 	});
 
