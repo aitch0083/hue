@@ -17,10 +17,10 @@ var p = compressor.minify({
 
 p.then(function(min){
 
-	concat([
-		parent_dir + '/public/javascripts/front.libs.min.js',
-		parent_dir + '/public/javascripts/front.actions.min.js'
-	],  parent_dir + '/public/javascripts/front.all.built.min.js');
+	// concat([
+	// 	parent_dir + '/public/javascripts/front.libs.min.js',
+	// 	parent_dir + '/public/javascripts/front.actions.min.js'
+	// ],  parent_dir + '/public/javascripts/front.all.built.min.js');
 
 	console.info('JS...');
 	console.info('FRONTEND JS DONE...');

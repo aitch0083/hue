@@ -71,9 +71,17 @@ $doc.ready(function(){
 	$mgrid = $('#masonry-grid');
 	loadnext();
 
+	var $marco_container = $('.marco-container');
 	var $marcomarco = $('.marco-photos:last');
-	$marcomarco.on('load', function($event){
-		$(".marco-container").twentytwenty();
+	
+	$marco_container.before('<div class="marco-preloader"><h5>Marco努力加載中...</h5><img src="/images/car_loading.gif" width="100" height="100"></div>');
+
+	$marcomarco.one('load', function($event){
+		$(".marco-preloader").remove();
+		var _c = setTimeout(function(){
+			clearTimeout(_c);
+			$(".marco-container").twentytwenty();
+		}, 500);
 	});
 
 	var $pano_images = $('img.pano-photos');
