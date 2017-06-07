@@ -21,8 +21,8 @@ gulp.task('image-opt', function(cb) {
 
 	return watch(source_dir + '*.*', function(vinyl){
 		
-		console.info('from:', source_dir, ', to:', target_dir);
-		console.info('vinyl:', vinyl.event, ', path:',vinyl.path);
+		// console.info('from:', source_dir, ', to:', target_dir);
+		// console.info('vinyl:', vinyl.event, ', path:',vinyl.path);
 
 		if(vinyl.event === 'add'){
 
