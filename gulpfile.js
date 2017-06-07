@@ -21,8 +21,8 @@ gulp.task('image-opt', function(cb) {
 
 	return watch(source_dir + '*.*', function(vinyl){
 		
-		// console.info('from:', source_dir, ', to:', target_dir);
-		// console.info('vinyl:', vinyl.event, ', path:',vinyl.path);
+		console.info('from:', source_dir, ', to:', target_dir);
+		console.info('vinyl:', vinyl.event, ', path:',vinyl.path);
 
 		if(vinyl.event === 'add'){
 
@@ -34,7 +34,7 @@ gulp.task('image-opt', function(cb) {
 			    		// console.info('go go go:', format);
 
 			    		if(format === 'JPEG'){
-			    			done(null, gm_file.strip().quality(85).interlace('Line').samplingFactor(2, 1).noProfile());
+			    			done(null, gm_file.strip().quality(85).interlace('Line').samplingFactor(4, 1).noProfile());
 			    		} else if(format === 'PNG'){
 			    			done(null, gm_file.type('PaletteMatte').strip().noProfile());
 			    		} else {
@@ -58,7 +58,7 @@ gulp.task('force-image-opt', function(cb){
 			gm_file.format(function(err, format){
 	    		
 	    		if(format === 'JPEG'){
-	    			done(null, gm_file.strip().quality(85).interlace('Line').samplingFactor(2, 1).noProfile());
+	    			done(null, gm_file.strip().quality(85).interlace('Line').samplingFactor(4, 1).noProfile());
 	    		} else if(format === 'PNG'){
 	    			done(null, gm_file.type('PaletteMatte').strip().noProfile());
 	    		} else {
@@ -91,7 +91,7 @@ gulp.task('force-image-opt-old', function(cb){
 				}
 	    		
 	    		if(format === 'JPEG'){
-	    			done(null, gm_file.strip().quality(90).interlace('Line').samplingFactor(2, 1).noProfile());
+	    			done(null, gm_file.strip().quality(85).interlace('Line').samplingFactor(4, 1).noProfile());
 	    		} else if(format === 'PNG'){
 	    			done(null, gm_file.type('PaletteMatte').strip().noProfile());
 	    		} else {
