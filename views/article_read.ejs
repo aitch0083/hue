@@ -61,7 +61,7 @@
 				<div class="cate-card">
 					<div class="card">
 						<a href="/articles/read/<%= latest_articles[idx].id; %>.html">
-							<img class="thumbnail img-lazy-load ratio-item-img" data-original="<%- latest_articles[idx].thumbnail %>" />
+							<img class="thumbnail ratio-item-img" src="<%- latest_articles[idx].thumbnail %>" />
 							<div class="card-section">
 								<a class="side-bar-news-cate" href="/categories/index/<%= latest_articles[idx].Category.get('id') %>">
 									<%= latest_articles[idx].Category.get('title'); %>
@@ -86,7 +86,7 @@
 						<% } else { %>
 							<div class="card">
 								<a class="float-left" href="<%=banner.plain_url%>" target="<%=banner.target%>" style="min-width: 100%;">
-									<img class="img-lazy-load" data-original="<%- banner.img1 %>" style="min-width: 100%"/>
+									<img src="<%- banner.img1 %>" style="min-width: 100%"/>
 								</a>
 							</div>
 						<% } %>
