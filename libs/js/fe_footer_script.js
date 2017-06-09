@@ -49,6 +49,8 @@ var loadnext = _.throttle(function(){
 				} else {
 					$('#playpoint').append($result);
 				}
+
+				$('.img-lazy-load').lazyload();
 			});
 
 			cached_path[src] = 1;
@@ -76,6 +78,7 @@ $doc.ready(function(){
 	
 	$marco_container.before('<div class="marco-preloader"><h5>Marco努力加載中...</h5><img src="/images/car_loading.gif" width="100" height="100"></div>');
 
+	// console.info('$marcomarco:', $marcomarco.get(0).complete);
 	$marcomarco.one('load', function($event){
 		$(".marco-preloader").remove();
 		var _c = setTimeout(function(){
@@ -83,6 +86,12 @@ $doc.ready(function(){
 			$(".marco-container").twentytwenty();
 		}, 500);
 	});
+
+	if($marcomarco.length && $marcomarco.get(0).complete){
+		$marcomarco.trigger('load');
+	}
+
+	$('.img-lazy-load').lazyload();
 
 	var $pano_images = $('img.pano-photos');
 	if($pano_images.length){

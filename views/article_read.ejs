@@ -37,7 +37,7 @@
 					<div class="small-12 medium-4 float-left cate-card footer-same-cate-articles-smaller">
 						<div class="card">
 							<a href="/articles/read/<%= same_cate_artciles[idx].id; %>.html">
-								<img class="thumbnail ratio-item-img" src="<%- same_cate_artciles[idx].thumbnail %>" />
+								<img class="thumbnail img-lazy-load ratio-item-img" data-original="<%- same_cate_artciles[idx].thumbnail %>" />
 								<div class="card-section">
 									<a class="side-bar-news-cate" href="/categories/index/<%= same_cate_artciles[idx].Category.get('id') %>">
 										<%= same_cate_artciles[idx].Category.get('title'); %>
