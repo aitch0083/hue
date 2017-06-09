@@ -33,13 +33,18 @@ gulp.task('image-opt', function(cb) {
 			    		
 			    		// console.info('go go go:', format);
 
-			    		if(format === 'JPEG'){
-			    			done(null, gm_file.strip().quality(85).interlace('Line').samplingFactor(4, 1).noProfile());
-			    		} else if(format === 'PNG'){
-			    			done(null, gm_file.type('PaletteMatte').strip().noProfile());
-			    		} else {
-			    			done(null, gm_file.strip());
-			    		}
+			    		try{
+				    		if(format === 'JPEG'){
+				    			done(null, gm_file.strip().quality(85).interlace('Line').samplingFactor(4, 1).noProfile());
+				    		} else if(format === 'PNG'){
+				    			done(null, gm_file.type('PaletteMatte').strip().noProfile());
+				    		} else {
+				    			done(null, gm_file.strip());
+				    		}
+				    	} catch(exp) {
+				    		console.error('Unable to process the file:', gm_file.source);
+	    					done(null, gm_file);
+				    	}
 			    	});
 			    }, {imageMagick: true}))
 			    .pipe(gulp.dest(target_dir));
@@ -89,13 +94,19 @@ gulp.task('force-image-opt-old', function(cb){
 					console.error('Error happended when compressing the image:', err);
 					return done(null, gm_file);
 				}
+
+				try{
 	    		
-	    		if(format === 'JPEG'){
-	    			done(null, gm_file.strip().quality(85).interlace('Line').samplingFactor(4, 1).noProfile());
-	    		} else if(format === 'PNG'){
-	    			done(null, gm_file.type('PaletteMatte').strip().noProfile());
-	    		} else {
-	    			done(null, gm_file.strip());
+		    		if(format === 'JPEG'){
+		    			done(null, gm_file.strip().quality(85).interlace('Line').samplingFactor(4, 1).noProfile());
+		    		} else if(format === 'PNG'){
+		    			done(null, gm_file.type('PaletteMatte').strip().noProfile());
+		    		} else {
+		    			done(null, gm_file.strip());
+		    		}
+	    		} catch (exp) {
+	    			console.error('Unable to process the file:', gm_file.source);
+	    			done(null, gm_file);
 	    		}
 	    	});
 			
