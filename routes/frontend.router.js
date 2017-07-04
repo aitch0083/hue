@@ -89,7 +89,7 @@ var article_read_hanlder = function(req, res, next) {
 
 			Banner.findAll({
 				where: banner_conditions,
-				limit: configs.latest_article_no,
+				limit: 100,
 				order: 'id desc'
 			})
 
@@ -195,7 +195,7 @@ var category_read_handler = function(req, res, next){
 
 		Banner.findAll({
 			where: banner_conditions,
-			limit: configs.latest_article_no,
+			limit: 100,
 			order: 'id desc'
 		})
 
