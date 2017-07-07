@@ -17,11 +17,11 @@ var _do_validate = function(req, res){
 		user_id: null
 	};
 
-	// return {
-	// 	success: true,
-	// 	message: 'testing...',
-	// 	user_id: 9
-	// }
+	return {
+		success: true,
+		message: 'testing...',
+		user_id: 9
+	}
 	
 	// console.info('username:', req.session.username);
 	// console.info('req:', req.session.user_id);

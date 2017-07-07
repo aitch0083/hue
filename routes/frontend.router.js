@@ -341,7 +341,7 @@ router.get('/articles/index/:page', function(req, res, next){
 
 		Banner.findAll({
 			where:  banner_conditions,
-			limit:  configs.latest_article_no,
+			limit:  100,
 			//offset: offset,
 			order:  'id desc'
 		}),
