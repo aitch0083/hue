@@ -8,10 +8,10 @@
 	    <% if(meta !== undefined && configs !== undefined) { %>
 	    <meta property="og:type" 	    content="website" />
 	    <meta property="og:title" 	    content="<%= meta !== undefined ? meta.title : configs.site_title %>" />
-		<meta property="og:url" 	    content="<%= meta !== undefined ? meta.url : configs.site_url; %>" />
+		<meta property="og:url" 	    content="<%= meta !== undefined ? meta.url + '.html' : configs.site_url; %>" />
 		<meta property="og:image" 	    content="<%= meta !== undefined ? meta.image : configs.logo; %>" />
 		<meta property="og:site_name"   content="<%= meta !== undefined ? meta.site_name : configs.site_title %>" />
-		<meta property="og:description" content="<%= meta !== undefined ? meta.description : '' %>" />
+		<meta property="og:description" content="<%= meta !== undefined ? meta.description : meta.title %>" />
 		<meta property="fb:app_id"      content="<%= meta !== undefined ? meta.fb_id : '' %>" />
 		<% } %>
 
