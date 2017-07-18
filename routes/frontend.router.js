@@ -127,7 +127,7 @@ var article_read_hanlder = function(req, res, next) {
 				res.locals.configs            = configs;
 				res.locals.meta               = {
 					title:       article.title || configs.site_title,
-					url:         configs.site_url + '/articles/read' + article.id,
+					url:         configs.site_url + '/articles/read/' + article.id,
 					image:       article.thumbnail,
 					site_name:   configs.site_title,
 					description: article.abstraction,
@@ -220,7 +220,7 @@ var category_read_handler = function(req, res, next){
 
 		res.locals.meta = {
 			title:       category.title,
-			url:         configs.site_url + '/categories/index' + category.id,
+			url:         configs.site_url + '/categories/index/' + category.id,
 			site_name:   configs.site_title,
 			description: category.title,
 			fb_id:       configs.fb_id
