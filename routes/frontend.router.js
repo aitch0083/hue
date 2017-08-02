@@ -8,6 +8,7 @@ var path      = require('path');
 var moment    = require('moment');
 var RSSFeed   = require('feed');
 var striptags = require('striptags');
+var xmlescape = require('xml-escape');
 
 //Configurations
 var configs  = require('../configs/global.configs');
@@ -430,7 +431,7 @@ router.get('/articles/rssFeed/:cate_id/:page_size', function(req, res, next){
 
 				var URI        = configs.site_public_url + '/articles/read/' + article.id + '.html';
 				var abstract   = striptags(article.abstract);
-				var clean_desc = article.content;
+				var clean_desc = xmlescape(article.content);
 
 				feed.addItem({
 					title:       article.plain_title,
