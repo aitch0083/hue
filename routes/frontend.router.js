@@ -438,7 +438,7 @@ router.get('/articles/rssFeed/:cate_id/:page_size', function(req, res, next){
 					id:          URI,
 					link:        URI,
 					description: clean_desc,
-					date:        article.created,
+					date:        moment(article.created, 'YYYY-MM-DD HH:mm:ss').toDate(),
 					image:       configs.site_public_url + '/' + article.thumbnail
 				});
 
