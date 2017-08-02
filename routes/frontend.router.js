@@ -431,13 +431,14 @@ router.get('/articles/rssFeed/:cate_id/:page_size', function(req, res, next){
 
 				var URI        = configs.site_public_url + '/articles/read/' + article.id + '.html';
 				var abstract   = striptags(article.abstract);
-				var clean_desc = xmlescape(article.content);
+				var clean_desc = striptags(article.content);
 
 				feed.addItem({
 					title:       article.plain_title,
 					id:          URI,
 					link:        URI,
 					description: clean_desc,
+					content:     article.content,
 					date:        moment(article.created, 'YYYY-MM-DD HH:mm:ss').toDate(),
 					image:       configs.site_public_url + '/' + article.thumbnail
 				});
