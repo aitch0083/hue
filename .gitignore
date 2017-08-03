@@ -7,5 +7,6 @@ public/images/uploaded/*
 public/articles/read/*
 public/categories/*
 sftp-config.json
+sitemap.xml
 *.xml
 .*
