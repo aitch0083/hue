@@ -1,14 +1,16 @@
 'use strict';
-var SZ        = require('sequelize');
-var express   = require('express');
-var bcrypt    = require('bcrypt-nodejs');
-var _         = require('lodash');
-var fs        = require('fs');
-var path      = require('path');
-var moment    = require('moment');
-var RSSFeed   = require('feed');
-var striptags = require('striptags');
-var xmlescape = require('xml-escape');
+var SZ           = require('sequelize');
+var express      = require('express');
+var bcrypt       = require('bcrypt-nodejs');
+var _            = require('lodash');
+var fs           = require('fs');
+var path         = require('path');
+var moment       = require('moment');
+var RSSFeed      = require('feed');
+var striptags    = require('striptags');
+var xmlescape    = require('xml-escape');
+var xmlbuilder   = require('xmlbuilder');
+var sanitizeHtml = require('sanitize-html');
 
 //Configurations
 var configs  = require('../configs/global.configs');
@@ -402,7 +404,7 @@ router.get('/articles/rssFeed/:cate_id/:page_size', function(req, res, next){
 
 	var cache_file_name = path.join(__dirname, '../public/articles', 'rss_feed_'+cate_id+'s'+page_size+'.xml');
 
-	//find the html cache file, if there is none, then create one
+	//find the XML cache file, if there is none, then create one
 	if(fs.existsSync(cache_file_name)){
 		res.sendFile(cache_file_name);
 	} else {
@@ -416,6 +418,7 @@ router.get('/articles/rssFeed/:cate_id/:page_size', function(req, res, next){
 				{ model:User, as:'User', required: true, where: user_conditions, attributes:['username', 'id', 'name'] }
 			]
 		}).then(function(articles){
+			
 			var feed = new RSSFeed({
 			  title:       configs.site_title + ' RSS Feed',
 			  description: configs.site_description,
@@ -430,15 +433,34 @@ router.get('/articles/rssFeed/:cate_id/:page_size', function(req, res, next){
 			_.each(articles, function(article){
 
 				var URI        = configs.site_public_url + '/articles/read/' + article.id + '.html';
-				var abstract   = striptags(article.abstract);
-				var clean_desc = striptags(article.content);
+				var clean_desc = sanitizeHtml(article.content, {
+					allowedTags: [ 
+					  'h1','h2','h3', 'h4', 'h5', 'h6', 'blockquote', 'a', 'ul', 'ol',
+					  'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'hr', 'div', 'img',
+					  'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'iframe',
+					  'font', 'span'
+					],
+					allowedAttributes: {
+					  a:    [ 'href', 'name', 'target', 'title'],
+					  img:  [ 'src', 'style', 'class' ],
+					  font: [ 'face', 'style'],
+					  span: [ 'style'],
+					  div:  [ 'style', 'class' ],
+					  iframe: ['style', 'src', 'width', 'height', 'frameborder', 'allowfullscreen', 'class']
+					},
+					// Lots of these won't come up by default because we don't allow them 
+					selfClosing: [ 'img', 'br', 'hr', 'area', 'base', 'basefont', 'input', 'link', 'meta' ],
+					// URL schemes we permit 
+					allowedSchemes: [ 'http', 'https', 'mailto' ],
+					allowProtocolRelative: true
+				});
 
 				feed.addItem({
 					title:       article.plain_title,
 					id:          URI,
 					link:        URI,
-					description: article.content,
-					content:     article.content,
+					description: clean_desc,
+					content:     clean_desc,
 					date:        moment(article.created, 'YYYY-MM-DD HH:mm:ss').toDate(),
 					image:       configs.site_public_url + '/' + article.thumbnail
 				});
@@ -451,6 +473,112 @@ router.get('/articles/rssFeed/:cate_id/:page_size', function(req, res, next){
 
 			res.set('Content-Type', 'text/xml');
 			res.send(rss);
+		});
+
+	}
+});
+
+//RSS feed for Line
+router.get('/articles/lineRssFeed/:cate_id/:page_size', function(req, res, next){
+	
+	var cate_id   = parseInt(req.params.cate_id);
+	var page_size = parseInt(req.params.page_size);
+
+	if(isNaN(cate_id) || isNaN(page_size)){
+		var error = new Error('Invalid RSS invocation');
+		error.status = 404;
+
+		next(error);
+	}
+
+	if(cate_id > 0){
+		article_conditions['category_id'] = cate_id;
+	} 
+
+	var cache_file_name = path.join(__dirname, '../public/articles', 'line_rss_feed_'+cate_id+'s'+page_size+'.xml');
+
+	//find the XML cache file, if there is none, then create one
+	if(fs.existsSync(cache_file_name)){
+		res.sendFile(cache_file_name);
+	} else {
+
+		Article.findAll({
+			where: article_conditions,
+			limit: page_size,
+			order: 'id desc',
+			include: [
+				{ model:Category, as:'Category', required: true, where: { valid: 1 }, attributes:['title', 'id'] },
+				{ model:User, as:'User', required: true, where: user_conditions, attributes:['username', 'id', 'name'] }
+			]
+		}).then(function(articles){
+
+			res.set('Content-Type', 'text/xml');
+			
+			var this_moment = moment();
+			var UUID        = 'WWWLIANCARCOM' + this_moment.format('YYYY');
+			var xml         = xmlbuilder.create('articles');
+			
+			xml.ele('UUID', null, UUID)
+			   .ele('tmie', null, this_moment.valueOf());
+
+			_.each(articles, function(article){
+
+				var URI        = configs.site_public_url + '/articles/read/' + article.id + '.html';
+				var ID         = 'WWWLIANCARCOMARTICLE'+article.id;
+				var start_time = article.start_time !== '0000-00-00 00:00:00' ? moment(article.start_time, 'YYYY-MM-DD HH:mm:ss') : moment(article.created, 'YYYY-MM-DD HH:mm:ss');
+				var end_time   = start_time.add('1', 'year');
+				var clean_desc = sanitizeHtml(article.content, {
+					allowedTags: [ 
+					  'h1','h2','h3', 'h4', 'h5', 'h6', 'blockquote', 'a', 'ul', 'ol',
+					  'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'hr', 'div', 'img',
+					  'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'iframe',
+					  'font', 'span'
+					],
+					allowedAttributes: {
+					  a:    [ 'href', 'name', 'target', 'title'],
+					  img:  [ 'src', 'style', 'class' ],
+					  font: [ 'face', 'style'],
+					  span: [ 'style'],
+					  div:  [ 'style', 'class' ],
+					  iframe: ['style', 'src', 'width', 'height', 'frameborder', 'allowfullscreen', 'class']
+					},
+					// Lots of these won't come up by default because we don't allow them 
+					selfClosing: [ 'img', 'br', 'hr', 'area', 'base', 'basefont', 'input', 'link', 'meta' ],
+					// URL schemes we permit 
+					allowedSchemes: [ 'http', 'https', 'mailto' ],
+					allowProtocolRelative: true
+				});
+
+				xml.ele('article')
+				   .ele('ID', null, ID).up()
+				   .ele('nativeCountry', null, 'TW').up()
+				   .ele('language', null, 'zh').up()
+				   .ele('startYmdtUnix', null, start_time.valueOf()).up()
+				   .ele('endYmdtUnix', null, end_time.valueOf()).up()
+				   .ele('title', null, article.plain_title).up()
+				   .ele('category', null, article.Category.name).up()
+				   .ele('publishTimeUnix', null, start_time.valueOf()).up()
+				   .ele('contentType', null, 0).up()
+				   .ele('thumbnail', null, article.thumbnail).up()
+				   .ele('contents')
+				   	.ele('image')
+				   		.ele('title',     article.plain_title).up()
+				   		.ele('url',       article.thumbnail).up()
+				   		.ele('thumbnail', article.thumbnail).up()
+				   		.up()
+				   	.ele('text')
+				   		.ele('content').dat(clean_desc).up()
+				   	.up();
+
+			});//eo _.each
+
+			var xml_string = xml.end({allowEmpty: true, pretty:false});
+
+			fs.writeFile(cache_file_name, xml_string);
+
+			// console.info('Line XML: ', xml_string);
+			
+			res.send(xml_string);
 		});
 
 	}

@@ -71,8 +71,12 @@ var Article = sequelize.define('articles', {
                                         at_top: at_top ? '<i class="material-icons orange" title="it\'s the TOP article">grade</i>' : ''
                                     });
 
+                    var created = ele.getDataValue('start_time');
+                    created = created && created !== '0000-00-00 00:00:00' ? created : ele.getDataValue('created');
+
                     ele.setDataValue('plain_title', title);
                     ele.setDataValue('title', link);
+                    ele.setDataValue('created', created);
 
                     if(category){
                         ele.setDataValue('category_name', category.get('title'));
