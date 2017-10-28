@@ -20,8 +20,8 @@
 				<div class="entry-meta">
 					<span class="author">
 						BY <%= article.User.get('name'); %>  
-						@ <time datetime="<%= article.get('created'); %>">
-							<%- display_time(article.get('created')); %>					
+						@ <time datetime="<%= article.get('start_time'); %>">
+							<%- display_time(article.get('start_time')); %>					
 						  </time>				
 					</span>
 				</div>
