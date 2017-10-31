@@ -519,11 +519,11 @@ router.get('/articles/lineRssFeed/:cate_id/:page_size', function(req, res, next)
 			res.set('Content-Type', 'text/xml');
 			
 			var this_moment = moment();
-			var UUID        = 'WWWLIANCARCOM' + this_moment.format('YYYY');
+			var UUID        = 'WWWLIANCARCOM' + this_moment.format('YYYY') + article.id;
 			var xml         = xmlbuilder.create('articles');
 			
-			xml.ele('UUID', null, UUID)
-			   .ele('tmie', null, this_moment.valueOf());
+			xml.ele('UUID', null, UUID).up()
+			   .ele('time', null, this_moment.valueOf());
 
 			_.each(articles, function(article){
 
