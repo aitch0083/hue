@@ -561,7 +561,7 @@ router.get('/articles/lineRssFeed/:cate_id/:page_size', function(req, res, next)
 				// 	allowedSchemes: [ 'http', 'https', 'mailto' ],
 				// 	allowProtocolRelative: true
 				// });
-
+				
 				xml.ele('article')
 				   .ele('ID', null, ID).up()
 				   .ele('nativeCountry', null, 'TW').up()
@@ -569,7 +569,7 @@ router.get('/articles/lineRssFeed/:cate_id/:page_size', function(req, res, next)
 				   .ele('startYmdtUnix', null, start_time.valueOf()).up()
 				   .ele('endYmdtUnix', null, end_time.valueOf()).up()
 				   .ele('title', null, article.plain_title).up()
-				   .ele('category', null, article.Category.title).up()
+				   .ele('category', null, article.Category.get('title')).up()
 				   .ele('publishTimeUnix', null, start_time.valueOf()).up()
 				   .ele('contentType', null, 0).up()
 				   .ele('thumbnail', null, article.thumbnail).up()
