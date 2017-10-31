@@ -11,6 +11,7 @@ var striptags    = require('striptags');
 var xmlescape    = require('xml-escape');
 var xmlbuilder   = require('xmlbuilder');
 var sanitizeHtml = require('sanitize-html');
+var md5          = require('md5');
 
 //Configurations
 var configs  = require('../configs/global.configs');
@@ -518,11 +519,17 @@ router.get('/articles/lineRssFeed/:cate_id/:page_size', function(req, res, next)
 
 			res.set('Content-Type', 'text/xml');
 			
-			var this_moment = moment();
-			var UUID        = 'WWWLIANCARCOM' + this_moment.format('YYYY');
-			var xml         = xmlbuilder.create('articles');
+			var this_moment  = moment();
+			var UUID         = 'WWWLIANCARCOM' + this_moment.format('YYYYMMDD');
+			var xml          = xmlbuilder.create('articles');
+			var title_string = '';
+
+			_.each(articles, function(article){
+				title_string += article.title;
+			});
+			title_string = md5(title_string);
 			
-			xml.ele('UUID', null, UUID).up()
+			xml.ele('UUID', null, title_string).up()
 			   .ele('time', null, this_moment.valueOf());
 
 			_.each(articles, function(article){
