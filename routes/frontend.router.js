@@ -519,7 +519,7 @@ router.get('/articles/lineRssFeed/:cate_id/:page_size', function(req, res, next)
 			res.set('Content-Type', 'text/xml');
 			
 			var this_moment = moment();
-			var UUID        = 'WWWLIANCARCOM' + this_moment.format('YYYY') + article.id;
+			var UUID        = 'WWWLIANCARCOM' + this_moment.format('YYYY');
 			var xml         = xmlbuilder.create('articles');
 			
 			xml.ele('UUID', null, UUID).up()
