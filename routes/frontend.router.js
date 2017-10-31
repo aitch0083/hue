@@ -529,7 +529,7 @@ router.get('/articles/lineRssFeed/:cate_id/:page_size', function(req, res, next)
 
 				var URI        = configs.site_public_url + '/articles/read/' + article.id + '.html';
 				var ID         = 'WWWLIANCARCOMARTICLE'+article.id;
-				var start_time = article.start_time !== '0000-00-00 00:00:00' ? moment(article.start_time, 'YYYY-MM-DD HH:mm:ss') : moment(article.created, 'YYYY-MM-DD HH:mm:ss');
+				var start_time = article.start_time && article.start_time !== '0000-00-00 00:00:00' ? moment(article.start_time, 'YYYY-MM-DD HH:mm:ss') : moment(article.created, 'YYYY-MM-DD HH:mm:ss');
 				var end_time   = start_time.add('1', 'year');
 
 				if(!article.video_url){
