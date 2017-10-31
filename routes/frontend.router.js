@@ -12,6 +12,7 @@ var xmlescape    = require('xml-escape');
 var xmlbuilder   = require('xmlbuilder');
 var sanitizeHtml = require('sanitize-html');
 var md5          = require('md5');
+var cheerio      = require('cheerio');
 
 //Configurations
 var configs  = require('../configs/global.configs');
@@ -572,7 +573,12 @@ router.get('/articles/lineRssFeed/:cate_id/:page_size', function(req, res, next)
 					allowProtocolRelative: true
 				});
 
-				clean_desc += '<div width="width:100%; max-width: 100%;"><p><a href="' + URI + '" class="btn_txt" target="_blank">繼續閱讀</a></p><p><a href="' + configs.site_public_url + '" class="btn_txt" target="_blank">”閱讀更多汽車新聞</a></p></div>';
+				var $ = cheerio.load(clean_desc, {decodeEntities:false});
+				$('div').slice(-2).remove();
+
+				clean_desc = $.html();
+
+				clean_desc += '<div width="width:100%; max-width: 100%;"><p><a href="' + URI + '" class="btn_txt" target="_blank">...繼續閱讀</a></p><p><a href="' + configs.site_public_url + '" class="btn_txt" target="_blank">”閱讀更多汽車新聞</a></p></div>';
 				
 				xml.ele('article')
 				   .ele('ID', null, ID).up()
