@@ -542,35 +542,37 @@ router.get('/articles/lineRssFeed/:cate_id/:page_size', function(req, res, next)
 
 				end_time.add('5', 'years');
 
-				if(!article.video_url){
-					var format_content = '<div width="width:100%; max-width: 100%;"><img src="'+article.thumbnail+'" style="width:100%; max-width: 100%;"/></div><div>' + article.abstract + '</div>';
-				} else {
-					var format_content = '<div width="width:100%; max-width: 100%;"><iframe frameborder="0" src="'+article.video_url+'" height="360" class="note-video-clip" style="width:100%; max-width: 100%;"></iframe></div>' + article.abstract + '</div>';
-				}
+				// if(!article.video_url){
+				// 	var format_content = '<div width="width:100%; max-width: 100%;"><img src="'+article.thumbnail+'" style="width:100%; max-width: 100%;"/></div><div>' + article.abstract + '</div>';
+				// } else {
+				// 	var format_content = '<div width="width:100%; max-width: 100%;"><iframe frameborder="0" src="'+article.video_url+'" height="360" class="note-video-clip" style="width:100%; max-width: 100%;"></iframe></div>' + article.abstract + '</div>';
+				// }
 
-				format_content += '<div width="width:100%; max-width: 100%;"><p><a href="' + URI + '" class="btn_txt" target="_blank">繼續閱讀</a></p><p><a href="' + configs.site_public_url + '" class="btn_txt" target="_blank">”閱讀更多汽車新聞</a></p></div>';
+				// format_content += '<div width="width:100%; max-width: 100%;"><p><a href="' + URI + '" class="btn_txt" target="_blank">繼續閱讀</a></p><p><a href="' + configs.site_public_url + '" class="btn_txt" target="_blank">”閱讀更多汽車新聞</a></p></div>';
 
-				// var clean_desc = sanitizeHtml(article.content, {
-				// 	allowedTags: [ 
-				// 	  'h1','h2','h3', 'h4', 'h5', 'h6', 'blockquote', 'a', 'ul', 'ol',
-				// 	  'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'hr', 'div', 'img',
-				// 	  'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'iframe',
-				// 	  'font', 'span'
-				// 	],
-				// 	allowedAttributes: {
-				// 	  a:    [ 'href', 'name', 'target', 'title'],
-				// 	  img:  [ 'src', 'style', 'class' ],
-				// 	  font: [ 'face', 'style'],
-				// 	  span: [ 'style'],
-				// 	  div:  [ 'style', 'class' ],
-				// 	  iframe: ['style', 'src', 'width', 'height', 'frameborder', 'allowfullscreen', 'class']
-				// 	},
-				// 	// Lots of these won't come up by default because we don't allow them 
-				// 	selfClosing: [ 'img', 'br', 'hr', 'area', 'base', 'basefont', 'input', 'link', 'meta' ],
-				// 	// URL schemes we permit 
-				// 	allowedSchemes: [ 'http', 'https', 'mailto' ],
-				// 	allowProtocolRelative: true
-				// });
+				var clean_desc = sanitizeHtml(article.content, {
+					allowedTags: [ 
+					  'h1','h2','h3', 'h4', 'h5', 'h6', 'blockquote', 'a', 'ul', 'ol',
+					  'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'hr', 'div', 'img',
+					  'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'iframe',
+					  'font', 'span'
+					],
+					allowedAttributes: {
+					  a:    [ 'href', 'name', 'target', 'title'],
+					  img:  [ 'src', 'style', 'class' ],
+					  font: [ 'face', 'style'],
+					  span: [ 'style'],
+					  div:  [ 'style', 'class' ],
+					  iframe: ['style', 'src', 'width', 'height', 'frameborder', 'allowfullscreen', 'class']
+					},
+					// Lots of these won't come up by default because we don't allow them 
+					selfClosing: [ 'img', 'br', 'hr', 'area', 'base', 'basefont', 'input', 'link', 'meta' ],
+					// URL schemes we permit 
+					allowedSchemes: [ 'http', 'https', 'mailto' ],
+					allowProtocolRelative: true
+				});
+
+				clean_desc += '<div width="width:100%; max-width: 100%;"><p><a href="' + URI + '" class="btn_txt" target="_blank">繼續閱讀</a></p><p><a href="' + configs.site_public_url + '" class="btn_txt" target="_blank">”閱讀更多汽車新聞</a></p></div>';
 				
 				xml.ele('article')
 				   .ele('ID', null, ID).up()
@@ -591,7 +593,7 @@ router.get('/articles/lineRssFeed/:cate_id/:page_size', function(req, res, next)
 				   		.ele('thumbnail', article.thumbnail).up()
 				   		.up()
 				   	.ele('text')
-				   		.ele('content').dat(format_content).up()
+				   		.ele('content').dat(clean_desc).up()
 				   	.up();
 
 			});//eo _.each
