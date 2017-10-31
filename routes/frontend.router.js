@@ -556,7 +556,7 @@ router.get('/articles/lineRssFeed/:cate_id/:page_size', function(req, res, next)
 					  'h1','h2','h3', 'h4', 'h5', 'h6', 'blockquote', 'a', 'ul', 'ol',
 					  'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'hr', 'div', 'img',
 					  'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'iframe',
-					  'font', 'span'
+					  'font', 'span', 'br'
 					],
 					allowedAttributes: {
 					  a:    [ 'href', 'name', 'target', 'title'],
@@ -578,7 +578,7 @@ router.get('/articles/lineRssFeed/:cate_id/:page_size', function(req, res, next)
 
 				clean_desc = $.html();
 
-				clean_desc += '<div width="width:100%; max-width: 100%;"><p><a href="' + URI + '" class="btn_txt" target="_blank">...繼續閱讀</a></p><p><a href="' + configs.site_public_url + '" class="btn_txt" target="_blank">”閱讀更多汽車新聞</a></p></div>';
+				clean_desc += '...<div width="width:100%; max-width: 100%;"><p><a href="' + URI + '" class="btn_txt" target="_blank">...繼續閱讀</a></p><p><a href="' + configs.site_public_url + '" class="btn_txt" target="_blank">”閱讀更多汽車新聞</a></p></div>';
 				
 				xml.ele('article')
 				   .ele('ID', null, ID).up()
