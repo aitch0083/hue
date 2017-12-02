@@ -570,7 +570,10 @@ router.get('/articles/lineRssFeed/:cate_id/:page_size', function(req, res, next)
 					selfClosing: [ 'img', 'br', 'hr', 'area', 'base', 'basefont', 'input', 'link', 'meta' ],
 					// URL schemes we permit 
 					allowedSchemes: [ 'http', 'https', 'mailto' ],
-					allowProtocolRelative: true
+					allowProtocolRelative: true,
+					transformTags: {
+						'br' : 'p'
+					}
 				});
 
 				var $ = cheerio.load(clean_desc, {decodeEntities:false});
@@ -578,7 +581,7 @@ router.get('/articles/lineRssFeed/:cate_id/:page_size', function(req, res, next)
 
 				clean_desc = $.html();
 
-				clean_desc += '...<div width="width:100%; max-width: 100%;"><p><a href="' + URI + '" class="btn_txt" target="_blank">...繼續閱讀</a></p><p><a href="' + configs.site_public_url + '" class="btn_txt" target="_blank">”閱讀更多汽車新聞</a></p></div>';
+				clean_desc += '<div width="width:100%; max-width: 100%;"><p><a href="' + URI + '" class="btn_txt" target="_blank">...繼續閱讀</a></p><p><a href="' + configs.site_public_url + '" class="btn_txt" target="_blank">閱讀更多汽車新聞</a></p></div>';
 				
 				xml.ele('article')
 				   .ele('ID', null, ID).up()
