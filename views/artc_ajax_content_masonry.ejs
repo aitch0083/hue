@@ -1,13 +1,31 @@
 <% var kicks = []; %>
 <% if(page - 1 <= 0 && hotlines !== null) { //first page, hotline %>
 
-	<% var side_kicks = _.slice(latest_articles, 0, 4); %>
+	<% 
+	var live_days  = {1:'週一愛生活', 3:'週三愛玩車'};
+	var today      = new Date();
+    var dow 	   = today.getDay();
+    var cutoff     = live_days[dow] !== undefined ? 3 : 4;
+	var side_kicks = _.slice(latest_articles, 0, cutoff); 
+	%>
+
 	<div class="small-up-1 medium-up-5 large-up-5">
-		<div class="column column-block big-head">
+
+		<div id="latest-stream" class="column column-block hide">
+            <div class="responsive-embed widescreen">
+               <iframe width="560" height="315" src="https://www.youtube.com/embed/live_stream?channel=UCiSDoCI4UAVoI60OR1CmynQ" frameborder="0" allowfullscreen style="max-width: 100%; min-width: 100%;"></iframe>
+            </div>
+            <a href="#" class="a-title">
+           		<span id="latest-stream-title">八點大熱門::<%= live_days[dow] %></span> 
+           		<span id="countdown-clock" class="text-center"></span>
+           	</a>
+        </div>
+
+		<div id="hotliner" class="column column-block big-head">
 			<a href="/articles/read/<%= hotlines.id; %>.html">
 				
 				<% if(!hotlines.video_url) { %>
-					<img class="thumbnail img-lazy-load" data-original="<%- hotlines.thumbnail %>" />
+					<img class="thumbnail img-lazy-load" data-original="<%- hotlines.thumbnail %>" style="<%= cutoff === 3 ? 'margin-top:1px;' : '' %>" />
 				<% } else { %>
 					<div class="responsive-embed widescreen">
 						<iframe id="player" type="text/html" width="560" height="315" class="thumbnail"

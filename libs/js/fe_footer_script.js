@@ -46,6 +46,28 @@ var loadnext = _.throttle(function(){
 				var $result = $(result);
 				if(src.indexOf('/index/0') > 0){
 					$mgrid.append($result);
+
+					var live_days = {1:'週一愛生活', 3:'週三愛玩車'};
+					var today     = new Date();
+				    var dow       = today.getDay();
+				    //column column-block big-head
+				    //column column-block side-kicks
+				    if(live_days[dow]){
+				    	$('#hotliner').removeClass('big-head').addClass('side-kicks');
+				    	$('#latest-stream').removeClass('hide').addClass('big-head');
+				    } 
+
+				    var today = new Date();
+					var month = today.getMonth() + 1;
+				    var date = today.getDate();
+					var tonight =  today.getFullYear() + '/' + (month < 10 ? '0' + month : month)  + '/' + (date < 10 ? '0' + date : date);
+				    tonight += " 20:00:00";
+					$('#countdown-clock').countdown(tonight, function(event) {
+				        $(this).html(
+				          event.strftime('倒數: <span class="blue">%H:%M:%S</span>')
+				        );
+					});
+
 				} else {
 					$('#playpoint').append($result);
 				}
@@ -62,7 +84,7 @@ var loadnext = _.throttle(function(){
 $doc.ready(function(){
 
 	var md = new MobileDetect(window.navigator.userAgent);
-
+	
 	$('.ratio-item-img').keepRatio({ ratio: 16/9, calculate: 'height' });
 	$('#ArticleContentContainer').find('img').responsImg();
 
