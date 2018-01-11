@@ -55,7 +55,9 @@ var loadnext = _.throttle(function(){
 				    if(live_days[dow]){
 				    	$('#hotliner').removeClass('big-head').addClass('side-kicks');
 				    	$('#latest-stream').removeClass('hide').addClass('big-head');
-				    } 
+				    } else {
+				    	$('#latest-stream').remove();
+				    }
 
 				    var today = new Date();
 					var month = today.getMonth() + 1;
