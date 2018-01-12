@@ -25,7 +25,7 @@
 			<a href="/articles/read/<%= hotlines.id; %>.html">
 				
 				<% if(!hotlines.video_url) { %>
-					<img class="thumbnail img-lazy-load" data-original="<%- hotlines.thumbnail %>" style="<%= cutoff === 3 ? 'margin-top:1px;' : '' %>" />
+					<img class="thumbnail img-lazy-load" data-original="<%- hotlines.thumbnail %>" style="margin-top:1px;" />
 				<% } else { %>
 					<div class="responsive-embed widescreen">
 						<iframe id="player" type="text/html" width="560" height="315" class="thumbnail"
