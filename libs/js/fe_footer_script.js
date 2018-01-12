@@ -91,7 +91,7 @@ $doc.ready(function(){
 	$('#ArticleContentContainer').find('img').responsImg();
 
 	$.get('/menu').then(function(result){
-		$('#top-menu-placeholder').html(result);
+		$('.menu-holder').html(result);
 	});
 
 	$mgrid = $('#masonry-grid');
