@@ -1,6 +1,11 @@
 <% include _fe_header_ %>
 
 <link rel="stylesheet" href="/stylesheets/masonry.styles.css"/>
+<style>
+.card {
+	margin-bottom: 0px;
+}
+</style>
 
 <div class="row">
 	
@@ -8,14 +13,6 @@
 	<div id="cate-container" class="small-12 medium-8 float-left cate-container">
 
 		<article>
-
-			<header>
-				<p class="category-title">
-					<a href="/categories/index/<%= category.get('ID') %>" style="">
-						<%= category.get('Title') %>
-					</a>
-				</p>
-			</header>
 
 			<% if( show_page_anchor ) { %>
 				<span class="page-indicator hidden" data-src="/categories/index/<%= category.get('ID') %>/<%= page %>"></span>
