@@ -2,7 +2,10 @@
 <% if(page - 1 <= 0 && hotlines !== null) { //first page, hotline %>
 
 	<% 
-	var live_days  = {1:'週一愛生活', 3:'週三愛玩車'};
+	var live_days  = {
+		// 1:'週一愛生活', 
+		3:'週三愛玩車'
+	};
 	var today      = new Date();
     var dow 	   = today.getDay();
     var cutoff     = live_days[dow] !== undefined ? 3 : 4;
