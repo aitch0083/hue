@@ -47,7 +47,10 @@ var loadnext = _.throttle(function(){
 				if(src.indexOf('/index/0') > 0){
 					$mgrid.append($result);
 
-					var live_days = {1:'週一愛生活', 3:'週三愛玩車'};
+					var live_days = {
+						// 1:'週一愛生活', 
+						3:'週三愛玩車'
+					};
 					var today     = new Date();
 				    var dow       = today.getDay();
 				    //column column-block big-head
