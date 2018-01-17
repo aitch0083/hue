@@ -53,9 +53,10 @@ var loadnext = _.throttle(function(){
 					};
 					var today     = new Date();
 				    var dow       = today.getDay();
+				    var hour      = today.getHours();
 				    //column column-block big-head
 				    //column column-block side-kicks
-				    if(live_days[dow]){
+				    if(live_days[dow] && hour >= 17){
 				    	$('#hotliner').removeClass('big-head').addClass('side-kicks');
 				    	$('#latest-stream').removeClass('hide').addClass('big-head');
 				    } else {
