@@ -89,7 +89,8 @@ var loadnext = _.throttle(function(){
 
 $doc.ready(function(){
 
-	var md = new MobileDetect(window.navigator.userAgent);
+	var md      = new MobileDetect(window.navigator.userAgent);
+	var $window = $(window);
 	
 	$('.ratio-item-img').keepRatio({ ratio: 16/9, calculate: 'height' });
 	$('#ArticleContentContainer').find('img').responsImg();
@@ -103,15 +104,116 @@ $doc.ready(function(){
 
 	var $marco_container = $('.marco-container');
 	var $marcomarco = $('.marco-photos:last');
+
+	var wobble_slide = function(container, wobble_time) {
+
+        var count       = 1;
+        var swing_left  = 0.33;
+        var swing_right = 0.67;
+        var brate1      = 0.05;
+        var brate2      = 0.1;
+
+        wobble_time = wobble_time || 660;
+
+        if(container.busy_wobling){
+        	return;
+        }
+
+        var queue = [
+            function() {
+                container.setValue(swing_left, true);
+                container.busy_wobling = true;
+            },
+            function() {
+                container.setValue(swing_right, true);
+            },
+            function() {
+                container.setValue(swing_left + brate1, true);
+            },
+            function() {
+                container.setValue(swing_right - brate1, true);
+            },
+            function() {
+                container.setValue(swing_left + brate2, true);
+            },
+            function() {
+                container.setValue(swing_right - brate2, true);
+            },
+            function() {
+                container.setValue(0.5, true);
+                container.busy_wobling = false;
+            },
+        ];
+
+        var callf = function() {
+
+            if (queue.length <= 0) {
+                clearTimeout(_c);
+                return false;
+            }
+
+            var _f = queue.shift();
+            _f();
+
+            setTimeout(callf, wobble_time);
+        };
+
+        var _c = setTimeout(callf, wobble_time);
+
+    };//eo wobble_slide
 	
 	$marco_container.before('<div class="marco-preloader"><h5>Marco努力加載中...</h5><img src="/images/car_loading.gif" width="100" height="100"></div>');
 
+	var elementScrolled = function ($elem) {
+
+        var docViewTop    = $window.scrollTop();
+        var docViewBottom = docViewTop + $window.height();
+
+        if($elem.length > 1){
+
+        	$elem.each(function(idx){
+        		var $this      = $(this);
+        		var elemTop    = $this.offset().top;
+        		var elemHeight = $this.height();
+
+        		elemTop += elemHeight/2;
+				
+				if((elemTop <= docViewBottom) && (elemTop >= docViewTop)){
+
+					wobble_slide($this.data('imagesCompare'));
+				}
+        	});
+
+        } else { 
+
+	        var elemTop = $elem.offset().top;
+
+	        if((elemTop <= docViewBottom) && (elemTop >= docViewTop)){
+				wobble_slide($elem.data('imagesCompare'));
+			}
+    	}
+    };
+
 	// console.info('$marcomarco:', $marcomarco.get(0).complete);
+	var $compare_image_container = null;
 	$marcomarco.one('load', function($event){
 		$(".marco-preloader").remove();
 		var _c = setTimeout(function(){
 			clearTimeout(_c);
-			$(".marco-container").twentytwenty();
+			
+			//$(".marco-container").twentytwenty();
+			$compare_image_container = $marco_container.each(function(idx){
+				var $ele = $(this);
+				$ele.find('img:first').wrap('<div style="display: none;"></div>');
+				$ele.find('img:last').wrap('<div></div>');
+			}).imagesCompare({
+		        animationDuration: 600
+		    }).data('imagesCompare');
+
+			$(window).scroll(function() {
+		        elementScrolled($marco_container);
+		    });
+
 		}, 500);
 	});
 
@@ -174,8 +276,7 @@ $doc.ready(function(){
 	$('.footer-same-cate-articles-smaller').equalHeights();
 
 	var $cate_container = $('#cate-container');
-	var $window         = $(window);
-
+	
 	$window.resize(function(){
 			resize_func();
 	}).scroll(function() {
