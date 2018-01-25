@@ -110,8 +110,8 @@ $doc.ready(function(){
         var count       = 1;
         var swing_left  = 0.33;
         var swing_right = 0.67;
-        var brate1      = 0.05;
-        var brate2      = 0.1;
+        var brate1      = 0;
+        var brate2      = 0;
 
         wobble_time = wobble_time || 660;
 
