@@ -176,7 +176,7 @@ $doc.ready(function(){
         		var elemTop    = $this.offset().top;
         		var elemHeight = $this.height();
 
-        		elemTop += elemHeight + 10;
+        		elemTop += elemHeight;
 				
 				if((elemTop <= docViewBottom) && (elemTop >= docViewTop)){
 
@@ -210,9 +210,9 @@ $doc.ready(function(){
 		        animationDuration: 600
 		    }).data('imagesCompare');
 
-			$(window).scroll(function() {
+			$(window).scroll(_.throttle(function() {
 		        elementScrolled($marco_container);
-		    });
+		    }, 1000));
 
 		}, 500);
 	});
