@@ -176,7 +176,7 @@ $doc.ready(function(){
         		var elemTop    = $this.offset().top;
         		var elemHeight = $this.height();
 
-        		elemTop += elemHeight/2;
+        		elemTop += elemHeight + 10;
 				
 				if((elemTop <= docViewBottom) && (elemTop >= docViewTop)){
 
