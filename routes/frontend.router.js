@@ -166,7 +166,7 @@ var category_read_handler = function(req, res, next){
 	var id                  = parseInt(req.params.id);
 	var page                = parseInt(req.params.page);
 	var article_conditions  = { id: id, valid: 1, approved: 1 };
-	var category_conditions = { valid: 1, id: id };
+	var category_conditions = { valid: 1, id: id, display: 1 };
 	var user_conditions     = { valid: 1 };
 
 	if(isNaN(page) || page <= 0){
