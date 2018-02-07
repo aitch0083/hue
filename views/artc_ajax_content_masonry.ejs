@@ -7,9 +7,10 @@
 		3:'週三愛玩車'
 	};
 	var today      = new Date();
-    var dow 	   = today.getDay();
+    var dow        = today.getDay();
     var hour       = today.getHours();
-    var cutoff     = live_days[dow] !== undefined && hour >= 17 ? 3 : 4;
+    var month      = today.getMonth();
+    var cutoff     = live_days[dow] !== undefined && hour >= 17 && month !== 1 ? 3 : 4;
 	var side_kicks = _.slice(latest_articles, 0, cutoff); 
 	%>
 
