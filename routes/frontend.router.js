@@ -166,7 +166,7 @@ var category_read_handler = function(req, res, next){
 	var id                  = parseInt(req.params.id);
 	var page                = parseInt(req.params.page);
 	var article_conditions  = { id: id, valid: 1, approved: 1 };
-	var category_conditions = { valid: 1, id: id };
+	var category_conditions = { valid: 1, id: id, display: 1 };
 	var user_conditions     = { valid: 1 };
 
 	if(isNaN(page) || page <= 0){
@@ -210,9 +210,9 @@ var category_read_handler = function(req, res, next){
 
 	).spread(function(category, cate_articles, latest_articles, banners){
 
-		if(!category || category === null || category.display != 1){
-			var error = new Error('Invalid Category. ' + category.display);
-			console.error('Invalid category caught:', id, ', display: ', category.display);
+		if(!category || category === null){
+			var error = new Error('Invalid Category');
+			console.error('Invalid category caught:', id);
 			next(error);
 			return;
 		}
