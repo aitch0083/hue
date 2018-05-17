@@ -4,9 +4,11 @@
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('hue:server');
-var http = require('http');
+var app     = require('../app');
+var debug   = require('debug')('hue:server');
+var http    = require('http');
+var cluster = require('cluster');
+var os      = require('os');
 
 /**
  * Get port from environment and store in Express.
@@ -15,19 +17,38 @@ var http = require('http');
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
-/**
- * Create HTTP server.
- */
+if(cluster.isMaster){
 
-var server = http.createServer(app);
+  var numCpus = os.cpus().length;
+  var threshold = numCpus - 1;
+  threshold = threshold <= 0 ? 0 : threshold;
 
-/**
- * Listen on provided port, on all network interfaces.
- */
+  for(var i = 0 ; i < threshold ; i++){
+    cluster.fork();
+  } 
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+  cluster.on('exit', function(worker, code, signal){
+    if(!worker.exitedAfterDisconnect){
+      console.info('Server DIDED: ', worker.id);
+      cluster.fork();
+    }
+  });
+
+} else {
+  /**
+   * Create HTTP server.
+   */
+
+  var server = http.createServer(app);
+
+  /**
+   * Listen on provided port, on all network interfaces.
+   */
+
+  server.listen(port);
+  server.on('error', onError);
+  server.on('listening', onListening);
+}
 
 /**
  * Normalize a port into a number, string, or false.
