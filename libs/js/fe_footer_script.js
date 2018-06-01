@@ -303,7 +303,9 @@ $doc.ready(function(){
 
 	   var target_height = $cate_container.length ? $cate_container[0].scrollHeight : $doc.height();
 
-	   if($window.scrollTop() + $window.height() > (target_height - 1020)) {
+	   console.info('$window.scrollTop():',$window.scrollTop(),',$window.height():',$window.height(),',target_height:',target_height);
+
+	   if($window.scrollTop() + $window.height() > (target_height * .65)) {
 	   	   loadnext();
 	   }
 	});//eo scroll
