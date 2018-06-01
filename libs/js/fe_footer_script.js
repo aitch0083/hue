@@ -121,7 +121,7 @@ $doc.ready(function(){
     } else {
     	$('#latest-stream').remove();
     }
-	
+
 	var $marco_container = $('.marco-container');
 	var $marcomarco      = $('.marco-photos:last');
 
@@ -411,6 +411,15 @@ $doc.ready(function(){
         $(".lian-share-wrapper a").css("width", width + "%");
     });
     $window.resize();
+
+    $('iframe.thumbnail').each(function(idx, ele){
+    	var $ele = $(ele);
+    	var src = $ele.attr('src');
+
+    	if(src){
+    		$ele.attr('src', src);
+    	}
+    });
 	
 });//eo document.ready
 
