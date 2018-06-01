@@ -303,7 +303,7 @@ $doc.ready(function(){
 
 	   var target_height = $cate_container.length ? $cate_container[0].scrollHeight : $doc.height();
 
-	   if($window.scrollTop() + $window.height() > (target_height - 620)) {
+	   if($window.scrollTop() + $window.height() > (target_height - 1020)) {
 	   	   loadnext();
 	   }
 	});//eo scroll
@@ -420,6 +420,10 @@ $doc.ready(function(){
     		$ele.attr('src', src);
     	}
     });
+
+    setTimeout(function(){
+    	$('ins.adsbygoogle:last').remove();
+    }, 2500);
 	
 });//eo document.ready
 
