@@ -303,7 +303,7 @@ $doc.ready(function(){
 
 	   var target_height = $cate_container.length ? $cate_container[0].scrollHeight : $doc.height();
 
-	   if($window.scrollTop() + $window.height() > (target_height - 320)) {
+	   if($window.scrollTop() + $window.height() > (target_height - 620)) {
 	   	   loadnext();
 	   }
 	});//eo scroll
