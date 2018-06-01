@@ -1,5 +1,5 @@
 <% var kicks = []; %>
-<% if(page - 1 <= 0 && hotlines !== null) { %>
+<% if(page == 1 && hotlines !== null) { %>
 
 	<% 
 	var live_days  = {
@@ -49,7 +49,7 @@
 					</a>
 				</div>
 			</a>
-		</div>
+		</div><!-- EO hotliner -->
 
 		<% for(var idx = 0 ; idx < side_kicks.length ; idx++ ) { %>
 			<% kicks.push(side_kicks[idx].id) %>
@@ -75,13 +75,13 @@
 						</a>
 					</div>
 				</a>
-			</div>
+			</div><!-- EO column column-block side-kicks -->
 		<% } //eo for %>		
-	<div>
+	</div><!-- EO small-up-1 medium-up-5 large-up-5 -->
 
 <% } //eo hotline %>
 
-<% if (page - 1 <= 0) { %>
+<% if (page == 1) { %>
 <div id="playpoint" class="small-up-1 medium-up-4 large-up-5">
 <% } %>
 
@@ -134,6 +134,6 @@
 
 	<% } %>
 
-<% if (page - 1 <= 0) { %>
+<% if (page == 1) { %>
 </div>
 <% } %>
