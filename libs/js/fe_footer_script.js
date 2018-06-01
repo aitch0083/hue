@@ -32,7 +32,8 @@ var cached_path     = {};
 
 var loadnext = _.throttle(function(){
 	$page_indicator = $('.page-indicator:last');
-	
+	$mgrid = $mgrid === null ? $('#masonry-grid') : $mgrid;
+
 	if($page_indicator.length){
 		var src = $page_indicator.data('src');
 
@@ -101,11 +102,11 @@ $doc.ready(function(){
 		$('.menu-holder').html(result);
 	});
 
-	$mgrid = $('#masonry-grid');
-	loadnext();
-
+	$mgrid = $mgrid === null ? $('#masonry-grid') : $mgrid;
+	//loadnext();
+	
 	var $marco_container = $('.marco-container');
-	var $marcomarco = $('.marco-photos:last');
+	var $marcomarco      = $('.marco-photos:last');
 
 	var wobble_slide = function(container, wobble_time) {
 
@@ -285,8 +286,8 @@ $doc.ready(function(){
 
 	   var target_height = $cate_container.length ? $cate_container[0].scrollHeight : $doc.height();
 
-	   if($window.scrollTop() + $window.height() > target_height - 320) {
-	       loadnext();
+	   if($window.scrollTop() + $window.height() > (target_height - 320)) {
+	   	   loadnext();
 	   }
 	});//eo scroll
 
@@ -388,8 +389,7 @@ $doc.ready(function(){
                     "lian-share-wrapper-left");
         } else {
             var width = 100;
-            wrapper.addClass("lian-share-wrapper-left").removeClass(
-                    "lian-share-wrapper-bottom");
+            wrapper.addClass("lian-share-wrapper-left").removeClass("lian-share-wrapper-bottom");
         }
         $(".lian-share-wrapper a").css("width", width + "%");
     });

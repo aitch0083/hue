@@ -7,8 +7,10 @@ var TestDrive = sequelize.define('test_drives', {
 	
     //For display: 
 	id:       { type: SZ.BIGINT(20).UNSIGNED, allowNull: false, autoIncrement: true, primaryKey: true, field: 'id'},
-	title:    { type: SZ.STRING(100),         allowNull: false, defaultValue: '' },
-    tnc:      { type: SZ.STRING(100),         allowNull: false, defaultValue: '' },
+	name:     { type: SZ.STRING(30),         allowNull: false, defaultValue: '' },
+    title:    { type: SZ.STRING(10),         allowNull: false, defaultValue: '' },
+    phone:    { type: SZ.STRING(10),         allowNull: false, defaultValue: '' },
+    
     created:  { type: SZ.DATE, 			      allowNull: false, field: 'created'},
 	modified: { type: SZ.DATE, 			      allowNull: false, field: 'modified'},
     start:    { type: SZ.DATE,                allowNull: true},

@@ -261,29 +261,74 @@ router.get('/', function(req, res, next){
 
 	} else {
 
-		res.locals.title   = configs.site_title;
-		res.locals.configs = configs;
-		
-		res.locals.meta = {
-			title:       configs.site_title,
-			url:         configs.site_url,
-			site_name:   configs.site_title,
-			description: configs.site_description,
-			fb_id:       configs.fb_id,
-			image:       configs.logo
-		};
+		var article_conditions  = { valid: 1, approved: 1 };
+		var category_conditions = { valid: 1 };
+		var user_conditions     = { valid: 1 };
+		var page                = 0;
+		var offset              = page * configs.home_latest_artcile_no;
 
-		res.locals._      = _;
-		res.locals.page   = 0;
-		res.locals.layout = 'masonry';
+		Promise.join(
 
-		res.render('masonry', function(error, html){
-			if(error){	
-				next(error);
-			}
+			Article.findAndCountAll({
+				where: {valid: 1, approved: 1, at_top: 0},
+				limit: configs.home_latest_artcile_no,
+				offset: offset,
+				order: 'id desc',
+				include: [
+					{ model:Category, as:'Category', required: true, where: category_conditions, attributes:['title', 'id'] },
+					{ model:User, as:'User', required: true, where: user_conditions, attributes:['username', 'id', 'name'] }
+				]
+			}),
 
-			fs.writeFile(cache_file_name, html);
-			res.send(html);
+			Banner.findAll({
+				where:  banner_conditions,
+				limit:  100,
+				//offset: offset,
+				order:  'id desc'
+			}),
+
+			Article.findOne({
+				where: {valid: 1, approved: 1, at_top: 1},
+				order: 'id desc',
+				include: [
+					{ model:Category, as:'Category', required: true, where: category_conditions, attributes:['title', 'id'] },
+					{ model:User, as:'User', required: true, where: user_conditions, attributes:['username', 'id', 'name'] }
+				]
+			})
+
+		).spread(function(latest_articles, banners, hotlines){
+
+			res.locals.title             = configs.site_title;
+			res.locals.configs           = configs;
+			res.locals.latest_articles   = latest_articles.rows;
+			res.locals.latest_article_no = latest_articles.count;
+			res.locals.banners           = banners;
+			res.locals.hotlines          = hotlines;
+			res.locals.page              = page + 1;
+			res.locals.layout            = 'masonry';
+
+			res.locals.meta = {
+				title:       configs.site_title,
+				url:         configs.site_url,
+				site_name:   configs.site_title,
+				description: configs.site_description,
+				fb_id:       configs.fb_id
+			};
+
+			res.locals._ = _;
+
+			res.locals.max_page = Math.ceil(latest_articles.count / configs.home_latest_artcile_no);
+
+			// res.render('artc_ajax_content' + layout, {page: page + 1});
+
+			res.render('masonry_with_articles', function(error, html){
+				if(error){	
+					next(error);
+				}
+
+				fs.writeFile(cache_file_name, html);
+				res.send(html);
+			});
 		});
 	}
 });
