@@ -104,6 +104,23 @@ $doc.ready(function(){
 
 	$mgrid = $mgrid === null ? $('#masonry-grid') : $mgrid;
 	//loadnext();
+	var live_days = {
+		// 1:'週一愛生活', 
+		2:'17鏈戀車',
+		// 3:'週三愛玩車'
+	};
+	var today     = new Date();
+    var dow       = today.getDay();
+    var hour      = today.getHours();
+    var month     = today.getMonth();
+    //column column-block big-head
+    //column column-block side-kicks
+    if(live_days[dow] && hour >= 17 && month !== 1){//disabled in Feb
+    	$('#hotliner').removeClass('big-head').addClass('side-kicks');
+    	$('#latest-stream').removeClass('hide').addClass('big-head');
+    } else {
+    	$('#latest-stream').remove();
+    }
 	
 	var $marco_container = $('.marco-container');
 	var $marcomarco      = $('.marco-photos:last');
