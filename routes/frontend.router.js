@@ -255,7 +255,7 @@ router.get('/', function(req, res, next){
 
 	var cache_file_name = path.join(__dirname, '../public', 'index.html');
 
-	if(fs.existsSync(cache_file_name)){
+	if(false && fs.existsSync(cache_file_name)){
 
 		res.sendFile(cache_file_name);
 
