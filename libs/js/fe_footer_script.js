@@ -94,6 +94,8 @@ $doc.ready(function(){
 
 	var md      = new MobileDetect(window.navigator.userAgent);
 	var $window = $(window);
+
+	$('.img-lazy-load').lazyload();
 	
 	$('.ratio-item-img').keepRatio({ ratio: 16/9, calculate: 'height' });
 	$('#ArticleContentContainer').find('img').responsImg();
@@ -240,8 +242,6 @@ $doc.ready(function(){
 	if($marcomarco.length && $marcomarco.get(0).complete){
 		$marcomarco.trigger('load');
 	}
-
-	$('.img-lazy-load').lazyload();
 
 	var $pano_images = $('img.pano-photos');
 	if($pano_images.length){
