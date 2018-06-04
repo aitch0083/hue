@@ -184,6 +184,8 @@ $doc.ready(function(){
 
     };//eo wobble_slide
 	
+	$('iframe.note-video-clip').wrap('<div class="responsive-embed widescreen"></div>');
+
 	$marco_container.before('<div class="marco-preloader"><h5>Marco努力加載中...</h5><img src="/images/car_loading.gif" width="100" height="100"></div>');
 
 	var elementScrolled = function ($elem) {
