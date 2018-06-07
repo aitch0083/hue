@@ -33,7 +33,7 @@
 			<a href="/articles/read/<%= hotlines.id; %>.html">
 				
 				<% if(!hotlines.video_url) { %>
-					<img class="thumbnail img-lazy-load" data-original="<%- hotlines.thumbnail %>" style="margin-top:1px;" />
+					<img class="thumbnail" data-original="<%- hotlines.thumbnail %>" src="<%- hotlines.thumbnail %>" style="margin-top:1px;" />
 				<% } else { %>
 					<div class="responsive-embed widescreen">
 						<iframe id="player" type="text/html" width="560" height="315" class="thumbnail"
@@ -59,7 +59,7 @@
 				<a href="/articles/read/<%= side_kicks[idx].id; %>.html">
 					
 					<% if(!side_kicks[idx].video_url) { %>
-						<img class="thumbnail img-lazy-load" data-original="<%- side_kicks[idx].thumbnail %>"  style="margin-top: 1px;" />
+						<img class="thumbnail" data-original="<%- side_kicks[idx].thumbnail %>" src="<%- side_kicks[idx].thumbnail %>" style="margin-top: 1px;" />
 					<% } else { %>
 						<div class="responsive-embed widescreen">
 							<iframe id="player" type="text/html" width="560" height="315" class="thumbnail"
@@ -97,7 +97,7 @@
 			<a href="/articles/read/<%= latest_articles[idx].id; %>.html">
 				
 				<% if(!latest_articles[idx].video_url) { %>
-					<img class="thumbnail img-lazy-load" data-original="<%- latest_articles[idx].thumbnail %>" />
+					<img class="thumbnail" data-original="<%- latest_articles[idx].thumbnail %>" src="<%- latest_articles[idx].thumbnail %>" />
 				<% } else { %>
 					<div class="responsive-embed widescreen">
 						<iframe id="player" type="text/html" width="560" height="315" class="thumbnail"
@@ -128,7 +128,7 @@
 	            	</div>
 				<% } else { %>
 					<a class="float-left" href="<%=banner.plain_url%>" target="<%=banner.target%>" style="min-width: 100%;">
-						<img class="thumbnail img-lazy-load" data-original="<%- banner.img1 %>" style="min-width: 100%;"/>
+						<img class="thumbnail" data-original="<%- banner.img1 %>" src="<%- banner.img1 %>" style="min-width: 100%;"/>
 					</a>
 				<% } %>
 			</div>
