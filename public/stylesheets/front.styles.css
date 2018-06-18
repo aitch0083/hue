@@ -37,3 +37,4 @@ html,body{font-family:'Noto Sans TC',Helvetica Neue,Helvetica,Roboto,Arial,sans-
 @media only screen and (max-device-width: 667px) { body{ background-color: white !important;}}
 .google-auto-placed { text-align: center !important; width: 100% !important; height: auto !important; clear: both !important; max-width: 1200px !important; background: white !important; margin: 0px auto !important; padding: 0px !important;}
 .adsbygoogle{display: block !important; background-color: white !important; height: 90px; background: white !important; padding: 0px !important; margin: 0px auto !important;}
+.entry-content img {min-width: 100% !important; max-width: 100% !important;}
