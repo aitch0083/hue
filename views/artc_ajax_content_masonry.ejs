@@ -56,10 +56,10 @@
 		<% for(var idx = 0 ; idx < side_kicks.length ; idx++ ) { %>
 			<% kicks.push(side_kicks[idx].id) %>
 			<div class="column column-block side-kicks">
-				<a href="/articles/read/<%= side_kicks[idx].id; %>.html">
+				<a class="restrict-a" href="/articles/read/<%= side_kicks[idx].id; %>.html">
 					
 					<% if(!side_kicks[idx].video_url) { %>
-						<img class="thumbnail" data-original="<%- side_kicks[idx].thumbnail %>" src="<%- side_kicks[idx].thumbnail %>" style="margin-top: 1px;" />
+						<img class="thumbnail zoom" data-original="<%- side_kicks[idx].thumbnail %>" src="<%- side_kicks[idx].thumbnail %>" style="margin-top: 1px;" />
 					<% } else { %>
 						<div class="responsive-embed widescreen">
 							<iframe id="player" type="text/html" width="560" height="315" class="thumbnail"
@@ -94,10 +94,10 @@
 	<% for(var idx = 0 ; idx < latest_articles.length ; idx++ ) { %>
 		<% if(_.indexOf(kicks, latest_articles[idx].id) !== -1) continue; %>
 		<div class="column column-block">
-			<a href="/articles/read/<%= latest_articles[idx].id; %>.html">
+			<a class="restrict-a" href="/articles/read/<%= latest_articles[idx].id; %>.html">
 				
 				<% if(!latest_articles[idx].video_url) { %>
-					<img class="thumbnail" data-original="<%- latest_articles[idx].thumbnail %>" src="<%- latest_articles[idx].thumbnail %>" />
+					<img class="thumbnail zoom" data-original="<%- latest_articles[idx].thumbnail %>" src="<%- latest_articles[idx].thumbnail %>" />
 				<% } else { %>
 					<div class="responsive-embed widescreen">
 						<iframe id="player" type="text/html" width="560" height="315" class="thumbnail"

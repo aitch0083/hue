@@ -126,6 +126,13 @@ $doc.ready(function(){
 
 	var $marco_container = $('.marco-container');
 	var $marcomarco      = $('.marco-photos:last');
+    var $zoom_imgs       = $('.zoom');
+
+    $zoom_imgs.hover(function() {
+        $(this).addClass('transition');
+    }, function() {
+        $(this).removeClass('transition');
+    });
 
 	var wobble_slide = function(container, wobble_time) {
 
