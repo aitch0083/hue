@@ -50,7 +50,7 @@ var loadnext = _.throttle(function(){
 
 					var live_days = {
 						// 1:'週一愛生活', 
-						2:'17鏈戀車',
+						// 2:'17鏈戀車',
 						// 3:'週三愛玩車'
 					};
 					var today     = new Date();
@@ -108,7 +108,7 @@ $doc.ready(function(){
 	//loadnext();
 	var live_days = {
 		// 1:'週一愛生活', 
-		2:'17鏈戀車',
+		// 2:'17鏈戀車',
 		// 3:'週三愛玩車'
 	};
 	var today     = new Date();
