@@ -508,6 +508,7 @@ router.get('/articles/rssFeed/:cate_id/:page_size', function(req, res, next){
 
 				feed.addItem({
 					title:       article.plain_title,
+					category:    '<![CDATA[ auto_news ]]>',
 					id:          URI,
 					link:        URI,
 					description: clean_desc,
