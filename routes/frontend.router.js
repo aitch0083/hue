@@ -519,6 +519,8 @@ router.get('/articles/rssFeed/:cate_id/:page_size', function(req, res, next){
 
 			});
 
+			feed.addCategory('<![CDATA[ auto_news ]]>');
+
 			var rss = feed.rss2();
 
 			fs.writeFile(cache_file_name, rss);
